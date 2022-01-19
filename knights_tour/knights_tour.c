@@ -18,8 +18,9 @@ void print_board(int arr[], int len)
         for (i = 0; i < N; i++)
             board[j][i] = 0;
 
+    // FIXME: This isn't lining up. Not sure if its here or not. Check the maths
     for (i = 0; i < len; i++)
-        board[arr[i] % N][arr[i] / N] = arr[i];
+        board[arr[i] % N - 1][arr[i] / N] = i;
 
     for (i = 0; i < N; i++)
     {
@@ -59,7 +60,7 @@ int solve_knights_tour_recur(int x, int y, int moveNum, struct move knightMoves[
     int tourCompleted = -1;
 
     board[x][y] = 1;
-    path[moveNum++] = (x + 1) + N * (y + 1);
+    path[moveNum++] = (x + 1) + N * (y + 1); // TODO: Check this
 
     if (moveNum == N * N)
         return print_path(path);
