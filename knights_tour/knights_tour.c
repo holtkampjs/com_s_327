@@ -9,6 +9,8 @@ struct move
     int y;
 };
 
+int count = 0;
+
 void print_board(int arr[], int len)
 {
     int i, j;
@@ -58,6 +60,8 @@ int solve_knights_tour_recur(int x, int y, int moveNum, struct move knightMoves[
     int i;
     int tourCompleted = 0;
 
+    count++;
+
     if (is_invalid_move(x, y, board))
         return 0;
 
@@ -98,7 +102,7 @@ void solve_knights_tour()
     if (hasFinishedTour == 0)
         printf("No tours found\n");
 
-    printf("Final: i = %d, j = %d\n", i, j);
+    printf("%d\n", count);
 }
 
 int main(int argc, char *argv[])
