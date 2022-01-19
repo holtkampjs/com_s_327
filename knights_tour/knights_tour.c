@@ -63,7 +63,10 @@ int solve_knights_tour_recur(int x, int y, int moveNum, struct move knightMoves[
     count++;
 
     if (is_invalid_move(x, y, board))
+    {
+        board[x][y] = 1;
         return 0;
+    }
 
     board[x][y] = 1;
     path[moveNum++] = (x + 1) + N * y;
@@ -96,8 +99,8 @@ void solve_knights_tour()
         for (i = 0; i < N; i++)
             board[j][i] = 0;
 
-    for (i = 0; i < N; i++)
-        for (j = 0; j < N; j++)
+    for (j = 0; j < N; j++)
+        for (i = 0; i < N; i++)
             if (solve_knights_tour_recur(i, j, 0, moves, board, path))
                 hasFinishedTour = 1;
 
