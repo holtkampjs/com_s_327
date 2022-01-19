@@ -18,6 +18,10 @@ void print_board(int arr[], int len)
         for (i = 0; i < N; i++)
             board[j][i] = 0;
 
+    for (i = 0; i < len; i++)
+        printf("%d ", arr[i]);
+    printf("\n");
+
     // FIXME: This isn't lining up. Not sure if its here or not. Check the maths
     for (i = 0; i < len; i++)
         board[arr[i] % N - 1][arr[i] / N] = i;
