@@ -92,9 +92,10 @@ void solve_knights_tour()
 
     for (i = 0; i < N; i++)
         for (j = 0; j < N; j++)
-            hasFinishedTour |= solve_knights_tour_recur(i, j, 0, moves, board, path);
+            if (solve_knights_tour_recur(i, j, 0, moves, board, path))
+                hasFinishedTour = 1;
 
-    if (hasFinishedTour)
+    if (hasFinishedTour == 0)
         printf("No tours found\n");
 
     printf("Final: i = %d, j = %d\n", i, j);
