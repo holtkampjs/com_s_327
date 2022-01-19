@@ -36,7 +36,7 @@ int solve_knights_tour_recur(int x, int y, int moveNum, struct move knightMoves[
     int i, xMove, yMove;
     int tourCompleted = -1;
 
-    printf("Made it here\n");
+    printf("x: %2d, y: %2d, moveNum: %2d\n", x, y, moveNum);
 
     board[x][y] = 1;
     path[moveNum++] = (x + 1) + N * (y + 1);
