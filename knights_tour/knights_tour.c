@@ -24,6 +24,11 @@ int print_path(int arr[])
     return 0;
 }
 
+int is_unvisited_on_board(int x, int y, int *board[N][N])
+{
+    return x >= 0 && y >= 0 && x < N && y < N && *board[x][y] == 0;
+}
+
 int solve_knights_tour_recur(int x, int y, int moveNum, struct move *knightMoves[KNIGHT_MOVES], int board[N][N], int path[])
 {
     int i, xMove, yMove;
