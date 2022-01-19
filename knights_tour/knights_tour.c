@@ -19,11 +19,6 @@ void print_board(int arr[], int len)
             board[j][i] = 0;
 
     for (i = 0; i < len; i++)
-        printf("%d ", arr[i]);
-    printf("\n");
-
-    // FIXME: This isn't lining up. Not sure if its here or not. Check the maths
-    for (i = 0; i < len; i++)
         board[(arr[i] - 1) / N][(arr[i] - 1) % N] = i + 1;
 
     for (i = 0; i < N; i++)
@@ -67,9 +62,10 @@ int solve_knights_tour_recur(int x, int y, int moveNum, struct move knightMoves[
     path[moveNum++] = (x + 1) + N * y; // TODO: Check this
 
     if (moveNum == N * N)
+    {
+        print_board(path, moveNum);
         return print_path(path);
-
-    print_board(path, moveNum);
+    }
 
     for (i = 0; i < KNIGHT_MOVES; i++)
     {
@@ -97,13 +93,10 @@ void solve_knights_tour()
         for (i = 0; i < N; i++)
             board[j][i] = 0;
 
-    // for (i = 0; i < N; i++)
-    //     for (j = 0; j < N; j++)
-    //         if (solve_knights_tour_recur(i, j, 0, moves, board, path) != 0)
-    //             noToursFound = 0;
-
-    if (solve_knights_tour_recur(0, 0, 0, moves, board, path) != 0)
-        noToursFound = 0;
+    for (i = 0; i < N; i++)
+        for (j = 0; j < N; j++)
+            if (solve_knights_tour_recur(i, j, 0, moves, board, path) != 0)
+                noToursFound = 0;
 
     if (noToursFound)
         printf("No tours found\n");
