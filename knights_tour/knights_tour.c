@@ -60,7 +60,7 @@ int solve_knights_tour_recur(int x, int y, int moveNum, struct move knightMoves[
     int tourCompleted = -1;
 
     board[x][y] = 1;
-    path[moveNum++] = (x + 1) + N * (y + 1); // TODO: Check this
+    path[moveNum++] = (x + 1) + N * y; // TODO: Check this
 
     if (moveNum == N * N)
         return print_path(path);
