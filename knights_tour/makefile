@@ -4,5 +4,5 @@ compile:
 update: 
 	cd ..
 	git pull
-	cd knights_tour
+	cd knights_tour/
 	make
