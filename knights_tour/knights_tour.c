@@ -70,10 +70,13 @@ void solve_knights_tour()
         for (i = 0; i < N; i++)
             board[j][i] = 0;
 
-    for (i = 0; i < N; i++)
-        for (j = 0; j < N; j++)
-            if (solve_knights_tour_recur(i, j, 0, moves, board, path) != 0)
-                noToursFound = 0;
+    // for (i = 0; i < N; i++)
+    //     for (j = 0; j < N; j++)
+    //         if (solve_knights_tour_recur(i, j, 0, moves, board, path) != 0)
+    //             noToursFound = 0;
+
+    if (solve_knights_tour_recur(0, 0, 0, moves, board, path) != 0)
+        noToursFound = 0;
 
     if (noToursFound)
         printf("No tours found\n");
