@@ -9,16 +9,26 @@ struct move
     int y;
 };
 
-void print_board(int board[][N])
+void print_board(int arr[], int len)
 {
     int i, j;
+    int board[N][N];
+
+    for (j = 0; j < N; j++)
+        for (i = 0; i < N; i++)
+            board[j][i] = 0;
+
+    for (i = 0; i < len; i++)
+        board[arr[i] % N - 1][arr[i] / N - 1] = arr[i];
+
     for (i = 0; i < N; i++)
     {
         for (j = 0; j < N; j++)
-            printf("%d ", board[i][j]);
+            printf("%2d ", board[i][j]);
         printf("\n");
     }
-    printf("\n\n");
+
+    printf("\n");
 }
 
 int print_path(int arr[])
@@ -54,7 +64,7 @@ int solve_knights_tour_recur(int x, int y, int moveNum, struct move knightMoves[
     if (moveNum == N * N)
         return print_path(path);
 
-    print_board(board);
+    print_board(path, moveNum);
 
     for (i = 0; i < KNIGHT_MOVES; i++)
     {
