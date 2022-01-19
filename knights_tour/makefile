@@ -1,5 +1,5 @@
 compile: 
-	gcc -Wall knights_tour.c -o tour
+	gcc -Wall -g knights_tour.c -o tour
 
 debug: 
 	make
