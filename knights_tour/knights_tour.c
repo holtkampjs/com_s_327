@@ -33,16 +33,15 @@ void print_board(int arr[], int len)
     printf("\n");
 }
 
-int print_path(int arr[])
+int print_path(int arr[], int len)
 {
-    int i, lastIndex;
+    int i;
     char separator;
 
     separator = ',';
-    lastIndex = N * N - 1;
-    for (i = 0; i < N * N; i++)
+    for (i = 0; i < len; i++)
     {
-        if (i == lastIndex)
+        if (i == len - 1)
             separator = '\n';
         printf("%d%c", separator, arr[i]);
     }
@@ -50,40 +49,36 @@ int print_path(int arr[])
     return 1;
 }
 
-int is_invalid_move(int x, int y, int board[][N])
+int is_on_board(int x, int y)
 {
-    return x < 0 || y < 0 || x >= N || y >= N || board[x][y] != 0;
+    return x >= 0 && x < N && y >= 0 && y < N;
 }
 
 int solve_knights_tour_recur(int x, int y, int moveNum, struct move knightMoves[KNIGHT_MOVES], int board[][N], int path[])
 {
-    int i;
-    int tourCompleted = 0;
-
-    count++;
-
-    if (is_invalid_move(x, y, board))
-    {
-        board[x][y] = 1;
-        return 0;
-    }
+    int i, nextX, nextY;
+    int completed = 0;
 
     board[x][y] = 1;
     path[moveNum++] = (x + 1) + N * y;
 
-    print_board(path, moveNum);
-
     if (moveNum == N * N)
     {
-        print_board(path, moveNum);
-        return print_path(path);
+        // print_board(path, moveNum);
+        return print_path(path, N * N);
     }
 
     for (i = 0; i < KNIGHT_MOVES; i++)
-        if (solve_knights_tour_recur(x + knightMoves[i].x, y + knightMoves[i].y, moveNum, knightMoves, board, path))
-            tourCompleted = 1;
+    {
+        nextX = x + knightMoves[i].x;
+        nextY = y + knightMoves[i].y;
 
-    return tourCompleted;
+        if (is_on_board(nextX, nextY) && board[nextX][nextY] == 0)
+            if (solve_knights_tour_recur(nextX, nextY, moveNum, knightMoves, board, path))
+                completed = 1;
+    }
+
+    return completed;
 }
 
 void solve_knights_tour()
