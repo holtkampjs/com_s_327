@@ -24,7 +24,7 @@ void print_board(int arr[], int len)
 
     // FIXME: This isn't lining up. Not sure if its here or not. Check the maths
     for (i = 0; i < len; i++)
-        board[arr[i] % N - 1][arr[i] / N] = i;
+        board[arr[i] % N - 1][arr[i] / N] = i + 1;
 
     for (i = 0; i < N; i++)
     {
