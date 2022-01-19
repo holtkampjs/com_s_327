@@ -19,7 +19,7 @@ void print_board(int arr[], int len)
             board[j][i] = 0;
 
     for (i = 0; i < len; i++)
-        board[arr[i] % N - 1][arr[i] / N - 1] = arr[i];
+        board[arr[i] % N][arr[i] / N] = arr[i];
 
     for (i = 0; i < N; i++)
     {
