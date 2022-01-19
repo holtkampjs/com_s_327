@@ -30,8 +30,6 @@ int print_path(int arr[])
 
 int is_unvisited_on_board(int x, int y, int board[][N])
 {
-    printf("33\n");
-
     return x >= 0 && y >= 0 && x < N && y < N && board[x][y] == 0;
 }
 
@@ -52,8 +50,6 @@ int solve_knights_tour_recur(int x, int y, int moveNum, struct move knightMoves[
 
     for (i = 0; i < KNIGHT_MOVES; i++)
     {
-        printf("55\n");
-
         xMove = x + knightMoves[i].x;
         yMove = y + knightMoves[i].y;
 
