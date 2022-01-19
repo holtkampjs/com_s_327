@@ -88,7 +88,7 @@ void solve_knights_tour()
     int i, j;
     int board[N][N];
     int path[N * N];
-    int noToursFound = 1;
+    int hasFinishedTour = 0;
 
     struct move moves[KNIGHT_MOVES] = {{2, 1}, {1, 2}, {-1, 2}, {-2, 1}, {-2, -1}, {-1, -2}, {1, -2}, {2, -1}};
 
@@ -98,11 +98,12 @@ void solve_knights_tour()
 
     for (i = 0; i < N; i++)
         for (j = 0; j < N; j++)
-            if (solve_knights_tour_recur(i, j, 0, moves, board, path) != 0)
-                noToursFound = 0;
+            hasFinishedTour |= solve_knights_tour_recur(i, j, 0, moves, board, path);
 
-    if (noToursFound)
+    if (hasFinishedTour)
         printf("No tours found\n");
+
+    printf("Final: i = %d, j = %d\n", i, j);
 }
 
 int main(int argc, char *argv[])
