@@ -11,6 +11,7 @@ struct move
 
 int print_path(int arr[])
 {
+    printf("14\n");
     int i, lastIndex;
     char separator;
 
@@ -23,11 +24,14 @@ int print_path(int arr[])
         printf("%d%c", separator, arr[i]);
     }
 
+    printf("27\n");
     return 0;
 }
 
 int is_unvisited_on_board(int x, int y, int board[][N])
 {
+    printf("33\n");
+
     return x >= 0 && y >= 0 && x < N && y < N && board[x][y] == 0;
 }
 
@@ -36,16 +40,20 @@ int solve_knights_tour_recur(int x, int y, int moveNum, struct move knightMoves[
     int i, xMove, yMove;
     int tourCompleted = -1;
 
-    printf("x: %2d, y: %2d, moveNum: %2d\n", x, y, moveNum);
+    printf("43\n");
 
     board[x][y] = 1;
     path[moveNum++] = (x + 1) + N * (y + 1);
+
+    printf("48\n");
 
     if (moveNum == N * N)
         return print_path(path);
 
     for (i = 0; i < KNIGHT_MOVES; i++)
     {
+        printf("55\n");
+
         xMove = x + knightMoves[i].x;
         yMove = y + knightMoves[i].y;
 
@@ -53,6 +61,8 @@ int solve_knights_tour_recur(int x, int y, int moveNum, struct move knightMoves[
             solve_knights_tour_recur(xMove, yMove, moveNum, knightMoves, board, path) == 0)
             tourCompleted = 0;
     }
+
+    printf("65\n");
 
     return tourCompleted;
 }
