@@ -1,3 +1,5 @@
+#include <stdio.h>
+
 #define N 5
 #define KNIGHT_MOVES 8
 
