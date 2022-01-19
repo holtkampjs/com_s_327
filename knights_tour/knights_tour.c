@@ -45,40 +45,34 @@ int print_path(int arr[])
         printf("%d%c", separator, arr[i]);
     }
 
-    return 0;
+    return 1;
 }
 
-int is_unvisited_on_board(int x, int y, int board[][N])
+int is_invalid_move(int x, int y, int board[][N])
 {
-    return x >= 0 && y >= 0 && x < N && y < N && board[x][y] == 0;
+    return x < 0 || y < 0 || x >= N || y >= N || board[x][y] != 0;
 }
 
 int solve_knights_tour_recur(int x, int y, int moveNum, struct move knightMoves[KNIGHT_MOVES], int board[][N], int path[])
 {
-    int i, xMove, yMove;
-    int tourCompleted = -1;
+    int i;
+    int tourCompleted = 0;
 
-    board[xMove][yMove] = 1;
+    if (is_invalid_move(x, y, board))
+        return 0;
+
+    board[x][y] = 1;
     path[moveNum++] = (x + 1) + N * y;
 
     if (moveNum == N * N)
     {
-        print_board(path, moveNum);
+        // print_board(path, moveNum);
         return print_path(path);
     }
 
     for (i = 0; i < KNIGHT_MOVES; i++)
-    {
-        xMove = x + knightMoves[i].x;
-        yMove = y + knightMoves[i].y;
-
-        if (is_unvisited_on_board(xMove, yMove, board))
-        {
-            board[xMove][yMove] = 1;
-            if (solve_knights_tour_recur(xMove, yMove, moveNum, knightMoves, board, path) == 0)
-                tourCompleted = 0;
-        }
-    }
+        if (solve_knights_tour_recur(x + knightMoves[i].x, y + knightMoves[i].y, moveNum, knightMoves, board, path))
+            tourCompleted = 1;
 
     return tourCompleted;
 }
