@@ -26,12 +26,12 @@ int print_path(int arr[])
     return 0;
 }
 
-int is_unvisited_on_board(int x, int y, int *board[N][N])
+int is_unvisited_on_board(int x, int y, int board[][N])
 {
-    return x >= 0 && y >= 0 && x < N && y < N && *board[x][y] == 0;
+    return x >= 0 && y >= 0 && x < N && y < N && board[x][y] == 0;
 }
 
-int solve_knights_tour_recur(int x, int y, int moveNum, struct move *knightMoves[KNIGHT_MOVES], int board[N][N], int path[])
+int solve_knights_tour_recur(int x, int y, int moveNum, struct move knightMoves[KNIGHT_MOVES], int board[][N], int path[])
 {
     int i, xMove, yMove;
     int tourCompleted = -1;
@@ -44,8 +44,8 @@ int solve_knights_tour_recur(int x, int y, int moveNum, struct move *knightMoves
 
     for (i = 0; i < KNIGHT_MOVES; i++)
     {
-        xMove = x + knightMoves[i]->x;
-        yMove = y + knightMoves[i]->y;
+        xMove = x + knightMoves[i].x;
+        yMove = y + knightMoves[i].y;
 
         if (is_unvisited_on_board(xMove, yMove, board) &&
             solve_knights_tour_recur(xMove, yMove, moveNum, knightMoves, board, path) == 0)
@@ -70,7 +70,7 @@ void solve_knights_tour()
 
     for (i = 0; i < N; i++)
         for (j = 0; j < N; j++)
-            if (solve_knights_tour_recur(i, j, 0, &moves, board, path) != 0)
+            if (solve_knights_tour_recur(i, j, 0, moves, board, path) != 0)
                 noToursFound = 0;
 
     if (noToursFound)
