@@ -47,7 +47,7 @@ int solve_knights_tour_recur(int x, int y, int moveNum, struct move *knightMoves
         xMove = x + knightMoves[i]->x;
         yMove = y + knightMoves[i]->y;
 
-        if (is_unvisited_on_board(xMove, yMove, &board) &&
+        if (is_unvisited_on_board(xMove, yMove, board) &&
             solve_knights_tour_recur(xMove, yMove, moveNum, knightMoves, board, path) == 0)
             tourCompleted = 0;
     }
