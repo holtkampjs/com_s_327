@@ -59,8 +59,6 @@ int solve_knights_tour_recur(int x, int y, int moveNum, struct move knightMoves[
     int i, nextX, nextY;
     int completed = 0;
 
-    count++;
-
     board[x][y] = 1;
     path[moveNum++] = (x + 1) + N * y;
 
@@ -78,6 +76,7 @@ int solve_knights_tour_recur(int x, int y, int moveNum, struct move knightMoves[
         if (is_on_board(nextX, nextY) && board[nextX][nextY] == 0)
             if (solve_knights_tour_recur(nextX, nextY, moveNum, knightMoves, board, path))
                 completed = 1;
+        print_board(path, moveNum);
     }
 
     return completed;
@@ -103,8 +102,6 @@ void solve_knights_tour()
 
     if (hasFinishedTour == 0)
         printf("No tours found\n");
-
-    printf("%d\n", count);
 }
 
 int main(int argc, char *argv[])
