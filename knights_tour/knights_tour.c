@@ -70,7 +70,7 @@ int solve_knights_tour_recur(int x, int y, int moveNum, struct move knightMoves[
 
     for (i = 0; i < KNIGHT_MOVES; i++)
     {
-        if (moveNum == 20 && i == 0)
+        if ((moveNum == 20 || moveNum == 21) && i == 0)
         {
             printf("go\n");
             print_board(path, moveNum);
