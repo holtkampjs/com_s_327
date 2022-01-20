@@ -47,13 +47,8 @@ int knights_tour_util(int x, int y, int move, int *tour)
 
     tour[move] = 5 * y + x + 1;
 
-    show_tour(tour, move + 1);
-
     if (move == 24)
-    {
-        printf("Complete: ");
         return show_tour(tour, move + 1);
-    }
 
     for (i = 0; i < NUM_MOVES; i++)
     {
@@ -88,7 +83,7 @@ void solve_knights_tour()
 
     for (i = 0; i < 5; i++)
         for (j = 0; j < 5; j++)
-            if (knights_tour_util(i, j, 0, path))
+            if (knights_tour_util(j, i, 0, path))
                 failure = 0;
 
     if (failure)
