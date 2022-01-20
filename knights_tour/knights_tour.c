@@ -64,28 +64,20 @@ int solve_knights_tour_recur(int x, int y, int moveNum, struct move knightMoves[
 
     if (moveNum == N * N)
     {
-        print_board(path, moveNum);
         return print_path(path, N * N);
     }
 
     for (i = 0; i < KNIGHT_MOVES; i++)
     {
-        if ((moveNum == 20 || moveNum == 21) && i == 0)
-        {
-            printf("go\n");
-            print_board(path, moveNum);
-        }
-
         nextX = x + knightMoves[i].x;
         nextY = y + knightMoves[i].y;
 
         if (is_on_board(nextX, nextY) && board[nextX][nextY] == 0)
             if (solve_knights_tour_recur(nextX, nextY, moveNum, knightMoves, board, path))
                 completed = 1;
-
-        if (moveNum == 20 && i == 0)
-            print_board(path, moveNum);
     }
+
+    print_board(path, moveNum);
 
     return completed;
 }
