@@ -43,7 +43,7 @@ int knights_tour_util(int x, int y, int move, int *tour)
     int i, xMove, yMove;
     int flag = 0;
 
-    board[y][x] = move;
+    board[y][x] = move + 1;
 
     tour[move] = 5 * y + x + 1;
 
