@@ -47,8 +47,13 @@ int knights_tour_util(int x, int y, int move, int *tour)
 
     tour[move] = 5 * y + x + 1;
 
-    if (move + 1 == 25)
+    show_tour(tour, move + 1);
+
+    if (move == 24)
+    {
+        printf("Complete: ");
         return show_tour(tour, move + 1);
+    }
 
     for (i = 0; i < NUM_MOVES; i++)
     {
@@ -65,15 +70,21 @@ int knights_tour_util(int x, int y, int move, int *tour)
     return flag;
 }
 
+void init_board()
+{
+    int i, j;
+    for (i = 0; i < 5; i++)
+        for (j = 0; j < 5; j++)
+            board[i][j] = 0;
+}
+
 void solve_knights_tour()
 {
     int i, j;
     int failure = 1;
     int *path = (int *)malloc(25 * sizeof(int));
 
-    for (i = 0; i < 5; i++)
-        for (j = 0; j < 5; j++)
-            board[i][j] = 0;
+    init_board();
 
     for (i = 0; i < 5; i++)
         for (j = 0; j < 5; j++)
