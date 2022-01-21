@@ -10,16 +10,7 @@ typedef struct _coordinate
 } vector;
 
 int board[5][5];
-vector moves[] = {
-    {-1, 2},
-    {-2, 1},
-    {-2, -1},
-    {-1, -2},
-    {1, -2},
-    {2, -1},
-    {2, 1},
-    {1, 2},
-};
+vector moves[] = {{-1, 2}, {-2, 1}, {-2, -1}, {-1, -2}, {1, -2}, {2, -1}, {2, 1}, {1, 2}};
 
 int is_valid_move(int x, int y)
 {
@@ -36,6 +27,20 @@ int show_tour(int *tour, int len)
             printf("%d,", tour[i]);
 
     return 1;
+}
+
+void print_board()
+{
+    int i, j;
+
+    for (i = 0; i < 5; i++)
+    {
+        for (j = 0; j < 5; j++)
+            printf(" %2d ", board[i][j]);
+        printf("\n");
+    }
+
+    printf("\n");
 }
 
 int knights_tour_util(int x, int y, int move, int *tour)
