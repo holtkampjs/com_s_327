@@ -54,16 +54,16 @@ int knights_tour_util(int x, int y, int move)
     path[move] = 5 * y + x + 1;
 
     if (move == 24)
-        return show_tour(move + 1);
+        flag = show_tour(move + 1);
+    else
+        for (i = 0; i < NUM_MOVES; i++)
+        {
+            xMove = x + moves[i].x;
+            yMove = y + moves[i].y;
 
-    for (i = 0; i < NUM_MOVES; i++)
-    {
-        xMove = x + moves[i].x;
-        yMove = y + moves[i].y;
-
-        if (is_valid_move(xMove, yMove) && knights_tour_util(xMove, yMove, move + 1))
-            flag = 1;
-    }
+            if (is_valid_move(xMove, yMove) && knights_tour_util(xMove, yMove, move + 1))
+                flag = 1;
+        }
 
     path[move] = 0;
     board[y][x] = 0;
