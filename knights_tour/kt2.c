@@ -86,7 +86,7 @@ void init_board()
 void solve_knights_tour()
 {
     int i, j;
-    int failure = 1;
+    int success = 0;
 
     path = (int *)malloc(25 * sizeof(int));
 
@@ -95,12 +95,12 @@ void solve_knights_tour()
     for (i = 0; i < 5; i++)
         for (j = 0; j < 5; j++)
             if (knights_tour_util(j, i, 0))
-                failure = 0;
+                success = 1;
 
-    if (failure)
-        printf("No tours found\n");
-    else
+    if (success)
         printf("%d tours found\n", count);
+    else
+        printf("No tours found\n");
 
     free(path);
 }
