@@ -13,6 +13,8 @@ int board[5][5];
 int *path;
 vector moves[] = {{-1, 2}, {-2, 1}, {-2, -1}, {-1, -2}, {1, -2}, {2, -1}, {2, 1}, {1, 2}};
 
+int count = 0;
+
 int is_valid_move(int x, int y)
 {
     return x >= 0 && x < 5 && y >= 0 && y < 5 && board[y][x] == 0;
@@ -21,12 +23,14 @@ int is_valid_move(int x, int y)
 int show_tour(int len)
 {
     int i;
+
     for (i = 0; i < len; i++)
         if (i == len - 1)
             printf("%d\n", path[i]);
         else
             printf("%d,", path[i]);
 
+    count++;
     return 1;
 }
 
@@ -94,7 +98,9 @@ void solve_knights_tour()
                 failure = 0;
 
     if (failure)
-        printf("No tours found");
+        printf("No tours found\n");
+    else
+        printf("%d tours found\n", count);
 
     free(path);
 }
