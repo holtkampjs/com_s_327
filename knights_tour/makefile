@@ -1,8 +1,8 @@
 compile: 
-	gcc -Wall -Werror knights_tour.c -o tour
+	gcc -Wall -Werror kt.c -o tour
 
-debug: 
+other: 
 	gcc -Wall -Werror -g knights_tour.c -o test
 
-debug2: 
+debug: 
 	gcc -Wall -Werror -g kt2.c -o test
