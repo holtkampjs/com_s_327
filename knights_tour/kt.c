@@ -79,7 +79,7 @@ int main(int argc, char *argv[])
     int i, j;
     int success = 0;
 
-    if (argc > 1 && argv[1] == 'v')
+    if (argc > 1 && *argv[1] == 'v')
         visual = 1;
 
     path = (int *)malloc(DIM * DIM * sizeof(int));
