@@ -1,0 +1,10 @@
+Jan 18: Started project;
+Jan 19: First prototype; 
+        Started debugging; 
+        Rewrote implementation from scratch;
+Jan 20: Worked on debugging with printf and started using GDB;
+Jan 22: Found bug in backtracking and got project to work; 
+Jan 25: Put together README and CHANGELOG; 
+        Refactored project; 
+        Finalized Makefile;
+        Submitted project;
