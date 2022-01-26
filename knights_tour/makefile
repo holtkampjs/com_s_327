@@ -3,3 +3,6 @@ kt: kt.c
 
 debug: kt.c
 	gcc kt.c -Wall -Werror -g -o debug
+
+clean: 
+	rm -f debug kt
