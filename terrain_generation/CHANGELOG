@@ -2,4 +2,5 @@ Jan 27: Created basic files for project
 Jan 29: Added region seed generation
 Jan 31: Refactored seed generation
         Added border to map
-        Struggling with bug in seed placement and growth
+        Map clearing, tall grass, and obstacle(boulder / tree) generation complete
+        Added more random probablility to create more natural maps

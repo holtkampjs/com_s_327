@@ -4,13 +4,13 @@
 
 #define MAP_DIM_X 80
 #define MAP_DIM_Y 21
-#define SEED_COUNT 4
+#define SEED_COUNT 9
 
 #define max(a, b) (((a) > (b)) ? (a) : (b))
 #define min(a, b) (((a) < (b)) ? (a) : (b))
 #define square(a) (a * a)
 
-typedef struct point
+typedef struct seed
 {
     int x;
     int y;
@@ -26,6 +26,7 @@ enum terrain
     boulder = '%',
     tree = '^',
     clearing = ' ',
+    obstacle = '?'
 };
 
 int *map;
@@ -37,30 +38,45 @@ void set_seeds(seed_t *arr)
         *(arr + i) = (seed_t){
             .x = (rand() % MAP_DIM_X),
             .y = (rand() % MAP_DIM_Y),
-            .type = (i % 2 == 0 ? grass : clearing)};
+            .type = (i % 3 == 0 ? grass : ((i % 3 == 1) ? clearing : obstacle))};
 }
 
 void generate_terrain(seed_t *seeds)
 {
-    int i, j, k, l, rad;
+    int i, j, k, l, rad, isObstacle;
     seed_t *seed;
     int *cur;
 
-    for (i = 0, rad = 0; i < (MAP_DIM_X * MAP_DIM_Y); rad++)
+    for (i = 0, rad = 0; i < ((MAP_DIM_X - 2) * (MAP_DIM_Y - 2)); rad++)
     {
         for (j = 0; j < SEED_COUNT; j++)
         {
             seed = &seeds[j % SEED_COUNT];
+            isObstacle = seed->type == obstacle;
 
             for (k = max(seed->y - rad, 0); k < min(seed->y + rad, MAP_DIM_Y); k++)
             {
-                for (l = max(seed->x - rad * 4, 0); l < min(seed->x + rad * 4, MAP_DIM_X); l++)
+                for (l = max(seed->x - rad * (isObstacle ? 1 : 4), 0); l < min(seed->x + rad * (isObstacle ? 1 : 4), MAP_DIM_X); l++)
                 {
                     cur = map + MAP_DIM_X * k + l;
-                    if (*cur == 0 && square(0.25 * (l - seed->x)) + square(l - seed->y) <= square(rad))
+                    if (*cur == 0)
                     {
-                        *cur = seed->type;
-                        i++;
+                        if (isObstacle)
+                        {
+                            if (rand() % 10 == 0 && (square(l - seed->x) + square(k - seed->y)) < rad)
+                            {
+                                *cur = rand() % 2 ? tree : boulder;
+                                i++;
+                            }
+                        }
+                        else
+                        {
+                            if (rand() % 4 && square(0.25 * (l - seed->x)) + square(k - seed->y) < square(rad))
+                            {
+                                *cur = seed->type;
+                                i++;
+                            }
+                        }
                     }
                 }
             }
@@ -74,13 +90,7 @@ void print_map()
     for (i = 0; i < MAP_DIM_Y; i++)
     {
         for (j = 0; j < MAP_DIM_X; j++)
-        {
-            char c = *(map + MAP_DIM_X * i + j);
-            if (c)
-                printf("%c", c);
-            else
-                printf("_");
-        }
+            printf("%c", *(map + MAP_DIM_X * i + j));
         printf("\n");
     }
 }
@@ -115,7 +125,6 @@ int *map_gen()
 
     add_border();
     generate_terrain(seeds);
-    printf("Hi");
     print_map();
 
     free(seeds);
