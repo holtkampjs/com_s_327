@@ -4,3 +4,5 @@ Jan 31: Refactored seed generation
         Added border to map
         Map clearing, tall grass, and obstacle(boulder / tree) generation complete
         Added more random probablility to create more natural maps
+Feb 01: Implemented weighted path finding (Dijkstra's)
+        Adjusted object weights to create natural paths 
