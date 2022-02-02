@@ -160,38 +160,26 @@ void add_border()
     }
 }
 
+int create_weighted_path_util(trail_t *, int, int, int, int, int, int);
+
 int create_weighted_path(trail_t *trail, int x, int y, int xDest, int yDest)
 {
-    int current_weight;
-    if (x == xDest && y == yDest)
-        return 0;
+    int current_weight = (trail + index(x, y))->weight;
+    create_weighted_path_util(trail, current_weight, x, y - 1, dir_n, xDest, yDest);
+    create_weighted_path_util(trail, current_weight, x + 1, y, dir_e, xDest, yDest);
+    create_weighted_path_util(trail, current_weight, x, y + 1, dir_s, xDest, yDest);
+    create_weighted_path_util(trail, current_weight, x - 1, y, dir_w, xDest, yDest);
+    return 0;
+}
 
-    current_weight = (trail + index(x, y))->weight;
-    if (inbounds(x, y - 1) && get_weight(x, y - 1) + current_weight < (trail + index(x, y - 1))->weight)
+int create_weighted_path_util(trail_t *trail, int cur_weight, int next_x, int next_y, int dir, int xDest, int yDest)
+{
+    if (inbounds(next_x, next_y) && get_weight(next_x, next_y) + cur_weight < (trail + index(next_x, next_y))->weight)
     {
-        (trail + index(x, y - 1))->weight = get_weight(x, y - 1) + current_weight;
-        (trail + index(x, y - 1))->dir = dir_n;
-        create_weighted_path(trail, x, y - 1, xDest, yDest);
+        (trail + index(next_x, next_y))->weight = get_weight(next_x, next_y) + cur_weight;
+        (trail + index(next_x, next_y))->dir = dir;
+        create_weighted_path(trail, next_x, next_y, xDest, yDest);
     }
-    if (inbounds(x + 1, y) && get_weight(x + 1, y) + current_weight < (trail + index(x + 1, y))->weight)
-    {
-        (trail + index(x + 1, y))->weight = get_weight(x + 1, y) + current_weight;
-        (trail + index(x + 1, y))->dir = dir_e;
-        create_weighted_path(trail, x + 1, y, xDest, yDest);
-    }
-    if (inbounds(x, y + 1) && get_weight(x, y + 1) + current_weight < (trail + index(x, y + 1))->weight)
-    {
-        (trail + index(x, y + 1))->weight = get_weight(x, y + 1) + current_weight;
-        (trail + index(x, y + 1))->dir = dir_s;
-        create_weighted_path(trail, x, y + 1, xDest, yDest);
-    }
-    if (inbounds(x - 1, y) && get_weight(x - 1, y) + current_weight < (trail + index(x - 1, y))->weight)
-    {
-        (trail + index(x - 1, y))->weight = get_weight(x - 1, y) + current_weight;
-        (trail + index(x - 1, y))->dir = dir_w;
-        create_weighted_path(trail, x - 1, y, xDest, yDest);
-    }
-
     return 0;
 }
 
