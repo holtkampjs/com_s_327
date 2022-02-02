@@ -85,10 +85,7 @@ void generate_terrain(seed_t *seeds)
                 for (l = max(seed->x - rad * radiusOffset, 0); l < min(seed->x + rad * radiusOffset, MAP_DIM_X); l++)
                 {
                     cur = map + index(l, k);
-                    if (*cur != 0)
-                        continue;
-
-                    if (rand() % 5 && square(((float)1 / (float)radiusOffset) * (l - seed->x)) + square(k - seed->y) < square(rad))
+                    if (*cur == 0 && rand() % 5 && square(((float)1 / (float)radiusOffset) * (l - seed->x)) + square(k - seed->y) < square(rad))
                     {
                         if (seed->type != obstacle)
                             *cur = seed->type;
@@ -142,7 +139,6 @@ void print_weights()
     {
         for (j = 0; j < MAP_DIM_X; j++)
             printf("%3d ", get_weight(j, i));
-
         printf("\n");
     }
     fflush(stdout);
@@ -153,14 +149,14 @@ void add_border()
     int i;
     for (i = 0; i < MAP_DIM_X; i++)
     {
-        *(map + i) = '%';
-        *(map + MAP_DIM_X * (MAP_DIM_Y - 1) + i) = '%';
+        *(map + index(i, 0)) = '%';
+        *(map + index(i, MAP_DIM_Y - 1)) = '%';
     }
 
     for (i = 0; i < MAP_DIM_Y - 2; i++)
     {
-        *(map + MAP_DIM_X * (i + 1)) = '%';
-        *(map + MAP_DIM_X * (i + 2) - 1) = '%';
+        *(map + index(0, i + 1)) = '%';
+        *(map + index(MAP_DIM_X - 1, i + 1)) = '%';
     }
 }
 
