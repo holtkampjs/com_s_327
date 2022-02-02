@@ -69,7 +69,7 @@ void set_seeds(seed_t *arr)
 
 void generate_terrain(seed_t *seeds)
 {
-    int i, j, k, l, rad, isObstacle;
+    int i, j, k, l, rad, radiusOffset;
     seed_t *seed;
     int *cur;
 
@@ -78,31 +78,25 @@ void generate_terrain(seed_t *seeds)
         for (j = 0; j < SEED_COUNT; j++)
         {
             seed = &seeds[j % SEED_COUNT];
-            isObstacle = seed->type == obstacle;
+            radiusOffset = (seed->type == obstacle) ? 1 : 4;
 
             for (k = max(seed->y - rad, 0); k < min(seed->y + rad, MAP_DIM_Y); k++)
             {
-                for (l = max(seed->x - rad * (isObstacle ? 1 : 4), 0); l < min(seed->x + rad * (isObstacle ? 1 : 4), MAP_DIM_X); l++)
+                for (l = max(seed->x - rad * radiusOffset, 0); l < min(seed->x + rad * radiusOffset, MAP_DIM_X); l++)
                 {
                     cur = map + index(l, k);
-                    if (*cur == 0)
+                    if (*cur != 0)
+                        continue;
+
+                    if (rand() % 5 && square(((float)1 / (float)radiusOffset) * (l - seed->x)) + square(k - seed->y) < square(rad))
                     {
-                        if (isObstacle)
-                        {
-                            if (rand() % 5 == 0 && (square(l - seed->x) + square(k - seed->y)) < square(rad))
-                            {
-                                *cur = rand() % 2 ? tree : boulder;
-                                i++;
-                            }
-                        }
+                        if (seed->type != obstacle)
+                            *cur = seed->type;
+                        else if (rand() % 2)
+                            *cur = tree;
                         else
-                        {
-                            if (rand() % 4 && square(0.25 * (l - seed->x)) + square(k - seed->y) < square(rad))
-                            {
-                                *cur = seed->type;
-                                i++;
-                            }
-                        }
+                            *cur = boulder;
+                        i++;
                     }
                 }
             }
