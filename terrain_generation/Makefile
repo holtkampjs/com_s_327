@@ -5,4 +5,4 @@ debug: map_gen.c
 	gcc map_gen.c -o debug -Wall -Werror -g
 
 clean:
-	rm -f map_gen
+	rm -f map_gen out.txt debug

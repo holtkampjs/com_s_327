@@ -34,7 +34,7 @@ enum terrain
     grass = ',',
     boulder = '%',
     tree = '^',
-    clearing = ' ',
+    clearing = '.',
     obstacle = '?'
 };
 
