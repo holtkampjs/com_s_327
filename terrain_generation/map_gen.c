@@ -244,44 +244,33 @@ void add_path(seed_t *seeds, int north, int south, int east, int west)
     free(weighted_map);
 }
 
+int find_path(int x, int y, int dx, int dy, int dist)
+{
+    if (dist > 2 && *(map + index(x, y)) == path)
+        return 0;
+    if (*(map + index(x, y)) == clearing)
+        return find_path(x + dx, y + dy, dx, dy, dist + 1);
+    return 1;
+}
+
 int add_building(int type)
 {
-    int x, y, i, looking = 1;
-
+    int x, y, test;
     do
     {
+        test = 1;
         x = rand() % (MAP_DIM_X - 10) + 5;
         y = rand() % (MAP_DIM_Y - 6) + 3;
 
-        if (*(map + index(x, y)) == clearing && *(map + index(x + 1, y)) == clearing && *(map + index(x, y + 1)) == clearing && *(map + index(x + 1, y + 1)) == clearing)
-        {
-            for (i = 0; *(map + index(x + i, y)) == clearing; i++)
-                ;
-            if (*(map + index(x + i, y)) == path)
-                looking = 0;
-            else
-            {
-                for (i = 0; *(map + index(x, y + i)) == clearing; i++)
-                    ;
-                if (*(map + index(x, y + i)) == path)
-                    looking = 0;
-                else
-                {
-                    for (i = 0; *(map + index(x - i, y)) == clearing; i++)
-                        ;
-                    if (*(map + index(x - i, y)) == path)
-                        looking = 0;
-                    else
-                    {
-                        for (i = 0; *(map + index(x, y - i)) == clearing; i++)
-                            ;
-                        if (*(map + index(x, y - i)) == path)
-                            looking = 0;
-                    }
-                }
-            }
-        }
-    } while (looking);
+        if (*(map + index(x, y)) == clearing &&
+            *(map + index(x + 1, y)) == clearing &&
+            *(map + index(x, y + 1)) == clearing &&
+            *(map + index(x + 1, y + 1)) == clearing)
+            test = find_path(x, y, 1, 0, 0) &&
+                   find_path(x, y, 0, 1, 0) &&
+                   find_path(x, y, -1, 0, 0) &&
+                   find_path(x, y, 0, -1, 0);
+    } while (test);
 
     *(map + index(x, y)) = type;
     *(map + index(x + 1, y)) = type;
