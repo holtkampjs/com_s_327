@@ -6,3 +6,6 @@ Jan 31: Refactored seed generation
         Added more random probablility to create more natural maps
 Feb 01: Implemented weighted path finding (Dijkstra's)
         Adjusted object weights to create natural paths 
+        Refactored and simplified code
+
+Feb 02: Implemented center and mart placement

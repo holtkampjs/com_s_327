@@ -244,6 +244,53 @@ void add_path(seed_t *seeds, int north, int south, int east, int west)
     free(weighted_map);
 }
 
+int add_building(int type)
+{
+    int x, y, i, looking = 1;
+
+    do
+    {
+        x = rand() % (MAP_DIM_X - 10) + 5;
+        y = rand() % (MAP_DIM_Y - 6) + 3;
+
+        if (*(map + index(x, y)) == clearing && *(map + index(x + 1, y)) == clearing && *(map + index(x, y + 1)) == clearing && *(map + index(x + 1, y + 1)) == clearing)
+        {
+            for (i = 0; *(map + index(x + i, y)) == clearing; i++)
+                ;
+            if (*(map + index(x + i, y)) == path)
+                looking = 0;
+            else
+            {
+                for (i = 0; *(map + index(x, y + i)) == clearing; i++)
+                    ;
+                if (*(map + index(x, y + i)) == path)
+                    looking = 0;
+                else
+                {
+                    for (i = 0; *(map + index(x - i, y)) == clearing; i++)
+                        ;
+                    if (*(map + index(x - i, y)) == path)
+                        looking = 0;
+                    else
+                    {
+                        for (i = 0; *(map + index(x, y - i)) == clearing; i++)
+                            ;
+                        if (*(map + index(x, y - i)) == path)
+                            looking = 0;
+                    }
+                }
+            }
+        }
+    } while (looking);
+
+    *(map + index(x, y)) = type;
+    *(map + index(x + 1, y)) = type;
+    *(map + index(x, y + 1)) = type;
+    *(map + index(x + 1, y + 1)) = type;
+
+    return 0;
+}
+
 int *map_gen()
 {
     seed_t *seeds;
@@ -259,8 +306,10 @@ int *map_gen()
     generate_terrain(seeds);
     add_path(seeds, -1, -1, -1, -1);
 
+    add_building(pokemon_center);
+    add_building(pokemon_mart);
+
     print_map();
-    // print_weights();
 
     free(seeds);
     return map;
