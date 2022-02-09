@@ -27,7 +27,7 @@ typedef enum direction
     west
 } direction_t;
 
-int map_init(map_t *m);
+map_t *map_init(int n, int s, int e, int w, int hasPokemonCenter, int hasPokeMart);
 int map_display(map_t *m);
 int map_dispose(map_t *m);
 

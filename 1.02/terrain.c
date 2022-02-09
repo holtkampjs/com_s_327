@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
 #include "terrain.h"
 
 #define NUM_SEEDS 11
@@ -139,7 +138,6 @@ int map_calculate_weights(map_t *m, weight_t *w, int x, int y, int current_weigh
 
 int map_trace_path(map_t *m, weight_t *w, int x, int y)
 {
-    printf("%d\n", (w + offset(x, y))->w);
     while ((w + offset(x, y))->w)
     {
         *(m->terrain + offset(x, y)) = path;
@@ -256,15 +254,22 @@ int map_create_border(map_t *m)
     return 0;
 }
 
-int map_init(map_t *m)
+map_t *map_init(int n, int s, int e, int w, int hasPokemonCenter, int hasPokeMart)
 {
-    srand(time(NULL));
-
-    if (!m)
-        m = malloc(sizeof(*m));
+    map_t *m = malloc(sizeof(*m));
     m->terrain = calloc(((DIM_X * DIM_Y)), sizeof(*m->terrain));
     if (!m->terrain)
-        return 1;
+    {
+        free(m);
+        return NULL;
+    }
+
+    m->north_exit = n;
+    m->south_exit = s;
+    m->east_exit = e;
+    m->west_exit = w;
+    m->hasPokemonCenter = hasPokemonCenter;
+    m->hasPokeMart = hasPokeMart;
 
     map_create_border(m);
     map_set_exits(m);
@@ -277,11 +282,12 @@ int map_init(map_t *m)
     if (m->hasPokeMart)
         map_place_building(m, pokemon_mart);
 
-    return 0;
+    return m;
 }
 
 int map_dispose(map_t *m)
 {
     free(m->terrain);
+    free(m);
     return 0;
 }

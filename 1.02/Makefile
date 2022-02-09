@@ -5,7 +5,7 @@ RM = rm -f
 CFLAGS = -Wall -Werror -ggdb -funroll-loops
 
 BIN = pokemon
-OBJS = pokemon.o terrain.o
+OBJS = pokemon.o terrain.o navigation.o test.o
 
 all: $(BIN)
 

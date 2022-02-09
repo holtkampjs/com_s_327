@@ -1,18 +1,13 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
 #include "terrain.h"
+#include "navigation.h"
 
 int main(int argc, char *argv[])
 {
-    map_t m = {
-        .north_exit = -1,
-        .east_exit = -1,
-        .south_exit = -1,
-        .west_exit = -1,
-        .hasPokeMart = 1,
-        .hasPokemonCenter = 1};
-
-    map_init(&m);
-    map_display(&m);
-    map_dispose(&m);
-
+    srand(time(NULL));
+    nav_test_driver();
     return 0;
 }

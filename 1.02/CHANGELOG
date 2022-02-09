@@ -1,0 +1,4 @@
+Feb 07: Rewriting terrain generation code
+Feb 08: Finished rewriting terrain generation
+        Altered map generation initialization
+        Got navigation and test code interfacing with terrain code successfully
