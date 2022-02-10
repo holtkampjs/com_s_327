@@ -5,13 +5,13 @@ RM = rm -f
 CFLAGS = -Wall -Werror -ggdb -funroll-loops
 
 BIN = pokemon
-OBJS = pokemon.o terrain.o navigation.o test.o
+OBJS = terrain.o navigation.o pokemon.o
 
 all: $(BIN)
 
 $(BIN): $(OBJS)
 	@$(ECHO) Linking $@
-	@$(CC) $^ -o $@
+	@$(CC) $^ -lm -o $@
 
 -include $(OBJS:.o=.d)
 

@@ -3,37 +3,22 @@
 
 #include "terrain.h"
 
-#define MAPS_N 399
+#define MAPS_N 400
 
 typedef struct navigation
 {
-    int id;
+    int x;
+    int y;
     map_t **maps;
 } navigation_t;
 
-navigation_t *nav_init();
-
-/**
- * @brief Disposes of a navigation struct given
- *
- * @param n struct navigation
- * @return int
- */
+int nav_init(navigation_t *n);
 int nav_dispose(navigation_t *n);
-
-/**
- * @brief Displays the current map
- *
- * @param n struct navigation
- * @return int
- */
-int display(navigation_t *n);
-
-/**
- * @brief Test driver for the navigation logic
- *
- * @return int
- */
-int nav_test_driver();
+int nav_display(navigation_t *n);
+int nav_north(navigation_t *n);
+int nav_south(navigation_t *n);
+int nav_east(navigation_t *n);
+int nav_west(navigation_t *n);
+int nav_fly(navigation_t *n, int x, int y);
 
 #endif

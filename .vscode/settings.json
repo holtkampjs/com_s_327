@@ -1,7 +1,7 @@
 {
-    "files.associations": {
-        "*.ejs": "html",
-        "*.html": "html",
-        "navigation.h": "c"
-    }
+  "files.associations": {
+    "*.ejs": "html",
+    "*.html": "html",
+    "stdio.h": "c"
+  }
 }
