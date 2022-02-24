@@ -60,6 +60,13 @@ typedef enum __attribute__((__packed__)) terrain_type
   ter_forest
 } terrain_type_t;
 
+typedef enum __attribute__((__packed__)) trainer_type
+{
+  trainer_hiker,
+  trainer_rival,
+  trainer_pc
+} trainer_type_t;
+
 typedef struct map
 {
   terrain_type_t map[MAP_Y][MAP_X];
@@ -87,6 +94,177 @@ world_t world;
 static int32_t path_cmp(const void *key, const void *with)
 {
   return ((path_t *)key)->cost - ((path_t *)with)->cost;
+}
+
+static void dijkstra_path_trainer(map_t *m, pair_t player, int8_t type)
+{
+  static path_t path[MAP_Y][MAP_X], *p;
+  static uint32_t initialized = 0;
+  heap_t h;
+  uint32_t x, y, c;
+
+  if (!initialized)
+  {
+    for (y = 0; y < MAP_Y; y++)
+    {
+      for (x = 0; x < MAP_X; x++)
+      {
+        path[y][x].pos[dim_y] = y;
+        path[y][x].pos[dim_x] = x;
+      }
+    }
+    initialized = 1;
+  }
+
+  for (y = 0; y < MAP_Y; y++)
+  {
+    for (x = 0; x < MAP_X; x++)
+    {
+      path[y][x].cost = INT_MAX;
+    }
+  }
+
+  path[player[dim_y]][player[dim_x]].cost = 0;
+
+  heap_init(&h, path_cmp, NULL);
+
+  for (y = 1; y < MAP_Y - 1; y++)
+  {
+    for (x = 1; x < MAP_X - 1; x++)
+    {
+      path[y][x].hn = heap_insert(&h, &path[y][x]);
+    }
+  }
+
+  while ((p = heap_remove_min(&h)))
+  {
+    p->hn = NULL;
+
+    if (type == trainer_hiker)
+    {
+      if (mappair(p->pos) == ter_path || mappair(p->pos) == ter_clearing)
+        c = 10;
+      else if (mappair(p->pos) == ter_grass || mappair(p->pos) == ter_mountain || mappair(p->pos) == ter_forest)
+        c = 15;
+      else
+        continue;
+    }
+    else if (type == trainer_rival)
+    {
+      if (mappair(p->pos) == ter_path || mappair(p->pos) == ter_clearing)
+        c = 10;
+      else if (mappair(p->pos) == ter_grass)
+        c = 20;
+      else
+        continue;
+    }
+    else if (type == trainer_pc)
+    {
+      if (mappair(p->pos) == ter_path || mappair(p->pos) == ter_clearing || mappair(p->pos) == ter_mart || mappair(p->pos) == ter_center)
+        c = 10;
+      else if (mappair(p->pos) == ter_grass)
+        c = 20;
+      else
+        continue;
+    }
+    else
+    {
+      if (mappair(p->pos) == ter_path || mappair(p->pos) == ter_clearing)
+        c = 10;
+      else if (mappair(p->pos) == ter_grass)
+        c = 20;
+      else
+        continue;
+    }
+
+    if ((path[p->pos[dim_y] - 1][p->pos[dim_x]].hn) &&
+        (path[p->pos[dim_y] - 1][p->pos[dim_x]].cost > (p->cost + c)))
+    {
+      path[p->pos[dim_y] - 1][p->pos[dim_x]].cost = p->cost + c;
+      path[p->pos[dim_y] - 1][p->pos[dim_x]].from[dim_y] = p->pos[dim_y];
+      path[p->pos[dim_y] - 1][p->pos[dim_x]].from[dim_x] = p->pos[dim_x];
+      heap_decrease_key_no_replace(&h, path[p->pos[dim_y] - 1][p->pos[dim_x]].hn);
+    }
+
+    if ((path[p->pos[dim_y] - 1][p->pos[dim_x] - 1].hn) &&
+        (path[p->pos[dim_y] - 1][p->pos[dim_x] - 1].cost > (p->cost + c)))
+    {
+      path[p->pos[dim_y] - 1][p->pos[dim_x] - 1].cost = p->cost + c;
+      path[p->pos[dim_y] - 1][p->pos[dim_x] - 1].from[dim_y] = p->pos[dim_y];
+      path[p->pos[dim_y] - 1][p->pos[dim_x] - 1].from[dim_x] = p->pos[dim_x];
+      heap_decrease_key_no_replace(&h, path[p->pos[dim_y] - 1][p->pos[dim_x] - 1].hn);
+    }
+
+    if ((path[p->pos[dim_y]][p->pos[dim_x] - 1].hn) &&
+        (path[p->pos[dim_y]][p->pos[dim_x] - 1].cost > (p->cost + c)))
+    {
+      path[p->pos[dim_y]][p->pos[dim_x] - 1].cost = p->cost + c;
+      path[p->pos[dim_y]][p->pos[dim_x] - 1].from[dim_y] = p->pos[dim_y];
+      path[p->pos[dim_y]][p->pos[dim_x] - 1].from[dim_x] = p->pos[dim_x];
+      heap_decrease_key_no_replace(&h, path[p->pos[dim_y]][p->pos[dim_x] - 1].hn);
+    }
+
+    if ((path[p->pos[dim_y] + 1][p->pos[dim_x] - 1].hn) &&
+        (path[p->pos[dim_y] + 1][p->pos[dim_x] - 1].cost > (p->cost + c)))
+    {
+      path[p->pos[dim_y] + 1][p->pos[dim_x] - 1].cost = p->cost + c;
+      path[p->pos[dim_y] + 1][p->pos[dim_x] - 1].from[dim_y] = p->pos[dim_y];
+      path[p->pos[dim_y] + 1][p->pos[dim_x] - 1].from[dim_x] = p->pos[dim_x];
+      heap_decrease_key_no_replace(&h, path[p->pos[dim_y] + 1][p->pos[dim_x] - 1].hn);
+    }
+
+    if ((path[p->pos[dim_y] + 1][p->pos[dim_x]].hn) &&
+        (path[p->pos[dim_y] + 1][p->pos[dim_x]].cost > (p->cost + c)))
+    {
+      path[p->pos[dim_y] + 1][p->pos[dim_x]].cost = p->cost + c;
+      path[p->pos[dim_y] + 1][p->pos[dim_x]].from[dim_y] = p->pos[dim_y];
+      path[p->pos[dim_y] + 1][p->pos[dim_x]].from[dim_x] = p->pos[dim_x];
+      heap_decrease_key_no_replace(&h, path[p->pos[dim_y] + 1][p->pos[dim_x]].hn);
+    }
+
+    if ((path[p->pos[dim_y] + 1][p->pos[dim_x] + 1].hn) &&
+        (path[p->pos[dim_y] + 1][p->pos[dim_x] + 1].cost > (p->cost + c)))
+    {
+      path[p->pos[dim_y] + 1][p->pos[dim_x] + 1].cost = p->cost + c;
+      path[p->pos[dim_y] + 1][p->pos[dim_x] + 1].from[dim_y] = p->pos[dim_y];
+      path[p->pos[dim_y] + 1][p->pos[dim_x] + 1].from[dim_x] = p->pos[dim_x];
+      heap_decrease_key_no_replace(&h, path[p->pos[dim_y] + 1][p->pos[dim_x] + 1].hn);
+    }
+
+    if ((path[p->pos[dim_y]][p->pos[dim_x] + 1].hn) &&
+        (path[p->pos[dim_y]][p->pos[dim_x] + 1].cost > (p->cost + c)))
+    {
+      path[p->pos[dim_y]][p->pos[dim_x] + 1].cost = p->cost + c;
+      path[p->pos[dim_y]][p->pos[dim_x] + 1].from[dim_y] = p->pos[dim_y];
+      path[p->pos[dim_y]][p->pos[dim_x] + 1].from[dim_x] = p->pos[dim_x];
+      heap_decrease_key_no_replace(&h, path[p->pos[dim_y]][p->pos[dim_x] + 1].hn);
+    }
+
+    if ((path[p->pos[dim_y] - 1][p->pos[dim_x] + 1].hn) &&
+        (path[p->pos[dim_y] - 1][p->pos[dim_x] + 1].cost > (p->cost + c)))
+    {
+      path[p->pos[dim_y] - 1][p->pos[dim_x] + 1].cost = p->cost + c;
+      path[p->pos[dim_y] - 1][p->pos[dim_x] + 1].from[dim_y] = p->pos[dim_y];
+      path[p->pos[dim_y] - 1][p->pos[dim_x] + 1].from[dim_x] = p->pos[dim_x];
+      heap_decrease_key_no_replace(&h, path[p->pos[dim_y] - 1][p->pos[dim_x] + 1].hn);
+    }
+  }
+
+  // TODO: place this in separate function
+  // FIXME: store weights somewhere (likely global)
+  FILE *f = fopen("out.txt", "w");
+
+  for (y = 0; y < MAP_Y; y++)
+  {
+    for (x = 0; x < MAP_X; x++)
+    {
+      fprintf(f, "%3d ", path[y][x].cost);
+    }
+    fprintf(f, "\n");
+  }
+  fprintf(f, "\n");
+
+  fclose(f);
 }
 
 static int32_t edge_penalty(int8_t x, int8_t y)
@@ -989,6 +1167,10 @@ int main(int argc, char *argv[])
   char c;
   int x, y;
 
+  pair_t p;
+  p[dim_x] = 10;
+  p[dim_y] = 10;
+
   if (argc == 2)
   {
     seed = atoi(argv[1]);
@@ -1007,6 +1189,13 @@ int main(int argc, char *argv[])
   do
   {
     print_map();
+
+    // TODO: Find best place in event cycle for calculations to happen
+    dijkstra_path_trainer(world.cur_map, p, trainer_hiker);
+    // dijkstra_path_trainer(world.cur_map, p, trainer_rival);
+    // dijkstra_path_trainer(world.cur_map, p, trainer_pc);
+    // dijkstra_path_trainer(world.cur_map, p, 5);
+
     printf("Current position is %d%cx%d%c (%d,%d).  "
            "Enter command: ",
            abs(world.cur_idx[dim_x] - (WORLD_SIZE / 2)),
