@@ -1,0 +1,11 @@
+Feb 07: Rewriting terrain generation code
+Feb 08: Finished rewriting terrain generation
+        Altered map generation initialization
+        Got navigation and test code interfacing with terrain code successfully
+Feb 09: Struggling with pass by reference working inconsistently
+Feb 10: Found bug
+        Added map navigation functionality
+        Added edge of world
+        (Shhh drank beer till 4am to push through frustrations and fully intend on being in class today)
+        Banged head against wall (figuratively this time)
+        Can finally go to bed in peace 
