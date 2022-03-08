@@ -1047,7 +1047,7 @@ static void print_map()
   }
 
   attron(COLOR_PAIR(color_pc) | A_BLINK);
-  mvaddch(world.pc.pos[dim_y], world.pc.pos[dim_x], '@');
+  mvaddch(world.pc.pos[dim_y] + 3, world.pc.pos[dim_x], '@');
   attrset(A_NORMAL);
 
   for (i = 0; i < world.num_trainers; i++)
@@ -1600,7 +1600,7 @@ int main(int argc, char *argv[])
     case '?':
     case 'h':
       printw("Move with 'e'ast, 'w'est, 'n'orth, 's'outh or 'f'ly x y.\n"
-             "Quit with 'q'.  '?' and 'h' print this help message.");
+             "Quit with 'q'.  '?' a this help message.");
       break;
     case 2:
       world.pc.pos[dim_y]++;
