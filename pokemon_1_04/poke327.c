@@ -55,6 +55,19 @@ typedef int16_t pair_t[num_dims];
 #define heightpair(pair) (m->height[pair[dim_y]][pair[dim_x]])
 #define heightxy(x, y) (m->height[y][x])
 
+typedef enum __attribute__((__packed__)) dir_type
+{
+  dir_north,
+  dir_south,
+  dir_east,
+  dir_west,
+  dir_north_west,
+  dir_south_west, 
+  dir_north_east,
+  dir_south_east,
+  num_dir_type,
+} dir_type_t;
+
 typedef enum __attribute__((__packed__)) color_type
 {
   color_dummy,
@@ -120,6 +133,9 @@ typedef struct npc
 {
   int type;
   pair_t pos;
+  int stat;
+  heap_node_t *hn;
+  int dir;
 } npc_t;
 
 typedef struct map
@@ -130,6 +146,7 @@ typedef struct map
   npc_t *npcs;
   int hiker_dist[MAP_Y][MAP_X];
   int rival_dist[MAP_Y][MAP_X];
+  heap_t npc_heap;
 } map_t;
 
 typedef struct queue_node
@@ -861,6 +878,75 @@ static int place_trees(map_t *m)
   return 0;
 }
 
+int is_move_invalid(int x, int y, int npc_count, int character_type) 
+{
+  if (x < 1 || x > MAP_X - 1 || y < 1 || y > MAP_Y - 1)
+    return 1;
+
+  // Check terrain is valid
+  if (move_cost[character_type][world.cur_map->map[y][x]] == INT_MAX)
+    return 1;
+
+  // Check for pc
+  if (x == world.pc.pos[dim_x] && y == world.pc.pos[dim_y])
+    return 1;
+
+  // Check for other npcs
+  while (npc_count) {
+    if (x == world.cur_map->npcs[npc_count - 1].pos[dim_x] && y == world.cur_map->npcs[npc_count - 1].pos[dim_y])
+      return 1;
+    npc_count--;
+  }
+
+  return 0;
+}
+
+int npc_cmp(const void *key, const void *with)
+{
+  return ((npc_t *)key)->stat - ((npc_t *)with)->stat;
+}
+
+void spawn_npcs() 
+{
+  int i;
+  int x, y;
+  
+  world.cur_map->npcs = malloc(world.num_trainers * sizeof(*world.cur_map->npcs));
+
+  heap_init(&world.cur_map->npc_heap, npc_cmp, NULL);
+
+  for (i = 0; i < world.num_trainers; i++) {
+    world.cur_map->npcs[i].type = i % num_npc_type;
+
+    switch(i % num_npc_type) {
+      case npc_hiker:
+        do {
+          x = rand() % (MAP_X - 2) + 1;
+          y = rand() % (MAP_Y - 2) + 1;
+        } while (is_move_invalid(x, y, i, char_hiker));
+        break;
+      case npc_rival:
+        do {
+          x = rand() % (MAP_X - 2) + 1;
+          y = rand() % (MAP_Y - 2) + 1;
+        } while (is_move_invalid(x, y, i, char_rival));
+        break;
+      default:
+        do {
+          x = rand() % (MAP_X - 2) + 1;
+          y = rand() % (MAP_Y - 2) + 1;
+        } while (is_move_invalid(x, y, i, char_other));
+        break;
+    }
+
+    world.cur_map->npcs[i].pos[dim_x] = x;
+    world.cur_map->npcs[i].pos[dim_y] = y;
+    world.cur_map->npcs[i].stat = 0;
+    world.cur_map->npcs[i].dir = rand() % num_dir_type;
+    world.cur_map->npcs[i].hn = heap_insert(&world.cur_map->npc_heap, &world.cur_map->npcs[i]);
+  }
+}
+
 // New map expects cur_idx to refer to the index to be generated.  If that
 // map has already been generated then the only thing this does is set
 // cur_map.
@@ -868,7 +954,6 @@ static int new_map()
 {
   int d, p;
   int e, w, n, s;
-  int i;
 
   if (world.world[world.cur_idx[dim_y]][world.cur_idx[dim_x]])
   {
@@ -879,8 +964,6 @@ static int new_map()
   world.cur_map =
     world.world[world.cur_idx[dim_y]][world.cur_idx[dim_x]] =
     malloc(sizeof(*world.cur_map));
-
-  world.cur_map->npcs = malloc(world.num_trainers * sizeof(*world.cur_map->npcs));
 
   smooth_height(world.cur_map);
 
@@ -951,14 +1034,7 @@ static int new_map()
     place_center(world.cur_map);
   }
 
-  for (i = 0; i < world.num_trainers; i++)
-  {
-    world.cur_map->npcs[i].type = i % num_npc_type;
-    do {
-      world.cur_map->npcs[i].pos[dim_x] = rand() % (MAP_X - 2) + 1;
-      world.cur_map->npcs[i].pos[dim_y] = rand() % (MAP_Y - 2) + 1;
-    } while (0);
-  }
+  spawn_npcs();
 
   return 0;
 }
@@ -1349,13 +1425,163 @@ void pathfind(map_t *m)
   heap_delete(&h);
 }
 
-void move_npc(map_t *m) {
-  // TODO: Initialize priority queue
-  // TODO: Add npc's to the queue
-  // TODO: Move character
+void move_npc() {
+  npc_t *p;
+  struct timeval tv;
+  int min, dir;
+
+  gettimeofday(&tv, NULL);
+
+  if ((p = heap_remove_min(&world.cur_map->npc_heap))) {
+    switch (p->type) {
+      case npc_hiker:
+        min = INT_MAX;
+        if (!is_move_invalid(p->pos[dim_x], p->pos[dim_y] - 1, world.num_trainers, char_other) &&
+            min > world.cur_map->hiker_dist[p->pos[dim_y] - 1][p->pos[dim_x]]) {
+          min =   world.cur_map->hiker_dist[p->pos[dim_y] - 1][p->pos[dim_x]];
+          dir = dir_north;
+        }
+        if (!is_move_invalid(p->pos[dim_x], p->pos[dim_y] + 1, world.num_trainers, char_other) &&
+            min > world.cur_map->hiker_dist[p->pos[dim_y] + 1][p->pos[dim_x]]) {
+          min =   world.cur_map->hiker_dist[p->pos[dim_y] + 1][p->pos[dim_x]];
+          dir = dir_south;
+        }
+        if (!is_move_invalid(p->pos[dim_x] + 1, p->pos[dim_y], world.num_trainers, char_other) &&
+            min > world.cur_map->hiker_dist[p->pos[dim_y]][p->pos[dim_x] + 1]) {
+          min =   world.cur_map->hiker_dist[p->pos[dim_y]][p->pos[dim_x] + 1];
+          dir = dir_east;
+        }
+        if (!is_move_invalid(p->pos[dim_x] - 1, p->pos[dim_y], world.num_trainers, char_other) &&
+            min > world.cur_map->hiker_dist[p->pos[dim_y]][p->pos[dim_x] - 1]) {
+          min =   world.cur_map->hiker_dist[p->pos[dim_y]][p->pos[dim_x] - 1];
+          dir = dir_west;
+        }
+        if (!is_move_invalid(p->pos[dim_x] - 1, p->pos[dim_y] - 1, world.num_trainers, char_other) &&
+            min > world.cur_map->hiker_dist[p->pos[dim_y] - 1][p->pos[dim_x] - 1]) {
+          min =   world.cur_map->hiker_dist[p->pos[dim_y] - 1][p->pos[dim_x] - 1];
+          dir = dir_north_west;
+        }
+        if (!is_move_invalid(p->pos[dim_x] + 1, p->pos[dim_y] - 1, world.num_trainers, char_other) &&
+            min > world.cur_map->hiker_dist[p->pos[dim_y] - 1][p->pos[dim_x] + 1]) {
+          min =   world.cur_map->hiker_dist[p->pos[dim_y] - 1][p->pos[dim_x] + 1];
+          dir = dir_north_east;
+        }
+        if (!is_move_invalid(p->pos[dim_x] - 1, p->pos[dim_y] + 1, world.num_trainers, char_other) &&
+            min > world.cur_map->hiker_dist[p->pos[dim_y] + 1][p->pos[dim_x] - 1]) {
+          min =   world.cur_map->hiker_dist[p->pos[dim_y] + 1][p->pos[dim_x] - 1];
+          dir = dir_south_west;
+        }
+        if (!is_move_invalid(p->pos[dim_x] + 1, p->pos[dim_y] + 1, world.num_trainers, char_other) &&
+            min > world.cur_map->hiker_dist[p->pos[dim_y] + 1][p->pos[dim_x] + 1]) {
+          min =   world.cur_map->hiker_dist[p->pos[dim_y] + 1][p->pos[dim_x] + 1];
+          dir = dir_south_east;
+        }
+          
+        switch(dir) {
+          case dir_north:
+            p->pos[dim_y]--;
+            break;
+          case dir_south:
+            p->pos[dim_y]++;
+            break;
+          case dir_east:
+            p->pos[dim_x]++;
+            break;
+          case dir_west:
+            p->pos[dim_x]--;
+            break;
+          case dir_north_west:
+            p->pos[dim_y]--;
+            p->pos[dim_x]--;
+            break;
+          case dir_south_west:
+            p->pos[dim_y]++;
+            p->pos[dim_x]--;
+            break;
+          case dir_north_east:
+            p->pos[dim_y]--;
+            p->pos[dim_x]++;
+            break;
+          case dir_south_east:
+            p->pos[dim_y]++;
+            p->pos[dim_x]++;
+            break;
+        }
+
+        p->stat += move_cost[char_other][world.cur_map->map[p->pos[dim_y]][p->pos[dim_x]]] + tv.tv_usec;
+        break;
+      case npc_rival:
+        p->stat = INT_MAX;
+        break;
+      case npc_pacer:
+        if (p->dir % 4 == dir_north) {
+          if (!is_move_invalid(p->pos[dim_x], p->pos[dim_y] - 1, world.num_trainers, char_other)) {
+            p->pos[dim_y] = p->pos[dim_y] - 1;
+          } else {
+            p->dir = dir_south;
+          }
+        } else if (p->dir % 4 == dir_south) {
+          if (!is_move_invalid(p->pos[dim_x], p->pos[dim_y] + 1, world.num_trainers, char_other)) {
+            p->pos[dim_y] = p->pos[dim_y] + 1;
+          } else {
+            p->dir = dir_north;
+          }
+        } else if (p->dir % 4 == dir_east) {
+          if (!is_move_invalid(p->pos[dim_x] + 1, p->pos[dim_y], world.num_trainers, char_other)) {
+            p->pos[dim_x] = p->pos[dim_x] + 1;
+          } else {
+            p->dir = dir_west;
+          }
+        } else if (p->dir % 4 == dir_west) {
+          if (!is_move_invalid(p->pos[dim_x] - 1, p->pos[dim_y], world.num_trainers, char_other)) {
+            p->pos[dim_x] = p->pos[dim_x] - 1;
+          } else {
+            p->dir = dir_east;
+          }
+        }
+        p->stat += move_cost[char_other][world.cur_map->map[p->pos[dim_y]][p->pos[dim_x]]] + tv.tv_usec;
+       break;
+      case npc_wanderer:
+        if (p->dir % 4 == dir_north) {
+          if (world.cur_map->map[p->pos[dim_y]][p->pos[dim_x]] == world.cur_map->map[p->pos[dim_y] - 1][p->pos[dim_x]] && 
+              !is_move_invalid(p->pos[dim_x], p->pos[dim_y] - 1, world.num_trainers, char_other)) {
+            p->pos[dim_y] = p->pos[dim_y] - 1;
+          } else {
+            p->dir = dir_south;
+          }
+        }  else if (p->dir % 4 == dir_south) {
+          if (world.cur_map->map[p->pos[dim_y]][p->pos[dim_x]] == world.cur_map->map[p->pos[dim_y] + 1][p->pos[dim_x]] && 
+              !is_move_invalid(p->pos[dim_x], p->pos[dim_y] + 1, world.num_trainers, char_other)) {
+            p->pos[dim_y] = p->pos[dim_y] + 1;
+          } else {
+            p->dir = dir_north;
+          }
+        } else if (p->dir % 4 == dir_east) {
+          if (world.cur_map->map[p->pos[dim_y]][p->pos[dim_x]] == world.cur_map->map[p->pos[dim_y]][p->pos[dim_x] + 1] && 
+              !is_move_invalid(p->pos[dim_x] + 1, p->pos[dim_y], world.num_trainers, char_other)) {
+            p->pos[dim_x] = p->pos[dim_x] + 1;
+          } else {
+            p->dir = dir_west;
+          }
+        } else if (p->dir % 4 == dir_west) {
+          if (world.cur_map->map[p->pos[dim_y]][p->pos[dim_x]] == world.cur_map->map[p->pos[dim_y]][p->pos[dim_x] - 1] && 
+              !is_move_invalid(p->pos[dim_x] - 1, p->pos[dim_y], world.num_trainers, char_other)) {
+            p->pos[dim_x] = p->pos[dim_x] - 1;
+          } else {
+            p->dir = dir_east;
+          }
+        }
+        p->stat += move_cost[char_other][world.cur_map->map[p->pos[dim_y]][p->pos[dim_x]]] + tv.tv_usec;
+        break;
+      case npc_stationary:
+      case npc_random_walker:
+        p->stat += move_cost[char_other][world.cur_map->map[p->pos[dim_y]][p->pos[dim_x]]] + tv.tv_usec;
+        break;
+    }
+    p->hn = heap_insert(&world.cur_map->npc_heap, p);
+  }
 }
 
-// TODO: Apply checking to npc initialization
 void init_pc()
 {
   int x, y;
@@ -1417,8 +1643,8 @@ void initialize_window()
   int x, y;
 
   initscr();
-  // raw();
-  cbreak();
+  raw();
+  // cbreak();
   keypad(stdscr, TRUE);
 
   start_color();
@@ -1507,8 +1733,7 @@ int main(int argc, char *argv[])
   init_pc();
   pathfind(world.cur_map);
 
-  halfdelay(25);
-
+  timeout(0);
   do
   {
     if (c != -1)
@@ -1527,6 +1752,7 @@ int main(int argc, char *argv[])
 
     refresh();
 
+    halfdelay(1);
     c = getch();
     switch (c)
     {
@@ -1577,15 +1803,19 @@ int main(int argc, char *argv[])
         break;
       case 2:
         world.pc.pos[dim_y]++;
+        pathfind(world.cur_map);
         break;
       case 3:
         world.pc.pos[dim_y]--;
+        pathfind(world.cur_map);
         break;
       case 4:
         world.pc.pos[dim_x]--;
+        pathfind(world.cur_map);
         break;
       case 5:
         world.pc.pos[dim_x]++;
+        pathfind(world.cur_map);
         break;
       case -1:
         break;
@@ -1593,6 +1823,8 @@ int main(int argc, char *argv[])
         mvprintw(0, 0, "%c: Invalid input.  Enter '?' for help.\n", c);
         break;
     }
+
+    move_npc();
 
   } while (c != 'q');
 
