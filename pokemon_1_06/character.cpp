@@ -1,8 +1,8 @@
 #include <limits.h>
 
 #include "character.h"
-#include "poke327.h"
 #include "io.h"
+#include "poke327.h"
 
 /***********************************************************************
  * Hack: Avoid the "path to a building" issue by making building cells *
@@ -12,21 +12,20 @@
  * the building is greater than navigating the building's perimeter.   *
  ***********************************************************************/
 int32_t move_cost[num_character_types][num_terrain_types] = {
-  { INT_MAX, INT_MAX, 10, 10, 10, 20, 10, INT_MAX, INT_MAX, 10      },
-  { INT_MAX, INT_MAX, 10, 50, 50, 15, 10, 15,      15,      INT_MAX },
-  { INT_MAX, INT_MAX, 10, 50, 50, 20, 10, INT_MAX, INT_MAX, INT_MAX },
-  { INT_MAX, INT_MAX, 10, 50, 50, 20, 10, INT_MAX, INT_MAX, INT_MAX },
+    {INT_MAX, INT_MAX, 10, 10, 10, 20, 10, INT_MAX, INT_MAX, 10},
+    {INT_MAX, INT_MAX, 10, 50, 50, 15, 10, 15, 15, INT_MAX},
+    {INT_MAX, INT_MAX, 10, 50, 50, 20, 10, INT_MAX, INT_MAX, INT_MAX},
+    {INT_MAX, INT_MAX, 10, 50, 50, 20, 10, INT_MAX, INT_MAX, INT_MAX},
 };
 
 const char *char_type_name[num_character_types] = {
-  "PC",
-  "Hiker",
-  "Rival",
-  "Trainer",
+    "PC",
+    "Hiker",
+    "Rival",
+    "Trainer",
 };
 
-static void move_hiker_func(character_t *c, pair_t dest)
-{
+static void move_hiker_func(character_t *c, pair_t dest) {
   int min;
   int base;
   int i;
@@ -36,11 +35,10 @@ static void move_hiker_func(character_t *c, pair_t dest)
   dest[dim_x] = c->pos[dim_x];
   dest[dim_y] = c->pos[dim_y];
   min = INT_MAX;
-  
+
   for (i = base; i < 8 + base; i++) {
     if ((world.hiker_dist[c->pos[dim_y] + all_dirs[i & 0x7][dim_y]]
-                         [c->pos[dim_x] + all_dirs[i & 0x7][dim_x]] <=
-         min) &&
+                         [c->pos[dim_x] + all_dirs[i & 0x7][dim_x]] <= min) &&
         !world.cur_map->cmap[c->pos[dim_y] + all_dirs[i & 0x7][dim_y]]
                             [c->pos[dim_x] + all_dirs[i & 0x7][dim_x]]) {
       dest[dim_x] = c->pos[dim_x] + all_dirs[i & 0x7][dim_x];
@@ -55,22 +53,20 @@ static void move_hiker_func(character_t *c, pair_t dest)
   }
 }
 
-static void move_rival_func(character_t *c, pair_t dest)
-{
+static void move_rival_func(character_t *c, pair_t dest) {
   int min;
   int base;
   int i;
-  
+
   base = rand() & 0x7;
 
   dest[dim_x] = c->pos[dim_x];
   dest[dim_y] = c->pos[dim_y];
   min = INT_MAX;
-  
+
   for (i = base; i < 8 + base; i++) {
     if ((world.rival_dist[c->pos[dim_y] + all_dirs[i & 0x7][dim_y]]
-                         [c->pos[dim_x] + all_dirs[i & 0x7][dim_x]] <
-         min) &&
+                         [c->pos[dim_x] + all_dirs[i & 0x7][dim_x]] < min) &&
         !world.cur_map->cmap[c->pos[dim_y] + all_dirs[i & 0x7][dim_y]]
                             [c->pos[dim_x] + all_dirs[i & 0x7][dim_x]]) {
       dest[dim_x] = c->pos[dim_x] + all_dirs[i & 0x7][dim_x];
@@ -85,17 +81,15 @@ static void move_rival_func(character_t *c, pair_t dest)
   }
 }
 
-static void move_pacer_func(character_t *c, pair_t dest)
-{
+static void move_pacer_func(character_t *c, pair_t dest) {
   dest[dim_x] = c->pos[dim_x];
   dest[dim_y] = c->pos[dim_y];
 
   if (!c->npc->defeated &&
       world.cur_map->cmap[c->pos[dim_y] + c->npc->dir[dim_y]]
-                         [c->pos[dim_x] + c->npc->dir[dim_x]] ==
-      &world.pc) {
-      io_battle(c, &world.pc);
-      return;
+                         [c->pos[dim_x] + c->npc->dir[dim_x]] == &world.pc) {
+    io_battle(c, &world.pc);
+    return;
   }
 
   if ((world.cur_map->map[c->pos[dim_y] + c->npc->dir[dim_y]]
@@ -117,17 +111,15 @@ static void move_pacer_func(character_t *c, pair_t dest)
   }
 }
 
-static void move_wanderer_func(character_t *c, pair_t dest)
-{
+static void move_wanderer_func(character_t *c, pair_t dest) {
   dest[dim_x] = c->pos[dim_x];
   dest[dim_y] = c->pos[dim_y];
 
   if (!c->npc->defeated &&
       world.cur_map->cmap[c->pos[dim_y] + c->npc->dir[dim_y]]
-                         [c->pos[dim_x] + c->npc->dir[dim_x]] ==
-      &world.pc) {
-      io_battle(c, &world.pc);
-      return;
+                         [c->pos[dim_x] + c->npc->dir[dim_x]] == &world.pc) {
+    io_battle(c, &world.pc);
+    return;
   }
 
   if ((world.cur_map->map[c->pos[dim_y] + c->npc->dir[dim_y]]
@@ -148,40 +140,36 @@ static void move_wanderer_func(character_t *c, pair_t dest)
   }
 }
 
-static void move_sentry_func(character_t *c, pair_t dest)
-{
+static void move_sentry_func(character_t *c, pair_t dest) {
   // Not a bug.  Sentries are non-aggro.
   dest[dim_x] = c->pos[dim_x];
   dest[dim_y] = c->pos[dim_y];
 }
 
-static void move_walker_func(character_t *c, pair_t dest)
-{
+static void move_walker_func(character_t *c, pair_t dest) {
   dest[dim_x] = c->pos[dim_x];
   dest[dim_y] = c->pos[dim_y];
 
   if (!c->npc->defeated &&
       world.cur_map->cmap[c->pos[dim_y] + c->npc->dir[dim_y]]
-                         [c->pos[dim_x] + c->npc->dir[dim_x]] ==
-      &world.pc) {
-      io_battle(c, &world.pc);
-      return;
+                         [c->pos[dim_x] + c->npc->dir[dim_x]] == &world.pc) {
+    io_battle(c, &world.pc);
+    return;
   }
 
-  if ((move_cost[char_other][world.cur_map->map[c->pos[dim_y] +
-                                                c->npc->dir[dim_y]]
-                                               [c->pos[dim_x] +
-                                                c->npc->dir[dim_x]]] ==
-       INT_MAX) || world.cur_map->cmap[c->pos[dim_y] + c->npc->dir[dim_y]]
-                                      [c->pos[dim_x] + c->npc->dir[dim_x]]) {
+  if ((move_cost[char_other]
+                [world.cur_map->map[c->pos[dim_y] + c->npc->dir[dim_y]]
+                                   [c->pos[dim_x] + c->npc->dir[dim_x]]] ==
+       INT_MAX) ||
+      world.cur_map->cmap[c->pos[dim_y] + c->npc->dir[dim_y]]
+                         [c->pos[dim_x] + c->npc->dir[dim_x]]) {
     c->npc->dir[dim_x] *= -1;
     c->npc->dir[dim_y] *= -1;
   }
 
-  if ((move_cost[char_other][world.cur_map->map[c->pos[dim_y] +
-                                                c->npc->dir[dim_y]]
-                                               [c->pos[dim_x] +
-                                                c->npc->dir[dim_x]]] !=
+  if ((move_cost[char_other]
+                [world.cur_map->map[c->pos[dim_y] + c->npc->dir[dim_y]]
+                                   [c->pos[dim_x] + c->npc->dir[dim_x]]] !=
        INT_MAX) &&
       !world.cur_map->cmap[c->pos[dim_y] + c->npc->dir[dim_y]]
                           [c->pos[dim_x] + c->npc->dir[dim_x]]) {
@@ -190,33 +178,25 @@ static void move_walker_func(character_t *c, pair_t dest)
   }
 }
 
-static void move_pc_func(character_t *c, pair_t dest)
-{
+static void move_pc_func(character_t *c, pair_t dest) {
   io_display();
   io_handle_input(dest);
 }
 
 void (*move_func[num_movement_types])(character_t *, pair_t) = {
-  move_hiker_func,
-  move_rival_func,
-  move_pacer_func,
-  move_wanderer_func,
-  move_sentry_func,
-  move_walker_func,
-  move_pc_func,
+    move_hiker_func,  move_rival_func,  move_pacer_func, move_wanderer_func,
+    move_sentry_func, move_walker_func, move_pc_func,
 };
 
-int32_t cmp_char_turns(const void *key, const void *with)
-{
-  return ((character_t *) key)->next_turn - ((character_t *) with)->next_turn;
+int32_t cmp_char_turns(const void *key, const void *with) {
+  return ((character_t *)key)->next_turn - ((character_t *)with)->next_turn;
 }
 
-void delete_character(void *v)
-{
+void delete_character(void *v) {
   if (v == &world.pc) {
     free(world.pc.pc);
   } else {
-    free(((character_t *) v)->npc);
+    free(((character_t *)v)->npc);
     free(v);
   }
 }
@@ -224,21 +204,20 @@ void delete_character(void *v)
 #define ter_cost(x, y, c) move_cost[c][m->map[y][x]]
 
 static int32_t hiker_cmp(const void *key, const void *with) {
-  return (world.hiker_dist[((path_t *) key)->pos[dim_y]]
-                          [((path_t *) key)->pos[dim_x]] -
-          world.hiker_dist[((path_t *) with)->pos[dim_y]]
-                          [((path_t *) with)->pos[dim_x]]);
+  return (world.hiker_dist[((path_t *)key)->pos[dim_y]]
+                          [((path_t *)key)->pos[dim_x]] -
+          world.hiker_dist[((path_t *)with)->pos[dim_y]]
+                          [((path_t *)with)->pos[dim_x]]);
 }
 
 static int32_t rival_cmp(const void *key, const void *with) {
-  return (world.rival_dist[((path_t *) key)->pos[dim_y]]
-                          [((path_t *) key)->pos[dim_x]] -
-          world.rival_dist[((path_t *) with)->pos[dim_y]]
-                          [((path_t *) with)->pos[dim_x]]);
+  return (world.rival_dist[((path_t *)key)->pos[dim_y]]
+                          [((path_t *)key)->pos[dim_x]] -
+          world.rival_dist[((path_t *)with)->pos[dim_y]]
+                          [((path_t *)with)->pos[dim_x]]);
 }
 
-void pathfind(map_t *m)
-{
+void pathfind(map_t *m) {
   heap_t h;
   uint32_t x, y;
   static path_t p[MAP_Y][MAP_X], *c;
@@ -259,8 +238,8 @@ void pathfind(map_t *m)
       world.hiker_dist[y][x] = world.rival_dist[y][x] = INT_MAX;
     }
   }
-  world.hiker_dist[world.pc.pos[dim_y]][world.pc.pos[dim_x]] = 
-    world.rival_dist[world.pc.pos[dim_y]][world.pc.pos[dim_x]] = 0;
+  world.hiker_dist[world.pc.pos[dim_y]][world.pc.pos[dim_x]] =
+      world.rival_dist[world.pc.pos[dim_y]][world.pc.pos[dim_x]] = 0;
 
   heap_init(&h, hiker_cmp, NULL);
 
@@ -274,85 +253,81 @@ void pathfind(map_t *m)
     }
   }
 
-  while ((c = heap_remove_min(&h))) {
+  while ((c = (path_t *)heap_remove_min(&h))) {
     c->hn = NULL;
     if ((p[c->pos[dim_y] - 1][c->pos[dim_x] - 1].hn) &&
         (world.hiker_dist[c->pos[dim_y] - 1][c->pos[dim_x] - 1] >
          world.hiker_dist[c->pos[dim_y]][c->pos[dim_x]] +
-         ter_cost(c->pos[dim_x], c->pos[dim_y], char_hiker))) {
+             ter_cost(c->pos[dim_x], c->pos[dim_y], char_hiker))) {
       world.hiker_dist[c->pos[dim_y] - 1][c->pos[dim_x] - 1] =
-        world.hiker_dist[c->pos[dim_y]][c->pos[dim_x]] +
-        ter_cost(c->pos[dim_x], c->pos[dim_y], char_hiker);
+          world.hiker_dist[c->pos[dim_y]][c->pos[dim_x]] +
+          ter_cost(c->pos[dim_x], c->pos[dim_y], char_hiker);
       heap_decrease_key_no_replace(&h,
                                    p[c->pos[dim_y] - 1][c->pos[dim_x] - 1].hn);
     }
-    if ((p[c->pos[dim_y] - 1][c->pos[dim_x]    ].hn) &&
-        (world.hiker_dist[c->pos[dim_y] - 1][c->pos[dim_x]    ] >
+    if ((p[c->pos[dim_y] - 1][c->pos[dim_x]].hn) &&
+        (world.hiker_dist[c->pos[dim_y] - 1][c->pos[dim_x]] >
          world.hiker_dist[c->pos[dim_y]][c->pos[dim_x]] +
-         ter_cost(c->pos[dim_x], c->pos[dim_y], char_hiker))) {
-      world.hiker_dist[c->pos[dim_y] - 1][c->pos[dim_x]    ] =
-        world.hiker_dist[c->pos[dim_y]][c->pos[dim_x]] +
-        ter_cost(c->pos[dim_x], c->pos[dim_y], char_hiker);
-      heap_decrease_key_no_replace(&h,
-                                   p[c->pos[dim_y] - 1][c->pos[dim_x]    ].hn);
+             ter_cost(c->pos[dim_x], c->pos[dim_y], char_hiker))) {
+      world.hiker_dist[c->pos[dim_y] - 1][c->pos[dim_x]] =
+          world.hiker_dist[c->pos[dim_y]][c->pos[dim_x]] +
+          ter_cost(c->pos[dim_x], c->pos[dim_y], char_hiker);
+      heap_decrease_key_no_replace(&h, p[c->pos[dim_y] - 1][c->pos[dim_x]].hn);
     }
     if ((p[c->pos[dim_y] - 1][c->pos[dim_x] + 1].hn) &&
         (world.hiker_dist[c->pos[dim_y] - 1][c->pos[dim_x] + 1] >
          world.hiker_dist[c->pos[dim_y]][c->pos[dim_x]] +
-         ter_cost(c->pos[dim_x], c->pos[dim_y], char_hiker))) {
+             ter_cost(c->pos[dim_x], c->pos[dim_y], char_hiker))) {
       world.hiker_dist[c->pos[dim_y] - 1][c->pos[dim_x] + 1] =
-        world.hiker_dist[c->pos[dim_y]][c->pos[dim_x]] +
-        ter_cost(c->pos[dim_x], c->pos[dim_y], char_hiker);
+          world.hiker_dist[c->pos[dim_y]][c->pos[dim_x]] +
+          ter_cost(c->pos[dim_x], c->pos[dim_y], char_hiker);
       heap_decrease_key_no_replace(&h,
                                    p[c->pos[dim_y] - 1][c->pos[dim_x] + 1].hn);
     }
-    if ((p[c->pos[dim_y]    ][c->pos[dim_x] - 1].hn) &&
-        (world.hiker_dist[c->pos[dim_y]    ][c->pos[dim_x] - 1] >
+    if ((p[c->pos[dim_y]][c->pos[dim_x] - 1].hn) &&
+        (world.hiker_dist[c->pos[dim_y]][c->pos[dim_x] - 1] >
          world.hiker_dist[c->pos[dim_y]][c->pos[dim_x]] +
-         ter_cost(c->pos[dim_x], c->pos[dim_y], char_hiker))) {
-      world.hiker_dist[c->pos[dim_y]    ][c->pos[dim_x] - 1] =
-        world.hiker_dist[c->pos[dim_y]][c->pos[dim_x]] +
-        ter_cost(c->pos[dim_x], c->pos[dim_y], char_hiker);
-      heap_decrease_key_no_replace(&h,
-                                   p[c->pos[dim_y]    ][c->pos[dim_x] - 1].hn);
+             ter_cost(c->pos[dim_x], c->pos[dim_y], char_hiker))) {
+      world.hiker_dist[c->pos[dim_y]][c->pos[dim_x] - 1] =
+          world.hiker_dist[c->pos[dim_y]][c->pos[dim_x]] +
+          ter_cost(c->pos[dim_x], c->pos[dim_y], char_hiker);
+      heap_decrease_key_no_replace(&h, p[c->pos[dim_y]][c->pos[dim_x] - 1].hn);
     }
-    if ((p[c->pos[dim_y]    ][c->pos[dim_x] + 1].hn) &&
-        (world.hiker_dist[c->pos[dim_y]    ][c->pos[dim_x] + 1] >
+    if ((p[c->pos[dim_y]][c->pos[dim_x] + 1].hn) &&
+        (world.hiker_dist[c->pos[dim_y]][c->pos[dim_x] + 1] >
          world.hiker_dist[c->pos[dim_y]][c->pos[dim_x]] +
-         ter_cost(c->pos[dim_x], c->pos[dim_y], char_hiker))) {
-      world.hiker_dist[c->pos[dim_y]    ][c->pos[dim_x] + 1] =
-        world.hiker_dist[c->pos[dim_y]][c->pos[dim_x]] +
-        ter_cost(c->pos[dim_x], c->pos[dim_y], char_hiker);
-      heap_decrease_key_no_replace(&h,
-                                   p[c->pos[dim_y]    ][c->pos[dim_x] + 1].hn);
+             ter_cost(c->pos[dim_x], c->pos[dim_y], char_hiker))) {
+      world.hiker_dist[c->pos[dim_y]][c->pos[dim_x] + 1] =
+          world.hiker_dist[c->pos[dim_y]][c->pos[dim_x]] +
+          ter_cost(c->pos[dim_x], c->pos[dim_y], char_hiker);
+      heap_decrease_key_no_replace(&h, p[c->pos[dim_y]][c->pos[dim_x] + 1].hn);
     }
     if ((p[c->pos[dim_y] + 1][c->pos[dim_x] - 1].hn) &&
         (world.hiker_dist[c->pos[dim_y] + 1][c->pos[dim_x] - 1] >
          world.hiker_dist[c->pos[dim_y]][c->pos[dim_x]] +
-         ter_cost(c->pos[dim_x], c->pos[dim_y], char_hiker))) {
+             ter_cost(c->pos[dim_x], c->pos[dim_y], char_hiker))) {
       world.hiker_dist[c->pos[dim_y] + 1][c->pos[dim_x] - 1] =
-        world.hiker_dist[c->pos[dim_y]][c->pos[dim_x]] +
-        ter_cost(c->pos[dim_x], c->pos[dim_y], char_hiker);
+          world.hiker_dist[c->pos[dim_y]][c->pos[dim_x]] +
+          ter_cost(c->pos[dim_x], c->pos[dim_y], char_hiker);
       heap_decrease_key_no_replace(&h,
                                    p[c->pos[dim_y] + 1][c->pos[dim_x] - 1].hn);
     }
-    if ((p[c->pos[dim_y] + 1][c->pos[dim_x]    ].hn) &&
-        (world.hiker_dist[c->pos[dim_y] + 1][c->pos[dim_x]    ] >
+    if ((p[c->pos[dim_y] + 1][c->pos[dim_x]].hn) &&
+        (world.hiker_dist[c->pos[dim_y] + 1][c->pos[dim_x]] >
          world.hiker_dist[c->pos[dim_y]][c->pos[dim_x]] +
-         ter_cost(c->pos[dim_x], c->pos[dim_y], char_hiker))) {
-      world.hiker_dist[c->pos[dim_y] + 1][c->pos[dim_x]    ] =
-        world.hiker_dist[c->pos[dim_y]][c->pos[dim_x]] +
-        ter_cost(c->pos[dim_x], c->pos[dim_y], char_hiker);
-      heap_decrease_key_no_replace(&h,
-                                   p[c->pos[dim_y] + 1][c->pos[dim_x]    ].hn);
+             ter_cost(c->pos[dim_x], c->pos[dim_y], char_hiker))) {
+      world.hiker_dist[c->pos[dim_y] + 1][c->pos[dim_x]] =
+          world.hiker_dist[c->pos[dim_y]][c->pos[dim_x]] +
+          ter_cost(c->pos[dim_x], c->pos[dim_y], char_hiker);
+      heap_decrease_key_no_replace(&h, p[c->pos[dim_y] + 1][c->pos[dim_x]].hn);
     }
     if ((p[c->pos[dim_y] + 1][c->pos[dim_x] + 1].hn) &&
         (world.hiker_dist[c->pos[dim_y] + 1][c->pos[dim_x] + 1] >
          world.hiker_dist[c->pos[dim_y]][c->pos[dim_x]] +
-         ter_cost(c->pos[dim_x], c->pos[dim_y], char_hiker))) {
+             ter_cost(c->pos[dim_x], c->pos[dim_y], char_hiker))) {
       world.hiker_dist[c->pos[dim_y] + 1][c->pos[dim_x] + 1] =
-        world.hiker_dist[c->pos[dim_y]][c->pos[dim_x]] +
-        ter_cost(c->pos[dim_x], c->pos[dim_y], char_hiker);
+          world.hiker_dist[c->pos[dim_y]][c->pos[dim_x]] +
+          ter_cost(c->pos[dim_x], c->pos[dim_y], char_hiker);
       heap_decrease_key_no_replace(&h,
                                    p[c->pos[dim_y] + 1][c->pos[dim_x] + 1].hn);
     }
@@ -371,85 +346,81 @@ void pathfind(map_t *m)
     }
   }
 
-  while ((c = heap_remove_min(&h))) {
+  while ((c = (path_t *)heap_remove_min(&h))) {
     c->hn = NULL;
     if ((p[c->pos[dim_y] - 1][c->pos[dim_x] - 1].hn) &&
         (world.rival_dist[c->pos[dim_y] - 1][c->pos[dim_x] - 1] >
          world.rival_dist[c->pos[dim_y]][c->pos[dim_x]] +
-         ter_cost(c->pos[dim_x], c->pos[dim_y], char_rival))) {
+             ter_cost(c->pos[dim_x], c->pos[dim_y], char_rival))) {
       world.rival_dist[c->pos[dim_y] - 1][c->pos[dim_x] - 1] =
-        world.rival_dist[c->pos[dim_y]][c->pos[dim_x]] +
-        ter_cost(c->pos[dim_x], c->pos[dim_y], char_rival);
+          world.rival_dist[c->pos[dim_y]][c->pos[dim_x]] +
+          ter_cost(c->pos[dim_x], c->pos[dim_y], char_rival);
       heap_decrease_key_no_replace(&h,
                                    p[c->pos[dim_y] - 1][c->pos[dim_x] - 1].hn);
     }
-    if ((p[c->pos[dim_y] - 1][c->pos[dim_x]    ].hn) &&
-        (world.rival_dist[c->pos[dim_y] - 1][c->pos[dim_x]    ] >
+    if ((p[c->pos[dim_y] - 1][c->pos[dim_x]].hn) &&
+        (world.rival_dist[c->pos[dim_y] - 1][c->pos[dim_x]] >
          world.rival_dist[c->pos[dim_y]][c->pos[dim_x]] +
-         ter_cost(c->pos[dim_x], c->pos[dim_y], char_rival))) {
-      world.rival_dist[c->pos[dim_y] - 1][c->pos[dim_x]    ] =
-        world.rival_dist[c->pos[dim_y]][c->pos[dim_x]] +
-        ter_cost(c->pos[dim_x], c->pos[dim_y], char_rival);
-      heap_decrease_key_no_replace(&h,
-                                   p[c->pos[dim_y] - 1][c->pos[dim_x]    ].hn);
+             ter_cost(c->pos[dim_x], c->pos[dim_y], char_rival))) {
+      world.rival_dist[c->pos[dim_y] - 1][c->pos[dim_x]] =
+          world.rival_dist[c->pos[dim_y]][c->pos[dim_x]] +
+          ter_cost(c->pos[dim_x], c->pos[dim_y], char_rival);
+      heap_decrease_key_no_replace(&h, p[c->pos[dim_y] - 1][c->pos[dim_x]].hn);
     }
     if ((p[c->pos[dim_y] - 1][c->pos[dim_x] + 1].hn) &&
         (world.rival_dist[c->pos[dim_y] - 1][c->pos[dim_x] + 1] >
          world.rival_dist[c->pos[dim_y]][c->pos[dim_x]] +
-         ter_cost(c->pos[dim_x], c->pos[dim_y], char_rival))) {
+             ter_cost(c->pos[dim_x], c->pos[dim_y], char_rival))) {
       world.rival_dist[c->pos[dim_y] - 1][c->pos[dim_x] + 1] =
-        world.rival_dist[c->pos[dim_y]][c->pos[dim_x]] +
-        ter_cost(c->pos[dim_x], c->pos[dim_y], char_rival);
+          world.rival_dist[c->pos[dim_y]][c->pos[dim_x]] +
+          ter_cost(c->pos[dim_x], c->pos[dim_y], char_rival);
       heap_decrease_key_no_replace(&h,
                                    p[c->pos[dim_y] - 1][c->pos[dim_x] + 1].hn);
     }
-    if ((p[c->pos[dim_y]    ][c->pos[dim_x] - 1].hn) &&
-        (world.rival_dist[c->pos[dim_y]    ][c->pos[dim_x] - 1] >
+    if ((p[c->pos[dim_y]][c->pos[dim_x] - 1].hn) &&
+        (world.rival_dist[c->pos[dim_y]][c->pos[dim_x] - 1] >
          world.rival_dist[c->pos[dim_y]][c->pos[dim_x]] +
-         ter_cost(c->pos[dim_x], c->pos[dim_y], char_rival))) {
-      world.rival_dist[c->pos[dim_y]    ][c->pos[dim_x] - 1] =
-        world.rival_dist[c->pos[dim_y]][c->pos[dim_x]] +
-        ter_cost(c->pos[dim_x], c->pos[dim_y], char_rival);
-      heap_decrease_key_no_replace(&h,
-                                   p[c->pos[dim_y]    ][c->pos[dim_x] - 1].hn);
+             ter_cost(c->pos[dim_x], c->pos[dim_y], char_rival))) {
+      world.rival_dist[c->pos[dim_y]][c->pos[dim_x] - 1] =
+          world.rival_dist[c->pos[dim_y]][c->pos[dim_x]] +
+          ter_cost(c->pos[dim_x], c->pos[dim_y], char_rival);
+      heap_decrease_key_no_replace(&h, p[c->pos[dim_y]][c->pos[dim_x] - 1].hn);
     }
-    if ((p[c->pos[dim_y]    ][c->pos[dim_x] + 1].hn) &&
-        (world.rival_dist[c->pos[dim_y]    ][c->pos[dim_x] + 1] >
+    if ((p[c->pos[dim_y]][c->pos[dim_x] + 1].hn) &&
+        (world.rival_dist[c->pos[dim_y]][c->pos[dim_x] + 1] >
          world.rival_dist[c->pos[dim_y]][c->pos[dim_x]] +
-         ter_cost(c->pos[dim_x], c->pos[dim_y], char_rival))) {
-      world.rival_dist[c->pos[dim_y]    ][c->pos[dim_x] + 1] =
-        world.rival_dist[c->pos[dim_y]][c->pos[dim_x]] +
-        ter_cost(c->pos[dim_x], c->pos[dim_y], char_rival);
-      heap_decrease_key_no_replace(&h,
-                                   p[c->pos[dim_y]    ][c->pos[dim_x] + 1].hn);
+             ter_cost(c->pos[dim_x], c->pos[dim_y], char_rival))) {
+      world.rival_dist[c->pos[dim_y]][c->pos[dim_x] + 1] =
+          world.rival_dist[c->pos[dim_y]][c->pos[dim_x]] +
+          ter_cost(c->pos[dim_x], c->pos[dim_y], char_rival);
+      heap_decrease_key_no_replace(&h, p[c->pos[dim_y]][c->pos[dim_x] + 1].hn);
     }
     if ((p[c->pos[dim_y] + 1][c->pos[dim_x] - 1].hn) &&
         (world.rival_dist[c->pos[dim_y] + 1][c->pos[dim_x] - 1] >
          world.rival_dist[c->pos[dim_y]][c->pos[dim_x]] +
-         ter_cost(c->pos[dim_x], c->pos[dim_y], char_rival))) {
+             ter_cost(c->pos[dim_x], c->pos[dim_y], char_rival))) {
       world.rival_dist[c->pos[dim_y] + 1][c->pos[dim_x] - 1] =
-        world.rival_dist[c->pos[dim_y]][c->pos[dim_x]] +
-        ter_cost(c->pos[dim_x], c->pos[dim_y], char_rival);
+          world.rival_dist[c->pos[dim_y]][c->pos[dim_x]] +
+          ter_cost(c->pos[dim_x], c->pos[dim_y], char_rival);
       heap_decrease_key_no_replace(&h,
                                    p[c->pos[dim_y] + 1][c->pos[dim_x] - 1].hn);
     }
-    if ((p[c->pos[dim_y] + 1][c->pos[dim_x]    ].hn) &&
-        (world.rival_dist[c->pos[dim_y] + 1][c->pos[dim_x]    ] >
+    if ((p[c->pos[dim_y] + 1][c->pos[dim_x]].hn) &&
+        (world.rival_dist[c->pos[dim_y] + 1][c->pos[dim_x]] >
          world.rival_dist[c->pos[dim_y]][c->pos[dim_x]] +
-         ter_cost(c->pos[dim_x], c->pos[dim_y], char_rival))) {
-      world.rival_dist[c->pos[dim_y] + 1][c->pos[dim_x]    ] =
-        world.rival_dist[c->pos[dim_y]][c->pos[dim_x]] +
-        ter_cost(c->pos[dim_x], c->pos[dim_y], char_rival);
-      heap_decrease_key_no_replace(&h,
-                                   p[c->pos[dim_y] + 1][c->pos[dim_x]    ].hn);
+             ter_cost(c->pos[dim_x], c->pos[dim_y], char_rival))) {
+      world.rival_dist[c->pos[dim_y] + 1][c->pos[dim_x]] =
+          world.rival_dist[c->pos[dim_y]][c->pos[dim_x]] +
+          ter_cost(c->pos[dim_x], c->pos[dim_y], char_rival);
+      heap_decrease_key_no_replace(&h, p[c->pos[dim_y] + 1][c->pos[dim_x]].hn);
     }
     if ((p[c->pos[dim_y] + 1][c->pos[dim_x] + 1].hn) &&
         (world.rival_dist[c->pos[dim_y] + 1][c->pos[dim_x] + 1] >
          world.rival_dist[c->pos[dim_y]][c->pos[dim_x]] +
-         ter_cost(c->pos[dim_x], c->pos[dim_y], char_rival))) {
+             ter_cost(c->pos[dim_x], c->pos[dim_y], char_rival))) {
       world.rival_dist[c->pos[dim_y] + 1][c->pos[dim_x] + 1] =
-        world.rival_dist[c->pos[dim_y]][c->pos[dim_x]] +
-        ter_cost(c->pos[dim_x], c->pos[dim_y], char_rival);
+          world.rival_dist[c->pos[dim_y]][c->pos[dim_x]] +
+          ter_cost(c->pos[dim_x], c->pos[dim_y], char_rival);
       heap_decrease_key_no_replace(&h,
                                    p[c->pos[dim_y] + 1][c->pos[dim_x] + 1].hn);
     }

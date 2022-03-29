@@ -1,11 +1,11 @@
-#include <unistd.h>
-#include <ncurses.h>
 #include <ctype.h>
-#include <stdlib.h>
 #include <limits.h>
+#include <ncurses.h>
+#include <stdlib.h>
+#include <unistd.h>
 
-#include "io.h"
 #include "character.h"
+#include "io.h"
 #include "poke327.h"
 
 typedef struct io_message {
@@ -17,8 +17,7 @@ typedef struct io_message {
 
 static io_message_t *io_head, *io_tail;
 
-void io_init_terminal(void)
-{
+void io_init_terminal(void) {
   initscr();
   raw();
   noecho();
@@ -34,8 +33,7 @@ void io_init_terminal(void)
   init_pair(COLOR_WHITE, COLOR_WHITE, COLOR_BLACK);
 }
 
-void io_reset_terminal(void)
-{
+void io_reset_terminal(void) {
   endwin();
 
   while (io_head) {
@@ -46,12 +44,11 @@ void io_reset_terminal(void)
   io_tail = NULL;
 }
 
-void io_queue_message(const char *format, ...)
-{
+void io_queue_message(const char *format, ...) {
   io_message_t *tmp;
   va_list ap;
 
-  if (!(tmp = malloc(sizeof (*tmp)))) {
+  if (!(tmp = (io_message_t *)malloc(sizeof(*tmp)))) {
     perror("malloc");
     exit(1);
   }
@@ -60,7 +57,7 @@ void io_queue_message(const char *format, ...)
 
   va_start(ap, format);
 
-  vsnprintf(tmp->msg, sizeof (tmp->msg), format, ap);
+  vsnprintf(tmp->msg, sizeof(tmp->msg), format, ap);
 
   va_end(ap);
 
@@ -72,8 +69,7 @@ void io_queue_message(const char *format, ...)
   }
 }
 
-static void io_print_message_queue(uint32_t y, uint32_t x)
-{
+static void io_print_message_queue(uint32_t y, uint32_t x) {
   while (io_head) {
     io_tail = io_head;
     attron(COLOR_PAIR(COLOR_CYAN));
@@ -100,34 +96,31 @@ static void io_print_message_queue(uint32_t y, uint32_t x)
  *                                                                        *
  * Not a bug.                                                             *
  **************************************************************************/
-static int compare_trainer_distance(const void *v1, const void *v2)
-{
-  const character_t *const *c1 = v1;
-  const character_t *const *c2 = v2;
+static int compare_trainer_distance(const void *v1, const void *v2) {
+  const character_t *const *c1 = (const character_t *const *)v1;
+  const character_t *const *c2 = (const character_t *const *)v2;
 
   return (world.rival_dist[(*c1)->pos[dim_y]][(*c1)->pos[dim_x]] -
           world.rival_dist[(*c2)->pos[dim_y]][(*c2)->pos[dim_x]]);
 }
 
-static character_t *io_nearest_visible_trainer()
-{
+static character_t *io_nearest_visible_trainer() {
   character_t **c, *n;
   uint32_t x, y, count;
 
-  c = malloc(world.cur_map->num_trainers * sizeof (*c));
+  c = (character_t **)malloc(world.cur_map->num_trainers * sizeof(*c));
 
   /* Get a linear list of trainers */
   for (count = 0, y = 1; y < MAP_Y - 1; y++) {
     for (x = 1; x < MAP_X - 1; x++) {
-      if (world.cur_map->cmap[y][x] && world.cur_map->cmap[y][x] !=
-          &world.pc) {
+      if (world.cur_map->cmap[y][x] && world.cur_map->cmap[y][x] != &world.pc) {
         c[count++] = world.cur_map->cmap[y][x];
       }
     }
   }
 
   /* Sort it by distance from PC */
-  qsort(c, count, sizeof (*c), compare_trainer_distance);
+  qsort(c, count, sizeof(*c), compare_trainer_distance);
 
   n = c[0];
 
@@ -136,8 +129,7 @@ static character_t *io_nearest_visible_trainer()
   return n;
 }
 
-void io_display()
-{
+void io_display() {
   uint32_t y, x;
   character_t *c;
 
@@ -187,19 +179,18 @@ void io_display()
           attroff(COLOR_PAIR(COLOR_GREEN));
           break;
         default:
- /* Use zero as an error symbol, since it stands out somewhat, and it's *
-  * not otherwise used.                                                 */
+          /* Use zero as an error symbol, since it stands out somewhat, and it's
+           * * not otherwise used. */
           attron(COLOR_PAIR(COLOR_CYAN));
           mvaddch(y + 1, x, '0');
-          attroff(COLOR_PAIR(COLOR_CYAN)); 
-       }
+          attroff(COLOR_PAIR(COLOR_CYAN));
+        }
       }
     }
   }
 
   mvprintw(23, 1, "PC position is (%2d,%2d) on map %d%cx%d%c.",
-           world.pc.pos[dim_x],
-           world.pc.pos[dim_y],
+           world.pc.pos[dim_x], world.pc.pos[dim_y],
            abs(world.cur_idx[dim_x] - (WORLD_SIZE / 2)),
            world.cur_idx[dim_x] - (WORLD_SIZE / 2) >= 0 ? 'E' : 'W',
            abs(world.cur_idx[dim_y] - (WORLD_SIZE / 2)),
@@ -209,14 +200,11 @@ void io_display()
   mvprintw(22, 30, "Nearest visible trainer: ");
   if ((c = io_nearest_visible_trainer())) {
     attron(COLOR_PAIR(COLOR_RED));
-    mvprintw(22, 55, "%c at %d %c by %d %c.",
-             c->symbol,
+    mvprintw(22, 55, "%c at %d %c by %d %c.", c->symbol,
              abs(c->pos[dim_y] - world.pc.pos[dim_y]),
-             ((c->pos[dim_y] - world.pc.pos[dim_y]) <= 0 ?
-              'N' : 'S'),
+             ((c->pos[dim_y] - world.pc.pos[dim_y]) <= 0 ? 'N' : 'S'),
              abs(c->pos[dim_x] - world.pc.pos[dim_x]),
-             ((c->pos[dim_x] - world.pc.pos[dim_x]) <= 0 ?
-              'W' : 'E'));
+             ((c->pos[dim_x] - world.pc.pos[dim_x]) <= 0 ? 'W' : 'E'));
     attroff(COLOR_PAIR(COLOR_RED));
   } else {
     attron(COLOR_PAIR(COLOR_BLUE));
@@ -229,23 +217,21 @@ void io_display()
   refresh();
 }
 
-uint32_t io_teleport_pc(pair_t dest)
-{
+uint32_t io_teleport_pc(pair_t dest) {
   /* Just for fun. And debugging.  Mostly debugging. */
 
   do {
     dest[dim_x] = rand_range(1, MAP_X - 2);
     dest[dim_y] = rand_range(1, MAP_Y - 2);
-  } while (world.cur_map->cmap[dest[dim_y]][dest[dim_x]]                  ||
-           move_cost[char_pc][world.cur_map->map[dest[dim_y]]
-                                                [dest[dim_x]]] == INT_MAX ||
+  } while (world.cur_map->cmap[dest[dim_y]][dest[dim_x]] ||
+           move_cost[char_pc][world.cur_map->map[dest[dim_y]][dest[dim_x]]] ==
+               INT_MAX ||
            world.rival_dist[dest[dim_y]][dest[dim_x]] < 0);
 
   return 0;
 }
 
-static void io_scroll_trainer_list(char (*s)[40], uint32_t count)
-{
+static void io_scroll_trainer_list(char (*s)[40], uint32_t count) {
   uint32_t offset;
   uint32_t i;
 
@@ -269,17 +255,14 @@ static void io_scroll_trainer_list(char (*s)[40], uint32_t count)
     case 27:
       return;
     }
-
   }
 }
 
-static void io_list_trainers_display(character_t **c,
-                                     uint32_t count)
-{
+static void io_list_trainers_display(character_t **c, uint32_t count) {
   uint32_t i;
-  char (*s)[40]; /* pointer to array of 40 char */
+  char(*s)[40]; /* pointer to array of 40 char */
 
-  s = malloc(count * sizeof (*s));
+  s = (char(*)[40])malloc(count * sizeof(*s));
 
   mvprintw(3, 19, " %-40s ", "");
   /* Borrow the first element of our array for this string: */
@@ -288,15 +271,12 @@ static void io_list_trainers_display(character_t **c,
   mvprintw(5, 19, " %-40s ", "");
 
   for (i = 0; i < count; i++) {
-    snprintf(s[i], 40, "%16s %c: %2d %s by %2d %s",
-             char_type_name[c[i]->npc->ctype],
-             c[i]->symbol,
-             abs(c[i]->pos[dim_y] - world.pc.pos[dim_y]),
-             ((c[i]->pos[dim_y] - world.pc.pos[dim_y]) <= 0 ?
-              "North" : "South"),
-             abs(c[i]->pos[dim_x] - world.pc.pos[dim_x]),
-             ((c[i]->pos[dim_x] - world.pc.pos[dim_x]) <= 0 ?
-              "West" : "East"));
+    snprintf(
+        s[i], 40, "%16s %c: %2d %s by %2d %s", char_type_name[c[i]->npc->ctype],
+        c[i]->symbol, abs(c[i]->pos[dim_y] - world.pc.pos[dim_y]),
+        ((c[i]->pos[dim_y] - world.pc.pos[dim_y]) <= 0 ? "North" : "South"),
+        abs(c[i]->pos[dim_x] - world.pc.pos[dim_x]),
+        ((c[i]->pos[dim_x] - world.pc.pos[dim_x]) <= 0 ? "West" : "East"));
     if (count <= 13) {
       /* Handle the non-scrolling case right here. *
        * Scrolling in another function.            */
@@ -311,33 +291,30 @@ static void io_list_trainers_display(character_t **c,
       ;
   } else {
     mvprintw(19, 19, " %-40s ", "");
-    mvprintw(20, 19, " %-40s ",
-             "Arrows to scroll, escape to continue.");
+    mvprintw(20, 19, " %-40s ", "Arrows to scroll, escape to continue.");
     io_scroll_trainer_list(s, count);
   }
 
   free(s);
 }
 
-static void io_list_trainers()
-{
+static void io_list_trainers() {
   character_t **c;
   uint32_t x, y, count;
 
-  c = malloc(world.cur_map->num_trainers * sizeof (*c));
+  c = (character_t **)malloc(world.cur_map->num_trainers * sizeof(*c));
 
   /* Get a linear list of trainers */
   for (count = 0, y = 1; y < MAP_Y - 1; y++) {
     for (x = 1; x < MAP_X - 1; x++) {
-      if (world.cur_map->cmap[y][x] && world.cur_map->cmap[y][x] !=
-          &world.pc) {
+      if (world.cur_map->cmap[y][x] && world.cur_map->cmap[y][x] != &world.pc) {
         c[count++] = world.cur_map->cmap[y][x];
       }
     }
   }
 
   /* Sort it by distance from PC */
-  qsort(c, count, sizeof (*c), compare_trainer_distance);
+  qsort(c, count, sizeof(*c), compare_trainer_distance);
 
   /* Display it */
   io_list_trainers_display(c, count);
@@ -347,26 +324,27 @@ static void io_list_trainers()
   io_display();
 }
 
-void io_pokemart()
-{
-  mvprintw(0, 0, "Welcome to the Pokemart.  Could I interest you in some Pokeballs?");
+void io_pokemart() {
+  mvprintw(0, 0,
+           "Welcome to the Pokemart.  Could I interest you in some Pokeballs?");
   refresh();
   getch();
 }
 
-void io_pokemon_center()
-{
-  mvprintw(0, 0, "Welcome to the Pokemon Center.  How can Nurse Joy assist you?");
+void io_pokemon_center() {
+  mvprintw(0, 0,
+           "Welcome to the Pokemon Center.  How can Nurse Joy assist you?");
   refresh();
   getch();
 }
 
-void io_battle(character_t *aggressor, character_t *defender)
-{
+void io_battle(character_t *aggressor, character_t *defender) {
   character_t *npc;
 
   io_display();
-  mvprintw(0, 0, "Aww, how'd you get so strong?  You and your pokemon must share a special bond!");
+  mvprintw(0, 0,
+           "Aww, how'd you get so strong?  You and your pokemon must share a "
+           "special bond!");
   refresh();
   getch();
   if (aggressor->pc) {
@@ -381,8 +359,7 @@ void io_battle(character_t *aggressor, character_t *defender)
   }
 }
 
-uint32_t move_pc_dir(uint32_t input, pair_t dest)
-{
+uint32_t move_pc_dir(uint32_t input, pair_t dest) {
   dest[dim_y] = world.pc.pos[dim_y];
   dest[dim_x] = world.pc.pos[dim_x];
 
@@ -449,7 +426,7 @@ uint32_t move_pc_dir(uint32_t input, pair_t dest)
       dest[dim_y] = world.pc.pos[dim_y];
     }
   }
-  
+
   if (move_cost[char_pc][world.cur_map->map[dest[dim_y]][dest[dim_x]]] ==
       INT_MAX) {
     return 1;
@@ -458,10 +435,9 @@ uint32_t move_pc_dir(uint32_t input, pair_t dest)
   return 0;
 }
 
-void io_teleport_world(pair_t dest)
-{
+void io_teleport_world(pair_t dest) {
   int x, y;
-  
+
   world.cur_map->cmap[world.pc.pos[dim_y]][world.pc.pos[dim_x]] = NULL;
 
   mvprintw(0, 0, "Enter x [-200, 200]: ");
@@ -488,7 +464,7 @@ void io_teleport_world(pair_t dest)
   if (y > 200) {
     y = 200;
   }
-  
+
   x += 200;
   y += 200;
 
@@ -499,8 +475,7 @@ void io_teleport_world(pair_t dest)
   io_teleport_pc(dest);
 }
 
-void io_handle_input(pair_t dest)
-{
+void io_handle_input(pair_t dest) {
   uint32_t turn_not_consumed;
   int key;
 
