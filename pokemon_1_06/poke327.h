@@ -6,8 +6,6 @@
 
 #include "heap.h"
 
-typedef struct character character_t;
-
 #define malloc(size)                                                           \
   ({                                                                           \
     void *_tmp;                                                                \
@@ -58,21 +56,10 @@ typedef enum __attribute__((__packed__)) terrain_type {
   num_terrain_types
 } terrain_type_t;
 
-class map {
-public:
-  terrain_type_t map[MAP_Y][MAP_X];
-  uint8_t height[MAP_Y][MAP_X];
-  character_t *cmap[MAP_Y][MAP_X];
-  heap_t turn;
-  int32_t num_trainers;
-  int8_t n, s, e, w;
-};
-
 typedef struct npc npc_t;
 typedef struct pc pc_t;
-
 /* Here instead of character.h to abvoid including character.h */
-class character {
+class Character {
 public:
   npc_t *npc;
   pc_t *pc;
@@ -81,15 +68,25 @@ public:
   int next_turn;
 };
 
+class Map {
+public:
+  terrain_type_t map[MAP_Y][MAP_X];
+  uint8_t height[MAP_Y][MAP_X];
+  Character *cmap[MAP_Y][MAP_X];
+  heap_t turn;
+  int32_t num_trainers;
+  int8_t n, s, e, w;
+};
+
 typedef struct world {
-  map *world[WORLD_SIZE][WORLD_SIZE];
+  Map *world[WORLD_SIZE][WORLD_SIZE];
   pair_t cur_idx;
-  map *cur_map;
+  Map *cur_map;
   /* Please distance maps in world, not map, since *
    * we only need one pair at any given time.      */
   int hiker_dist[MAP_Y][MAP_X];
   int rival_dist[MAP_Y][MAP_X];
-  character_t pc;
+  Character pc;
   int quit;
 } world_t;
 

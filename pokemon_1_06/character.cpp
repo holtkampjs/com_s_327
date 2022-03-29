@@ -25,7 +25,7 @@ const char *char_type_name[num_character_types] = {
     "Trainer",
 };
 
-static void move_hiker_func(character_t *c, pair_t dest) {
+static void move_hiker_func(Character *c, pair_t dest) {
   int min;
   int base;
   int i;
@@ -53,7 +53,7 @@ static void move_hiker_func(character_t *c, pair_t dest) {
   }
 }
 
-static void move_rival_func(character_t *c, pair_t dest) {
+static void move_rival_func(Character *c, pair_t dest) {
   int min;
   int base;
   int i;
@@ -81,7 +81,7 @@ static void move_rival_func(character_t *c, pair_t dest) {
   }
 }
 
-static void move_pacer_func(character_t *c, pair_t dest) {
+static void move_pacer_func(Character *c, pair_t dest) {
   dest[dim_x] = c->pos[dim_x];
   dest[dim_y] = c->pos[dim_y];
 
@@ -111,7 +111,7 @@ static void move_pacer_func(character_t *c, pair_t dest) {
   }
 }
 
-static void move_wanderer_func(character_t *c, pair_t dest) {
+static void move_wanderer_func(Character *c, pair_t dest) {
   dest[dim_x] = c->pos[dim_x];
   dest[dim_y] = c->pos[dim_y];
 
@@ -140,13 +140,13 @@ static void move_wanderer_func(character_t *c, pair_t dest) {
   }
 }
 
-static void move_sentry_func(character_t *c, pair_t dest) {
+static void move_sentry_func(Character *c, pair_t dest) {
   // Not a bug.  Sentries are non-aggro.
   dest[dim_x] = c->pos[dim_x];
   dest[dim_y] = c->pos[dim_y];
 }
 
-static void move_walker_func(character_t *c, pair_t dest) {
+static void move_walker_func(Character *c, pair_t dest) {
   dest[dim_x] = c->pos[dim_x];
   dest[dim_y] = c->pos[dim_y];
 
@@ -178,25 +178,25 @@ static void move_walker_func(character_t *c, pair_t dest) {
   }
 }
 
-static void move_pc_func(character_t *c, pair_t dest) {
+static void move_pc_func(Character *c, pair_t dest) {
   io_display();
   io_handle_input(dest);
 }
 
-void (*move_func[num_movement_types])(character_t *, pair_t) = {
+void (*move_func[num_movement_types])(Character *, pair_t) = {
     move_hiker_func,  move_rival_func,  move_pacer_func, move_wanderer_func,
     move_sentry_func, move_walker_func, move_pc_func,
 };
 
 int32_t cmp_char_turns(const void *key, const void *with) {
-  return ((character_t *)key)->next_turn - ((character_t *)with)->next_turn;
+  return ((Character *)key)->next_turn - ((Character *)with)->next_turn;
 }
 
 void delete_character(void *v) {
   if (v == &world.pc) {
     free(world.pc.pc);
   } else {
-    free(((character_t *)v)->npc);
+    free(((Character *)v)->npc);
     free(v);
   }
 }
@@ -217,7 +217,7 @@ static int32_t rival_cmp(const void *key, const void *with) {
                           [((path_t *)with)->pos[dim_x]]);
 }
 
-void pathfind(map *m) {
+void pathfind(Map *m) {
   heap_t h;
   uint32_t x, y;
   static path_t p[MAP_Y][MAP_X], *c;

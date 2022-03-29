@@ -33,7 +33,7 @@ static int32_t edge_penalty(int8_t x, int8_t y) {
   return (x == 1 || y == 1 || x == MAP_X - 2 || y == MAP_Y - 2) ? 2 : 1;
 }
 
-static void dijkstra_path(map *m, pair_t from, pair_t to) {
+static void dijkstra_path(Map *m, pair_t from, pair_t to) {
   static path_t path[MAP_Y][MAP_X], *p;
   static uint32_t initialized = 0;
   heap_t h;
@@ -130,7 +130,7 @@ static void dijkstra_path(map *m, pair_t from, pair_t to) {
   }
 }
 
-static int build_paths(map *m) {
+static int build_paths(Map *m) {
   pair_t from, to;
 
   /*  printf("%d %d %d %d\n", m->n, m->s, m->e, m->w);*/
@@ -226,7 +226,7 @@ static int gaussian[5][5] = {{1, 4, 7, 4, 1},
                              {4, 16, 26, 16, 4},
                              {1, 4, 7, 4, 1}};
 
-static int smooth_height(map *m) {
+static int smooth_height(Map *m) {
   int32_t i, x, y;
   int32_t s, t, p, q;
   queue_node_t *head, *tail, *tmp;
@@ -370,7 +370,7 @@ static int smooth_height(map *m) {
   return 0;
 }
 
-static void find_building_location(map *m, pair_t p) {
+static void find_building_location(Map *m, pair_t p) {
   do {
     p[dim_x] = rand() % (MAP_X - 5) + 3;
     p[dim_y] = rand() % (MAP_Y - 10) + 5;
@@ -400,7 +400,7 @@ static void find_building_location(map *m, pair_t p) {
   } while (1);
 }
 
-static int place_pokemart(map *m) {
+static int place_pokemart(Map *m) {
   pair_t p;
 
   find_building_location(m, p);
@@ -413,7 +413,7 @@ static int place_pokemart(map *m) {
   return 0;
 }
 
-static int place_center(map *m) {
+static int place_center(Map *m) {
   pair_t p;
 
   find_building_location(m, p);
@@ -426,7 +426,7 @@ static int place_center(map *m) {
   return 0;
 }
 
-static int map_terrain(map *m, int8_t n, int8_t s, int8_t e, int8_t w) {
+static int map_terrain(Map *m, int8_t n, int8_t s, int8_t e, int8_t w) {
   int32_t i, x, y;
   queue_node_t *head, *tail, *tmp;
   //  FILE *out;
@@ -590,7 +590,7 @@ static int map_terrain(map *m, int8_t n, int8_t s, int8_t e, int8_t w) {
   return 0;
 }
 
-static int place_boulders(map *m) {
+static int place_boulders(Map *m) {
   int i;
   int x, y;
 
@@ -605,7 +605,7 @@ static int place_boulders(map *m) {
   return 0;
 }
 
-static int place_trees(map *m) {
+static int place_trees(Map *m) {
   int i;
   int x, y;
 
@@ -627,7 +627,7 @@ void rand_pos(pair_t pos) {
 
 void new_hiker() {
   pair_t pos;
-  character_t *c;
+  Character *c;
 
   do {
     rand_pos(pos);
@@ -636,7 +636,7 @@ void new_hiker() {
            pos[dim_x] > MAP_X - 4 || pos[dim_y] < 3 || pos[dim_y] > MAP_Y - 4);
 
   world.cur_map->cmap[pos[dim_y]][pos[dim_x]] = c =
-      (character_t *)malloc(sizeof(*c));
+      (Character *)malloc(sizeof(*c));
   c->npc = (npc_t *)malloc(sizeof(*c->npc));
   c->pos[dim_y] = pos[dim_y];
   c->pos[dim_x] = pos[dim_x];
@@ -655,7 +655,7 @@ void new_hiker() {
 
 void new_rival() {
   pair_t pos;
-  character_t *c;
+  Character *c;
 
   do {
     rand_pos(pos);
@@ -665,7 +665,7 @@ void new_rival() {
            pos[dim_x] > MAP_X - 4 || pos[dim_y] < 3 || pos[dim_y] > MAP_Y - 4);
 
   world.cur_map->cmap[pos[dim_y]][pos[dim_x]] = c =
-      (character_t *)malloc(sizeof(*c));
+      (Character *)malloc(sizeof(*c));
   c->npc = (npc_t *)malloc(sizeof(*c->npc));
   c->pos[dim_y] = pos[dim_y];
   c->pos[dim_x] = pos[dim_x];
@@ -682,7 +682,7 @@ void new_rival() {
 
 void new_char_other() {
   pair_t pos;
-  character_t *c;
+  Character *c;
 
   do {
     rand_pos(pos);
@@ -692,7 +692,7 @@ void new_char_other() {
            pos[dim_x] > MAP_X - 4 || pos[dim_y] < 3 || pos[dim_y] > MAP_Y - 4);
 
   world.cur_map->cmap[pos[dim_y]][pos[dim_x]] = c =
-      (character_t *)malloc(sizeof(*c));
+      (Character *)malloc(sizeof(*c));
   c->npc = (npc_t *)malloc(sizeof(*c->npc));
   c->pos[dim_y] = pos[dim_y];
   c->pos[dim_x] = pos[dim_x];
@@ -766,7 +766,7 @@ void init_pc() {
 }
 
 void place_pc() {
-  character_t *c;
+  Character *c;
 
   if (world.pc.pos[dim_x] == 1) {
     world.pc.pos[dim_x] = MAP_X - 2;
@@ -780,7 +780,7 @@ void place_pc() {
 
   world.cur_map->cmap[world.pc.pos[dim_y]][world.pc.pos[dim_x]] = &world.pc;
 
-  if ((c = (character_t *)heap_peek_min(&world.cur_map->turn))) {
+  if ((c = (Character *)heap_peek_min(&world.cur_map->turn))) {
     world.pc.next_turn = c->next_turn;
   } else {
     world.pc.next_turn = 0;
@@ -803,7 +803,7 @@ int new_map(int teleport) {
   }
 
   world.cur_map = world.world[world.cur_idx[dim_y]][world.cur_idx[dim_x]] =
-      (map *)malloc(sizeof(*world.cur_map));
+      (Map *)malloc(sizeof(*world.cur_map));
 
   smooth_height(world.cur_map);
 
@@ -955,11 +955,11 @@ void leave_map(pair_t d) {
 }
 
 void game_loop() {
-  character_t *c;
+  Character *c;
   pair_t d;
 
   while (!world.quit) {
-    c = (character_t *)heap_remove_min(&world.cur_map->turn);
+    c = (Character *)heap_remove_min(&world.cur_map->turn);
 
     move_func[c->npc ? c->npc->mtype : move_pc](c, d);
 
