@@ -33,7 +33,7 @@ static int32_t edge_penalty(int8_t x, int8_t y) {
   return (x == 1 || y == 1 || x == MAP_X - 2 || y == MAP_Y - 2) ? 2 : 1;
 }
 
-static void dijkstra_path(map_t *m, pair_t from, pair_t to) {
+static void dijkstra_path(map *m, pair_t from, pair_t to) {
   static path_t path[MAP_Y][MAP_X], *p;
   static uint32_t initialized = 0;
   heap_t h;
@@ -130,7 +130,7 @@ static void dijkstra_path(map_t *m, pair_t from, pair_t to) {
   }
 }
 
-static int build_paths(map_t *m) {
+static int build_paths(map *m) {
   pair_t from, to;
 
   /*  printf("%d %d %d %d\n", m->n, m->s, m->e, m->w);*/
@@ -226,7 +226,7 @@ static int gaussian[5][5] = {{1, 4, 7, 4, 1},
                              {4, 16, 26, 16, 4},
                              {1, 4, 7, 4, 1}};
 
-static int smooth_height(map_t *m) {
+static int smooth_height(map *m) {
   int32_t i, x, y;
   int32_t s, t, p, q;
   queue_node_t *head, *tail, *tmp;
@@ -367,22 +367,10 @@ static int smooth_height(map_t *m) {
     }
   }
 
-  /*
-  out = fopen("diffused.pgm", "w");
-  fprintf(out, "P5\n%u %u\n255\n", MAP_X, MAP_Y);
-  fwrite(&height, sizeof (height), 1, out);
-  fclose(out);
-
-  out = fopen("smoothed.pgm", "w");
-  fprintf(out, "P5\n%u %u\n255\n", MAP_X, MAP_Y);
-  fwrite(&m->height, sizeof (m->height), 1, out);
-  fclose(out);
-  */
-
   return 0;
 }
 
-static void find_building_location(map_t *m, pair_t p) {
+static void find_building_location(map *m, pair_t p) {
   do {
     p[dim_x] = rand() % (MAP_X - 5) + 3;
     p[dim_y] = rand() % (MAP_Y - 10) + 5;
@@ -412,7 +400,7 @@ static void find_building_location(map_t *m, pair_t p) {
   } while (1);
 }
 
-static int place_pokemart(map_t *m) {
+static int place_pokemart(map *m) {
   pair_t p;
 
   find_building_location(m, p);
@@ -425,7 +413,7 @@ static int place_pokemart(map_t *m) {
   return 0;
 }
 
-static int place_center(map_t *m) {
+static int place_center(map *m) {
   pair_t p;
 
   find_building_location(m, p);
@@ -438,7 +426,7 @@ static int place_center(map_t *m) {
   return 0;
 }
 
-static int map_terrain(map_t *m, int8_t n, int8_t s, int8_t e, int8_t w) {
+static int map_terrain(map *m, int8_t n, int8_t s, int8_t e, int8_t w) {
   int32_t i, x, y;
   queue_node_t *head, *tail, *tmp;
   //  FILE *out;
@@ -480,13 +468,6 @@ static int map_terrain(map_t *m, int8_t n, int8_t s, int8_t e, int8_t w) {
     tail->x = x;
     tail->y = y;
   }
-
-  /*
-  out = fopen("seeded.pgm", "w");
-  fprintf(out, "P5\n%u %u\n255\n", MAP_X, MAP_Y);
-  fwrite(&m->map, sizeof (m->map), 1, out);
-  fclose(out);
-  */
 
   /* Diffuse the vaules to fill the space */
   while (head) {
@@ -609,7 +590,7 @@ static int map_terrain(map_t *m, int8_t n, int8_t s, int8_t e, int8_t w) {
   return 0;
 }
 
-static int place_boulders(map_t *m) {
+static int place_boulders(map *m) {
   int i;
   int x, y;
 
@@ -624,7 +605,7 @@ static int place_boulders(map_t *m) {
   return 0;
 }
 
-static int place_trees(map_t *m) {
+static int place_trees(map *m) {
   int i;
   int x, y;
 
@@ -822,7 +803,7 @@ int new_map(int teleport) {
   }
 
   world.cur_map = world.world[world.cur_idx[dim_y]][world.cur_idx[dim_x]] =
-      (map_t *)malloc(sizeof(*world.cur_map));
+      (map *)malloc(sizeof(*world.cur_map));
 
   smooth_height(world.cur_map);
 

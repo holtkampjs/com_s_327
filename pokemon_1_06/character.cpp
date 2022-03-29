@@ -217,7 +217,7 @@ static int32_t rival_cmp(const void *key, const void *with) {
                           [((path_t *)with)->pos[dim_x]]);
 }
 
-void pathfind(map_t *m) {
+void pathfind(map *m) {
   heap_t h;
   uint32_t x, y;
   static path_t p[MAP_Y][MAP_X], *c;
