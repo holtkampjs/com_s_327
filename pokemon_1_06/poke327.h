@@ -78,7 +78,8 @@ public:
   int8_t n, s, e, w;
 };
 
-typedef struct world {
+class World {
+public:
   Map *world[WORLD_SIZE][WORLD_SIZE];
   pair_t cur_idx;
   Map *cur_map;
@@ -88,11 +89,11 @@ typedef struct world {
   int rival_dist[MAP_Y][MAP_X];
   Character pc;
   int quit;
-} world_t;
+};
 
 /* Even unallocated, a WORLD_SIZE x WORLD_SIZE array of pointers is a very *
  * large thing to put on the stack.  To avoid that, world is a global.     */
-extern world_t world;
+extern World world;
 
 extern pair_t all_dirs[8];
 

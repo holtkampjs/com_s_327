@@ -19,7 +19,7 @@ typedef struct queue_node {
   struct queue_node *next;
 } queue_node_t;
 
-world_t world;
+World world;
 
 pair_t all_dirs[8] = {
     {-1, -1}, {-1, 0}, {-1, 1}, {0, -1}, {0, 1}, {1, -1}, {1, 0}, {1, 1},
