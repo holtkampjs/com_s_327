@@ -58,7 +58,6 @@ typedef enum __attribute__((__packed__)) terrain_type {
 
 typedef struct npc npc_t;
 typedef struct pc pc_t;
-/* Here instead of character.h to abvoid including character.h */
 class Character {
 public:
   npc_t *npc;

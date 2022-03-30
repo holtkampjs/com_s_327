@@ -2,6 +2,7 @@
 #include <limits.h>
 #include <ncurses.h>
 #include <stdlib.h>
+#include <string>
 #include <unistd.h>
 
 #include "character.h"
