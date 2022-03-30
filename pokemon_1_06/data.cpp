@@ -1,4 +1,5 @@
 #include <fstream>
+#include <ios>
 #include <iostream>
 #include <string>
 
@@ -189,5 +190,33 @@ public:
 
 class CsvParser {
 private:
+  std::string getPath(int attempt, std::string filename) {
+    switch (attempt) {
+    case 1:
+      return "/share/cs327/pokedex/pokedex/data/csv/" + filename;
+    case 2:
+      std::string home_dir(getenv("HOME"));
+      if (home_dir.empty())
+        break;
+      return home_dir + "/cs327/pokedex/pokedex/data/csv/" + filename;
+    }
+
+    return "";
+  }
+
 public:
+  CsvParser() {}
+  ~CsvParser() {}
+
+  int parse(std::string filename) {
+    std::fstream file;
+    std::string path = getPath(1, filename);
+    file.open(path, std::ios::in);
+
+    // if (file.is_open())
+    // TODO: Continue from here
+
+    file.close();
+    return 0;
+  }
 };
