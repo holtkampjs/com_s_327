@@ -210,11 +210,19 @@ public:
 
   int parse(std::string filename) {
     std::fstream file;
-    std::string path = getPath(1, filename);
-    file.open(path, std::ios::in);
+    std::string path;
 
-    // if (file.is_open())
-    // TODO: Continue from here
+    for (int i = 0; !file.is_open(); i++) {
+      path = getPath(i, filename);
+
+      if (path.empty()) {
+        return 1;
+      }
+
+      file.open(path, std::ios::in);
+    }
+
+    // TODO: parse information
 
     file.close();
     return 0;
