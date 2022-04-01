@@ -116,6 +116,25 @@ public:
     this->contest_effect_id = m->contest_effect_id;
     this->super_contest_effect_id = m->super_contest_effect_id;
   }
+
+  friend std::ostream &operator<<(std::ostream &os, const Moves &m) {
+    os << m.id << ",";
+    os << m.identifier << ",";
+    os << m.generation_id << ",";
+    os << m.type_id << ",";
+    os << m.power << ",";
+    os << m.pp << ",";
+    os << m.accuracy << ",";
+    os << m.priority << ",";
+    os << m.target_id << ",";
+    os << m.damage_class_id << ",";
+    os << m.effect_id << ",";
+    os << m.effect_chance << ",";
+    os << m.contest_type_id << ",";
+    os << m.contest_effect_id << ",";
+    os << m.super_contest_effect_id << endl;
+    return os;
+  }
 };
 
 class PokemonMoves {
@@ -146,6 +165,16 @@ public:
     this->pokemon_move_method_id = pm->pokemon_move_method_id;
     this->level = pm->level;
     this->order = pm->order;
+  }
+
+  friend std::ostream &operator<<(std::ostream &os, const PokemonMoves &pm) {
+    os << pm.pokemon_id << ",";
+    os << pm.version_group_id << ",";
+    os << pm.move_id << ",";
+    os << pm.pokemon_move_method_id << ",";
+    os << pm.level << ",";
+    os << pm.order << endl;
+    return os;
   }
 };
 
@@ -226,6 +255,30 @@ public:
     this->order = ps->order;
     this->conquest_order = ps->conquest_order;
   }
+
+  friend std::ostream &operator<<(std::ostream &os, const PokemonSpecies &ps) {
+    os << ps.id << ",";
+    os << ps.identifier << ",";
+    os << ps.generation_id << ",";
+    os << ps.evolves_from_species_id << ",";
+    os << ps.evolution_chain_id << ",";
+    os << ps.color_id << ",";
+    os << ps.shape_id << ",";
+    os << ps.habitat_id << ",";
+    os << ps.gender_rate << ",";
+    os << ps.capture_rate << ",";
+    os << ps.base_happiness << ",";
+    os << ps.is_baby << ",";
+    os << ps.hatch_counter << ",";
+    os << ps.has_gender_differences << ",";
+    os << ps.growth_rate_id << ",";
+    os << ps.forms_switchable << ",";
+    os << ps.is_legendary << ",";
+    os << ps.is_mythical << ",";
+    os << ps.order << ",";
+    os << ps.conquest_order << endl;
+    return os;
+  }
 };
 
 class Experience {
@@ -246,6 +299,13 @@ public:
     this->level = e->level;
     this->experience = e->experience;
   }
+
+  friend std::ostream &operator<<(std::ostream &os, const Experience &e) {
+    os << e.growth_rate_id << ",";
+    os << e.level << ",";
+    os << e.experience << endl;
+    return os;
+  }
 };
 
 class TypeNames {
@@ -265,6 +325,13 @@ public:
     this->type_id = tn->type_id;
     this->local_language = tn->local_language;
     this->name = tn->name;
+  }
+
+  friend std::ostream &operator<<(std::ostream &os, const TypeNames &tn) {
+    os << tn.type_id << ",";
+    os << tn.local_language << ",";
+    os << tn.name << endl;
+    return os;
   }
 };
 
@@ -294,6 +361,36 @@ public:
   void printPokemon() {
     list<Pokemon>::iterator itr;
     for (itr = pokemon->begin(); itr != pokemon->end(); ++itr)
+      cout << *itr << endl;
+  }
+
+  void printMoves() {
+    list<Moves>::iterator itr;
+    for (itr = moves->begin(); itr != moves->end(); ++itr)
+      cout << *itr << endl;
+  }
+
+  void printPokemonMoves() {
+    list<PokemonMoves>::iterator itr;
+    for (itr = pokemonMoves->begin(); itr != pokemonMoves->end(); ++itr)
+      cout << *itr << endl;
+  }
+
+  void printPokemonSpecies() {
+    list<PokemonSpecies>::iterator itr;
+    for (itr = pokemonSpecies->begin(); itr != pokemonSpecies->end(); ++itr)
+      cout << *itr << endl;
+  }
+
+  void printExperience() {
+    list<Experience>::iterator itr;
+    for (itr = experience->begin(); itr != experience->end(); ++itr)
+      cout << *itr << endl;
+  }
+
+  void printTypeNames() {
+    list<TypeNames>::iterator itr;
+    for (itr = typeNames->begin(); itr != typeNames->end(); ++itr)
       cout << *itr << endl;
   }
 };
