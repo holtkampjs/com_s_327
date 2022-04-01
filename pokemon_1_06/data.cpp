@@ -98,6 +98,7 @@ public:
     this->super_contest_effect_id =
         super_contest_effect_id ? super_contest_effect_id : -1;
   }
+
   Moves(Moves *&m) {
     this->id = m->id;
     this->identifier = m->identifier;
@@ -136,6 +137,15 @@ public:
         pokemon_move_method_id ? pokemon_move_method_id : -1;
     this->level = level ? level : -1;
     this->order = order ? order : -1;
+  }
+
+  PokemonMoves(PokemonMoves *&pm) {
+    this->pokemon_id = pm->pokemon_id;
+    this->version_group_id = pm->version_group_id;
+    this->move_id = pm->move_id;
+    this->pokemon_move_method_id = pm->pokemon_move_method_id;
+    this->level = pm->level;
+    this->order = pm->order;
   }
 };
 
@@ -193,6 +203,29 @@ public:
     this->order = order ? order : -1;
     this->conquest_order = conquest_order ? conquest_order : -1;
   }
+
+  PokemonSpecies(PokemonSpecies *&ps) {
+    this->id = ps->id;
+    this->identifier = ps->identifier;
+    this->generation_id = ps->generation_id;
+    this->evolves_from_species_id = ps->evolves_from_species_id;
+    this->evolution_chain_id = ps->evolution_chain_id;
+    this->color_id = ps->color_id;
+    this->shape_id = ps->shape_id;
+    this->habitat_id = ps->habitat_id;
+    this->gender_rate = ps->gender_rate;
+    this->capture_rate = ps->capture_rate;
+    this->base_happiness = ps->base_happiness;
+    this->is_baby = ps->is_baby;
+    this->hatch_counter = ps->hatch_counter;
+    this->has_gender_differences = ps->has_gender_differences;
+    this->growth_rate_id = ps->growth_rate_id;
+    this->forms_switchable = ps->forms_switchable;
+    this->is_legendary = ps->is_legendary;
+    this->is_mythical = ps->is_mythical;
+    this->order = ps->order;
+    this->conquest_order = ps->conquest_order;
+  }
 };
 
 class Experience {
@@ -207,6 +240,12 @@ public:
     this->level = level ? level : -1;
     this->experience = experience ? experience : -1;
   }
+
+  Experience(Experience *&e) {
+    this->growth_rate_id = e->growth_rate_id;
+    this->level = e->level;
+    this->experience = e->experience;
+  }
 };
 
 class TypeNames {
@@ -220,6 +259,12 @@ public:
     this->type_id = type_id ? type_id : -1;
     this->local_language = local_language ? local_language : -1;
     this->name = name;
+  }
+
+  TypeNames(TypeNames *&tn) {
+    this->type_id = tn->type_id;
+    this->local_language = tn->local_language;
+    this->name = tn->name;
   }
 };
 
