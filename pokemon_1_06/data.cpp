@@ -1,3 +1,4 @@
+#include <bits/stdc++.h>
 #include <cstring>
 #include <fstream>
 #include <ios>
@@ -6,9 +7,12 @@
 #include <list>
 #include <new>
 #include <ostream>
+#include <sstream>
 #include <string>
 
 using namespace std;
+
+#define stoi(a) (a.empty() ? -1 : stoi(a))
 
 class Pokemon {
 private:
@@ -46,14 +50,28 @@ public:
   }
 
   friend std::ostream &operator<<(std::ostream &os, const Pokemon &p) {
-    os << p.id << ",";
-    os << p.identifier << ",";
-    os << p.species_id << ",";
-    os << p.height << ",";
-    os << p.weight << ",";
-    os << p.base_experience << ",";
-    os << p.order << ",";
-    os << p.is_default;
+    if (p.id != -1)
+      os << p.id;
+    os << ",";
+    os << p.identifier;
+    os << ",";
+    if (p.species_id != -1)
+      os << p.species_id;
+    os << ",";
+    if (p.height != -1)
+      os << p.height;
+    os << ",";
+    if (p.weight != -1)
+      os << p.weight;
+    os << ",";
+    if (p.base_experience != -1)
+      os << p.base_experience;
+    os << ",";
+    if (p.order != -1)
+      os << p.order;
+    os << ",";
+    if (p.is_default != -1)
+      os << p.is_default;
     return os;
   }
 };
@@ -118,21 +136,49 @@ public:
   }
 
   friend std::ostream &operator<<(std::ostream &os, const Moves &m) {
-    os << m.id << ",";
-    os << m.identifier << ",";
-    os << m.generation_id << ",";
-    os << m.type_id << ",";
-    os << m.power << ",";
-    os << m.pp << ",";
-    os << m.accuracy << ",";
-    os << m.priority << ",";
-    os << m.target_id << ",";
-    os << m.damage_class_id << ",";
-    os << m.effect_id << ",";
-    os << m.effect_chance << ",";
-    os << m.contest_type_id << ",";
-    os << m.contest_effect_id << ",";
-    os << m.super_contest_effect_id << endl;
+    if (m.id != -1)
+      os << m.id;
+    os << ",";
+    os << m.identifier;
+    os << ",";
+    if (m.generation_id != -1)
+      os << m.generation_id;
+    os << ",";
+    if (m.type_id != -1)
+      os << m.type_id;
+    os << ",";
+    if (m.power != -1)
+      os << m.power;
+    os << ",";
+    if (m.pp != -1)
+      os << m.pp;
+    os << ",";
+    if (m.accuracy != -1)
+      os << m.accuracy;
+    os << ",";
+    if (m.priority != -1)
+      os << m.priority;
+    os << ",";
+    if (m.target_id != -1)
+      os << m.target_id;
+    os << ",";
+    if (m.damage_class_id != -1)
+      os << m.damage_class_id;
+    os << ",";
+    if (m.effect_id != -1)
+      os << m.effect_id;
+    os << ",";
+    if (m.effect_chance != -1)
+      os << m.effect_chance;
+    os << ",";
+    if (m.contest_type_id != -1)
+      os << m.contest_type_id;
+    os << ",";
+    if (m.contest_effect_id != -1)
+      os << m.contest_effect_id;
+    os << ",";
+    if (m.super_contest_effect_id != -1)
+      os << m.super_contest_effect_id;
     return os;
   }
 };
@@ -168,12 +214,23 @@ public:
   }
 
   friend std::ostream &operator<<(std::ostream &os, const PokemonMoves &pm) {
-    os << pm.pokemon_id << ",";
-    os << pm.version_group_id << ",";
-    os << pm.move_id << ",";
-    os << pm.pokemon_move_method_id << ",";
-    os << pm.level << ",";
-    os << pm.order << endl;
+    if (pm.pokemon_id != -1)
+      os << pm.pokemon_id;
+    os << ",";
+    if (pm.version_group_id != -1)
+      os << pm.version_group_id;
+    os << ",";
+    if (pm.move_id != -1)
+      os << pm.move_id;
+    os << ",";
+    if (pm.pokemon_move_method_id != -1)
+      os << pm.pokemon_move_method_id;
+    os << ",";
+    if (pm.level != -1)
+      os << pm.level;
+    os << ",";
+    if (pm.order != -1)
+      os << pm.order;
     return os;
   }
 };
@@ -257,26 +314,64 @@ public:
   }
 
   friend std::ostream &operator<<(std::ostream &os, const PokemonSpecies &ps) {
-    os << ps.id << ",";
-    os << ps.identifier << ",";
-    os << ps.generation_id << ",";
-    os << ps.evolves_from_species_id << ",";
-    os << ps.evolution_chain_id << ",";
-    os << ps.color_id << ",";
-    os << ps.shape_id << ",";
-    os << ps.habitat_id << ",";
-    os << ps.gender_rate << ",";
-    os << ps.capture_rate << ",";
-    os << ps.base_happiness << ",";
-    os << ps.is_baby << ",";
-    os << ps.hatch_counter << ",";
-    os << ps.has_gender_differences << ",";
-    os << ps.growth_rate_id << ",";
-    os << ps.forms_switchable << ",";
-    os << ps.is_legendary << ",";
-    os << ps.is_mythical << ",";
-    os << ps.order << ",";
-    os << ps.conquest_order << endl;
+    if (ps.id != -1)
+      os << ps.id;
+    os << ",";
+    os << ps.identifier;
+    os << ",";
+    if (ps.generation_id != -1)
+      os << ps.generation_id;
+    os << ",";
+    if (ps.evolves_from_species_id != -1)
+      os << ps.evolves_from_species_id;
+    os << ",";
+    if (ps.evolution_chain_id != -1)
+      os << ps.evolution_chain_id;
+    os << ",";
+    if (ps.color_id != -1)
+      os << ps.color_id;
+    os << ",";
+    if (ps.shape_id != -1)
+      os << ps.shape_id;
+    os << ",";
+    if (ps.habitat_id != -1)
+      os << ps.habitat_id;
+    os << ",";
+    if (ps.gender_rate != -1)
+      os << ps.gender_rate;
+    os << ",";
+    if (ps.capture_rate != -1)
+      os << ps.capture_rate;
+    os << ",";
+    if (ps.base_happiness != -1)
+      os << ps.base_happiness;
+    os << ",";
+    if (ps.is_baby != -1)
+      os << ps.is_baby;
+    os << ",";
+    if (ps.hatch_counter != -1)
+      os << ps.hatch_counter;
+    os << ",";
+    if (ps.has_gender_differences != -1)
+      os << ps.has_gender_differences;
+    os << ",";
+    if (ps.growth_rate_id != -1)
+      os << ps.growth_rate_id;
+    os << ",";
+    if (ps.forms_switchable != -1)
+      os << ps.forms_switchable;
+    os << ",";
+    if (ps.is_legendary != -1)
+      os << ps.is_legendary;
+    os << ",";
+    if (ps.is_mythical != -1)
+      os << ps.is_mythical;
+    os << ",";
+    if (ps.order != -1)
+      os << ps.order;
+    os << ",";
+    if (ps.conquest_order != -1)
+      os << ps.conquest_order;
     return os;
   }
 };
@@ -301,9 +396,14 @@ public:
   }
 
   friend std::ostream &operator<<(std::ostream &os, const Experience &e) {
-    os << e.growth_rate_id << ",";
-    os << e.level << ",";
-    os << e.experience << endl;
+    if (e.growth_rate_id != -1)
+      os << e.growth_rate_id;
+    os << ",";
+    if (e.level != -1)
+      os << e.level;
+    os << ",";
+    if (e.experience != -1)
+      os << e.experience;
     return os;
   }
 };
@@ -328,9 +428,13 @@ public:
   }
 
   friend std::ostream &operator<<(std::ostream &os, const TypeNames &tn) {
-    os << tn.type_id << ",";
-    os << tn.local_language << ",";
-    os << tn.name << endl;
+    if (tn.type_id != -1)
+      os << tn.type_id;
+    os << ",";
+    if (tn.local_language != -1)
+      os << tn.local_language;
+    os << ",";
+    os << tn.name;
     return os;
   }
 };
@@ -417,7 +521,6 @@ private:
   }
 
   int addPokemon(char *str) {
-    char *token;
     Pokemon *p;
     int id;
     string identifier;
@@ -428,26 +531,218 @@ private:
     int order;
     int is_default;
 
-    token = strtok(str, ",");
-    id = atoi(token);
-    identifier = strtok(NULL, ",");
-    token = strtok(NULL, ",");
-    species_id = atoi(token);
-    token = strtok(NULL, ",");
-    height = atoi(token);
-    token = strtok(NULL, ",");
-    weight = atoi(token);
-    token = strtok(NULL, ",");
-    base_experience = atoi(token);
-    token = strtok(NULL, ",");
-    order = atoi(token);
-    token = strtok(NULL, "\n");
-    is_default = atoi(token);
+    vector<string> tokens;
+    stringstream check(str);
+    string tmp;
+    while (getline(check, tmp, ','))
+      tokens.push_back(tmp);
+
+    id = stoi(tokens[0]);
+    identifier = tokens[1];
+    species_id = stoi(tokens[2]);
+    height = stoi(tokens[3]);
+    weight = stoi(tokens[4]);
+    base_experience = stoi(tokens[5]);
+    order = stoi(tokens[6]);
+    is_default = stoi(tokens[7]);
 
     p = new Pokemon(id, identifier, species_id, height, weight, base_experience,
                     order, is_default);
 
     db->pokemon->emplace_back(p);
+
+    return 0;
+  }
+
+  int addMoves(char *str) {
+    Moves *m;
+
+    int id;
+    string identifier;
+    int generation_id;
+    int type_id;
+    int power;
+    int pp;
+    int accuracy;
+    int priority;
+    int target_id;
+    int damage_class_id;
+    int effect_id;
+    int effect_chance;
+    int contest_type_id;
+    int contest_effect_id;
+    int super_contest_effect_id;
+
+    vector<string> tokens;
+    stringstream check(str);
+    string tmp;
+    while (getline(check, tmp, ','))
+      tokens.push_back(tmp);
+
+    id = stoi(tokens[0]);
+    identifier = tokens[1];
+    generation_id = stoi(tokens[2]);
+    type_id = stoi(tokens[3]);
+    power = stoi(tokens[4]);
+    pp = stoi(tokens[5]);
+    accuracy = stoi(tokens[6]);
+    priority = stoi(tokens[7]);
+    target_id = stoi(tokens[8]);
+    damage_class_id = stoi(tokens[9]);
+    effect_id = stoi(tokens[10]);
+    effect_chance = stoi(tokens[11]);
+    contest_type_id = stoi(tokens[12]);
+    contest_effect_id = stoi(tokens[13]);
+    super_contest_effect_id = stoi(tokens[14]);
+
+    m = new Moves(id, identifier, generation_id, type_id, power, pp, accuracy,
+                  priority, target_id, damage_class_id, effect_id,
+                  effect_chance, contest_type_id, contest_effect_id,
+                  super_contest_effect_id);
+
+    db->moves->emplace_back(m);
+
+    return 0;
+  }
+
+  int addPokemonMoves(char *str) {
+    PokemonMoves *pm;
+
+    int pokemon_id;
+    int version_group_id;
+    int move_id;
+    int pokemon_move_method_id;
+    int level;
+    int order;
+
+    vector<string> tokens;
+    stringstream check(str);
+    string tmp;
+    while (getline(check, tmp, ','))
+      tokens.push_back(tmp);
+
+    pokemon_id = stoi(tokens[0]);
+    version_group_id = stoi(tokens[1]);
+    move_id = stoi(tokens[2]);
+    pokemon_move_method_id = stoi(tokens[3]);
+    level = stoi(tokens[4]);
+    order = stoi(tokens[5]);
+
+    pm = new PokemonMoves(pokemon_id, version_group_id, move_id,
+                          pokemon_move_method_id, level, order);
+
+    db->pokemonMoves->emplace_back(pm);
+
+    return 0;
+  }
+
+  int addPokemonSpecies(char *str) {
+    PokemonSpecies *ps;
+
+    int id;
+    string identifier;
+    int generation_id;
+    int evolves_from_species_id;
+    int evolution_chain_id;
+    int color_id;
+    int shape_id;
+    int habitat_id;
+    int gender_rate;
+    int capture_rate;
+    int base_happiness;
+    int is_baby;
+    int hatch_counter;
+    int has_gender_differences;
+    int growth_rate_id;
+    int forms_switchable;
+    int is_legendary;
+    int is_mythical;
+    int order;
+    int conquest_order;
+
+    vector<string> tokens;
+    stringstream check(str);
+    string tmp;
+    while (getline(check, tmp, ','))
+      tokens.push_back(tmp);
+
+    id = stoi(tokens[0]);
+    identifier = tokens[1];
+    generation_id = stoi(tokens[2]);
+    evolves_from_species_id = stoi(tokens[3]);
+    evolution_chain_id = stoi(tokens[4]);
+    color_id = stoi(tokens[5]);
+    shape_id = stoi(tokens[6]);
+    habitat_id = stoi(tokens[7]);
+    gender_rate = stoi(tokens[8]);
+    capture_rate = stoi(tokens[9]);
+    base_happiness = stoi(tokens[10]);
+    is_baby = stoi(tokens[11]);
+    hatch_counter = stoi(tokens[12]);
+    has_gender_differences = stoi(tokens[13]);
+    growth_rate_id = stoi(tokens[14]);
+    forms_switchable = stoi(tokens[15]);
+    is_legendary = stoi(tokens[16]);
+    is_mythical = stoi(tokens[17]);
+    order = stoi(tokens[18]);
+    conquest_order = stoi(tokens[19]);
+
+    ps = new PokemonSpecies(
+        id, identifier, generation_id, evolves_from_species_id,
+        evolution_chain_id, color_id, shape_id, habitat_id, gender_rate,
+        capture_rate, base_happiness, is_baby, hatch_counter,
+        has_gender_differences, growth_rate_id, forms_switchable, is_legendary,
+        is_mythical, order, conquest_order);
+
+    db->pokemonSpecies->emplace_back(ps);
+
+    return 0;
+  }
+
+  int addExperience(char *str) {
+    Experience *e;
+
+    int growth_rate_id;
+    int level;
+    int experience;
+
+    vector<string> tokens;
+    stringstream check(str);
+    string tmp;
+    while (getline(check, tmp, ','))
+      tokens.push_back(tmp);
+
+    growth_rate_id = stoi(tokens[0]);
+    level = stoi(tokens[1]);
+    experience = stoi(tokens[2]);
+
+    e = new Experience(growth_rate_id, level, experience);
+
+    db->experience->emplace_back(e);
+
+    return 0;
+  }
+
+  int addTypeNames(char *str) {
+    TypeNames *tn;
+
+    int type_id;
+    int local_language;
+    string name;
+
+    vector<string> tokens;
+    stringstream check(str);
+    string tmp;
+    while (getline(check, tmp, ','))
+      tokens.push_back(tmp);
+
+    type_id = stoi(tokens[0]);
+    local_language = stoi(tokens[1]);
+    name = tokens[2];
+
+    tn = new TypeNames(type_id, local_language, name);
+
+    db->typeNames->emplace_back(tn);
 
     return 0;
   }
@@ -460,7 +755,7 @@ public:
     int i;
     ifstream file;
     string path;
-    char line[200];
+    char line[400];
 
     for (i = 0; !file.is_open(); i++) {
       path = getPath(i, filename);
@@ -477,9 +772,8 @@ public:
       file.open(path);
 
       if (file.is_open()) {
-        file.getline(line, 200, '\n');
+        file.getline(line, 400, '\n');
         // cout << "Headers:" << endl;
-        // cout << line << endl;
         if (strlen(line) < 1) {
           file.close();
         }
@@ -487,16 +781,37 @@ public:
     }
 
     if (strcmp(filename, "pokemon") == 0) {
-      while (file.getline(line, 200, '\n'))
+      while (file.getline(line, 400, '\n'))
         addPokemon(line);
-
       db->printPokemon();
 
     } else if (strcmp(filename, "moves") == 0) {
+      while (file.getline(line, 400, '\n'))
+        addMoves(line);
+      db->printMoves();
+
     } else if (strcmp(filename, "pokemon_moves") == 0) {
+      while (file.getline(line, 400, '\n'))
+        addPokemonMoves(line);
+      db->printPokemonMoves();
+
     } else if (strcmp(filename, "pokemon_species") == 0) {
+      while (file.getline(line, 400, '\n'))
+        addPokemonSpecies(line);
+      db->printPokemonSpecies();
+
     } else if (strcmp(filename, "experience") == 0) {
+      while (file.getline(line, 400, '\n'))
+        addExperience(line);
+      db->printExperience();
     } else if (strcmp(filename, "type_names") == 0) {
+      while (file.getline(line, 400, '\n'))
+        addTypeNames(line);
+      db->printTypeNames();
+    } else {
+      cout << "\tTry one of these: pokemon, moves, pokemon_moves, "
+              "pokemon_species, experience, or type_names"
+           << endl;
     }
 
     file.close();
@@ -504,14 +819,14 @@ public:
   }
 };
 
-int main(int argc, char *argv[]) {
-  CsvParser *parser = new CsvParser();
+// int main(int argc, char *argv[]) {
+//   CsvParser *parser = new CsvParser();
 
-  parser->parse(argv[1]);
+//   parser->parse(argv[1]);
 
-  delete parser;
-  return 0;
-}
+//   delete parser;
+//   return 0;
+// }
 // Files to parse:
 //  - pokemon.csv
 //  - moves.csv
