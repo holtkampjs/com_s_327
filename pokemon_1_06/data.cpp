@@ -1,23 +1,19 @@
+#include <cstring>
 #include <fstream>
 #include <ios>
 #include <iostream>
+#include <iterator>
+#include <list>
+#include <new>
+#include <ostream>
 #include <string>
 
-// File location 1: /share/cs327/pokedex/pokedex/data/csv/
-// File location 2: $HOME/cs327/pokedex/pokedex/data/csv/
-//      - use getenv() to find the HOME environment variable
-// Files to parse:
-//  - pokemon.csv
-//  - moves.csv
-//  - pokemon_moves.csv
-//  - pokemon_species.csv
-//  - experience.csv
-//  - type_names.csv
+using namespace std;
 
 class Pokemon {
 private:
   int id;
-  std::string identifier;
+  string identifier;
   int species_id;
   int height;
   int weight;
@@ -26,8 +22,8 @@ private:
   int is_default;
 
 public:
-  Pokemon(int id, std::string identifier, int species_id, int height,
-          int weight, int base_experience, int order, int is_default) {
+  Pokemon(int id, string identifier, int species_id, int height, int weight,
+          int base_experience, int order, int is_default) {
     this->id = id ? id : -1;
     this->identifier = identifier;
     this->species_id = species_id ? species_id : -1;
@@ -37,12 +33,35 @@ public:
     this->order = order ? order : -1;
     this->is_default = is_default ? is_default : -1;
   }
+
+  Pokemon(Pokemon *&p) {
+    this->id = p->id;
+    this->identifier = p->identifier;
+    this->species_id = p->species_id;
+    this->height = p->height;
+    this->weight = p->weight;
+    this->base_experience = p->base_experience;
+    this->order = p->order;
+    this->is_default = p->is_default;
+  }
+
+  friend std::ostream &operator<<(std::ostream &os, const Pokemon &p) {
+    os << p.id << ",";
+    os << p.identifier << ",";
+    os << p.species_id << ",";
+    os << p.height << ",";
+    os << p.weight << ",";
+    os << p.base_experience << ",";
+    os << p.order << ",";
+    os << p.is_default;
+    return os;
+  }
 };
 
 class Moves {
 private:
   int id;
-  std::string identifier;
+  string identifier;
   int generation_id;
   int type_id;
   int power;
@@ -58,11 +77,10 @@ private:
   int super_contest_effect_id;
 
 public:
-  Moves(int id, std::string identifier, int generation_id, int type_id,
-        int power, int pp, int accuracy, int priority, int target_id,
-        int damage_class_id, int effect_id, int effect_chance,
-        int contest_type_id, int contest_effect_id,
-        int super_contest_effect_id) {
+  Moves(int id, string identifier, int generation_id, int type_id, int power,
+        int pp, int accuracy, int priority, int target_id, int damage_class_id,
+        int effect_id, int effect_chance, int contest_type_id,
+        int contest_effect_id, int super_contest_effect_id) {
     this->id = id ? id : -1;
     this->identifier = identifier;
     this->generation_id = generation_id ? generation_id : -1;
@@ -79,6 +97,23 @@ public:
     this->contest_effect_id = contest_effect_id ? contest_effect_id : -1;
     this->super_contest_effect_id =
         super_contest_effect_id ? super_contest_effect_id : -1;
+  }
+  Moves(Moves *&m) {
+    this->id = m->id;
+    this->identifier = m->identifier;
+    this->generation_id = m->generation_id;
+    this->type_id = m->type_id;
+    this->power = m->power;
+    this->pp = m->pp;
+    this->accuracy = m->accuracy;
+    this->priority = m->priority;
+    this->target_id = m->target_id;
+    this->damage_class_id = m->damage_class_id;
+    this->effect_id = m->effect_id;
+    this->effect_chance = m->effect_chance;
+    this->contest_type_id = m->contest_type_id;
+    this->contest_effect_id = m->contest_effect_id;
+    this->super_contest_effect_id = m->super_contest_effect_id;
   }
 };
 
@@ -107,7 +142,7 @@ public:
 class PokemonSpecies {
 private:
   int id;
-  std::string identifier;
+  string identifier;
   int generation_id;
   int evolves_from_species_id;
   int evolution_chain_id;
@@ -128,7 +163,7 @@ private:
   int conquest_order;
 
 public:
-  PokemonSpecies(int id, std::string identifier, int generation_id,
+  PokemonSpecies(int id, string identifier, int generation_id,
                  int evolves_from_species_id, int evolution_chain_id,
                  int color_id, int shape_id, int habitat_id, int gender_rate,
                  int capture_rate, int base_happiness, int is_baby,
@@ -178,53 +213,167 @@ class TypeNames {
 private:
   int type_id;
   int local_language;
-  std::string name;
+  string name;
 
 public:
-  TypeNames(int type_id, int local_language, std::string name) {
+  TypeNames(int type_id, int local_language, string name) {
     this->type_id = type_id ? type_id : -1;
     this->local_language = local_language ? local_language : -1;
     this->name = name;
   }
 };
 
+class Database {
+private:
+public:
+  list<Pokemon> *pokemon;
+  list<Moves> *moves;
+  list<PokemonMoves> *pokemonMoves;
+  list<PokemonSpecies> *pokemonSpecies;
+  list<Experience> *experience;
+  list<TypeNames> *typeNames;
+
+  Database() {
+    pokemon = new list<Pokemon>();
+    moves = new list<Moves>();
+    pokemonMoves = new list<PokemonMoves>();
+    pokemonSpecies = new list<PokemonSpecies>();
+    experience = new list<Experience>();
+    typeNames = new list<TypeNames>();
+  }
+
+  ~Database() {
+    // TODO: deallocate all lists
+  }
+
+  void printPokemon() {
+    list<Pokemon>::iterator itr;
+    for (itr = pokemon->begin(); itr != pokemon->end(); ++itr)
+      cout << *itr << endl;
+  }
+};
+
 class CsvParser {
 private:
-  std::string getPath(int attempt, std::string filename) {
+  Database *db;
+
+  string getPath(int attempt, string filename) {
     switch (attempt) {
+    case 0:
+      cout << "Looking in: ";
+      return "/share/cs327/pokedex/pokedex/data/csv/" + filename + ".csv";
     case 1:
-      return "/share/cs327/pokedex/pokedex/data/csv/" + filename;
-    case 2:
-      std::string home_dir(getenv("HOME"));
+      string home_dir(getenv("HOME"));
+      cout << "Looking in: ";
       if (home_dir.empty())
         break;
-      return home_dir + "/cs327/pokedex/pokedex/data/csv/" + filename;
+      return home_dir + "/.poke327/pokedex/pokedex/data/csv/" + filename +
+             ".csv";
     }
 
     return "";
   }
 
+  int addPokemon(char *str) {
+    char *token;
+    Pokemon *p;
+    int id;
+    string identifier;
+    int species_id;
+    int height;
+    int weight;
+    int base_experience;
+    int order;
+    int is_default;
+
+    token = strtok(str, ",");
+    id = atoi(token);
+    identifier = strtok(NULL, ",");
+    token = strtok(NULL, ",");
+    species_id = atoi(token);
+    token = strtok(NULL, ",");
+    height = atoi(token);
+    token = strtok(NULL, ",");
+    weight = atoi(token);
+    token = strtok(NULL, ",");
+    base_experience = atoi(token);
+    token = strtok(NULL, ",");
+    order = atoi(token);
+    token = strtok(NULL, "\n");
+    is_default = atoi(token);
+
+    p = new Pokemon(id, identifier, species_id, height, weight, base_experience,
+                    order, is_default);
+
+    db->pokemon->emplace_back(p);
+
+    return 0;
+  }
+
 public:
-  CsvParser() {}
-  ~CsvParser() {}
+  CsvParser() { db = new Database(); }
+  ~CsvParser() { delete db; }
 
-  int parse(std::string filename) {
-    std::fstream file;
-    std::string path;
+  int parse(const char *filename) {
+    int i;
+    ifstream file;
+    string path;
+    char line[200];
 
-    for (int i = 0; !file.is_open(); i++) {
+    for (i = 0; !file.is_open(); i++) {
       path = getPath(i, filename);
+      cout << path << endl;
 
       if (path.empty()) {
+        cout << "Unable to locate: \"" << filename << ".csv\"" << endl;
+        cout << "\tTry one of these: pokemon, moves, pokemon_moves, "
+                "pokemon_species, experience, or type_names"
+             << endl;
         return 1;
       }
 
-      file.open(path, std::ios::in);
+      file.open(path);
+
+      if (file.is_open()) {
+        file.getline(line, 200, '\n');
+        // cout << "Headers:" << endl;
+        // cout << line << endl;
+        if (strlen(line) < 1) {
+          file.close();
+        }
+      }
     }
 
-    // TODO: parse information
+    if (strcmp(filename, "pokemon") == 0) {
+      while (file.getline(line, 200, '\n'))
+        addPokemon(line);
+
+      db->printPokemon();
+
+    } else if (strcmp(filename, "moves") == 0) {
+    } else if (strcmp(filename, "pokemon_moves") == 0) {
+    } else if (strcmp(filename, "pokemon_species") == 0) {
+    } else if (strcmp(filename, "experience") == 0) {
+    } else if (strcmp(filename, "type_names") == 0) {
+    }
 
     file.close();
     return 0;
   }
 };
+
+int main(int argc, char *argv[]) {
+  CsvParser *parser = new CsvParser();
+
+  parser->parse(argv[1]);
+
+  delete parser;
+  return 0;
+}
+// Files to parse:
+//  - pokemon.csv
+//  - moves.csv
+//  - pokemon_moves.csv
+//  - pokemon_species.csv
+//  - experience.csv
+//  - type_names.csv
