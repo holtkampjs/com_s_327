@@ -1,0 +1,641 @@
+commit e7f36ca7edd01470b8dccd698628f8871a0ede2c
+Author: holtkampjs <holtkampjs@gmail.com>
+Date:   Fri Apr 1 05:51:01 2022 -0500
+
+    Added README
+
+commit 1e05302a54e54719d3d49a124a53c6c52df5390d
+Author: josephh1 <josephh1@pyrite-n1.cs.iastate.edu>
+Date:   Fri Apr 1 05:31:26 2022 -0500
+
+    1.06 finally works
+
+commit 092d9fd06b2524ad0850f0626be9d191ba57bc4d
+Author: josephh1 <josephh1@pyrite-n1.cs.iastate.edu>
+Date:   Thu Mar 31 23:13:02 2022 -0500
+
+    Made all data classes printable
+
+commit 4b23015a55b7889f7457029dbc4e695db12098ee
+Author: josephh1 <josephh1@pyrite-n1.cs.iastate.edu>
+Date:   Thu Mar 31 22:57:53 2022 -0500
+
+    Added copy constructors to all data classes
+
+commit 69896e5f493b879a5b491956c44b8d6079eaaeae
+Author: josephh1 <josephh1@pyrite-n1.cs.iastate.edu>
+Date:   Thu Mar 31 22:53:14 2022 -0500
+
+    Parses and prints Pokemon
+
+commit dd1179917081e1ac639e36522de2e9b6882b318a
+Author: josephh1 <josephh1@pyrite-n4.cs.iastate.edu>
+Date:   Thu Mar 31 09:48:16 2022 -0500
+
+    Added stub for parsing in CsvParser class
+
+commit 446459de9fe6b9fcae4ad2288c46d709a60a5709
+Author: josephh1 <josephh1@pyrite-n1.cs.iastate.edu>
+Date:   Tue Mar 29 23:54:50 2022 -0500
+
+    Started on logic for file parsing
+
+commit a7e0d8ec1e996835f467a65af2acac6fabe73381
+Author: josephh1 <josephh1@pyrite-n1.cs.iastate.edu>
+Date:   Tue Mar 29 23:36:38 2022 -0500
+
+    Created data classes and constructors
+
+commit 21eccaa250065542e77cc8dea2cca54621f6e4c9
+Author: holtkampjs <holtkampjs@gmail.com>
+Date:   Tue Mar 29 08:33:11 2022 -0500
+
+    Trivially converted world to a class
+
+commit 908b2b0593037b9be0ec751483bd4e1ce4835f2c
+Author: holtkampjs <holtkampjs@gmail.com>
+Date:   Tue Mar 29 08:22:21 2022 -0500
+
+    Removed all references to character_t to make inheritance easier
+
+commit f1f1b917c97dfe95c59ae90cca223a84645732da
+Author: holtkampjs <holtkampjs@gmail.com>
+Date:   Tue Mar 29 08:11:28 2022 -0500
+
+    Changed character and map structs to classes trivially
+
+commit ab6fc979c19fb1a8c80666c60f24b593ed751f6d
+Author: holtkampjs <holtkampjs@gmail.com>
+Date:   Tue Mar 29 08:00:32 2022 -0500
+
+    Removed heap.cpp, it was unnecessary. Back to heap.c
+
+commit 7fe5c56aa87395075e585cbf5debc76f47df5bf6
+Author: holtkampjs <holtkampjs@gmail.com>
+Date:   Mon Mar 28 22:01:56 2022 -0500
+
+    Updated .cpp files to run as expected
+
+commit 74b01738246f76af4eac5f01f13fe9e62fb351d5
+Author: holtkampjs <holtkampjs@gmail.com>
+Date:   Mon Mar 28 21:32:09 2022 -0500
+
+    Added code drop for 1.05 and changed file extensions to .cpp
+
+commit 46462770485525bab4470ba713ccbce2c6c6f1ba
+Author: holtkampjs <holtkampjs@gmail.com>
+Date:   Thu Mar 24 23:32:55 2022 -0500
+
+    Updated professor's code with my ncurses logic; Implemented movement; Added windows for pokemarts, centers, and battles; Added scrollable list of enemies in trainer list window; Added navigation following the PC;
+
+commit 7731074b1881b09f66eac413d2ce5a652d252ca2
+Author: holtkampjs <holtkampjs@gmail.com>
+Date:   Thu Mar 24 00:21:23 2022 -0500
+
+    Applied my ncurses printing logic to provided solution for 1.04
+
+commit e7ff8a67194dfbe7f7ab6fcb4449372031554bd0
+Author: holtkampjs <holtkampjs@gmail.com>
+Date:   Thu Mar 10 05:42:37 2022 -0600
+
+    Updated navigation to respond to WASD controlls
+
+commit 3478b016f2286019381d179bbd250d8eda6ddc1d
+Author: holtkampjs <holtkampjs@gmail.com>
+Date:   Thu Mar 10 05:06:38 2022 -0600
+
+    Working character movement and placement
+
+commit e4e67f98b5a3e740e24a27587ef0557f23c6be4a
+Author: jholt <holtkampjs@gmail.com>
+Date:   Tue Mar 8 01:20:07 2022 -0600
+
+    Just some formatting
+
+commit 8279f8f59eab58a80a0b6849ac085744fd9d294a
+Author: jholt <holtkampjs@gmail.com>
+Date:   Tue Mar 8 00:31:03 2022 -0600
+
+    Moved path maps to map_t instead of world_t
+
+commit e67016e9ce21e7b6689588485d386378a1af9c78
+Author: jholt <holtkampjs@gmail.com>
+Date:   Mon Mar 7 22:08:31 2022 -0600
+
+    Updated project
+
+commit c37bd56c1b6d8851d911cd5248b54620cce08b6c
+Author: jholt <holtkampjs@gmail.com>
+Date:   Sat Mar 5 20:01:29 2022 -0600
+
+    Implemented colors; Added moving pc; Generates enemies but they do not move;
+
+commit 13339467c98324b35c3c48155771de50351ccb60
+Author: jholt <holtkampjs@gmail.com>
+Date:   Wed Feb 23 23:22:24 2022 -0600
+
+    Working code for 1.03 path weights calculation. Still needs cleaning up
+
+commit a9e70219e7f243d4c5fd8a4ef32a4550a1a2be8c
+Author: jholt <holtkampjs@gmail.com>
+Date:   Fri Feb 18 01:22:27 2022 -0600
+
+    just getting set up for 1.03
+
+commit 3a4a79830e501391cc505fbc323349a955a84cd7
+Author: josephh1 <josephh1@iastate.edu>
+Date:   Thu Feb 10 04:31:14 2022 -0600
+
+    Completed 1.02
+
+commit fe6b3d420b9079bd05553608a9b1f4342956405f
+Author: jholt <holtkampjs@gmail.com>
+Date:   Tue Feb 8 19:57:04 2022 -0600
+
+    Navigation code is properly interfacing with map code
+
+commit a953468c8ee896949c8b253bf758f0cb849bf74e
+Author: josephh1 <josephh1@iastate.edu>
+Date:   Tue Feb 8 13:24:04 2022 -0600
+
+    Rewrote terrain generation code
+
+commit f36152c78ab02d5e855f89930b14de035bf2e41c
+Author: jholt <holtkampjs@gmail.com>
+Date:   Wed Feb 2 23:55:07 2022 -0600
+
+    Updated makefile
+
+commit 37ce938657682e1f943457ea87d6bd8f2a5ef83e
+Author: jholt <holtkampjs@gmail.com>
+Date:   Wed Feb 2 23:51:05 2022 -0600
+
+    Refactored
+
+commit 7bc8049f10ec276bf8549e12173dc0462daaa17d
+Author: jholt <holtkampjs@gmail.com>
+Date:   Wed Feb 2 23:11:46 2022 -0600
+
+    Implemented placement of pokemon centers and marts
+
+commit 57ed3aa6314e56dec69d9762aa2ad028b793734e
+Author: jholt <holtkampjs@gmail.com>
+Date:   Tue Feb 1 23:22:58 2022 -0600
+
+    Refactored weighted path creation
+
+commit 2071276363cfce9aa1d7b9018b133c7077808f5b
+Author: jholt <holtkampjs@gmail.com>
+Date:   Tue Feb 1 23:08:22 2022 -0600
+
+    Refactored border adding for readablity
+
+commit 38748cdc8138c10540bf74886a77458aa36b890e
+Author: jholt <holtkampjs@gmail.com>
+Date:   Tue Feb 1 22:56:51 2022 -0600
+
+    Refactored terrain generation
+
+commit b835a821f9ee178fe2287503bcba875236d0f0ed
+Author: jholt <holtkampjs@gmail.com>
+Date:   Tue Feb 1 22:43:36 2022 -0600
+
+    Successful implementation of path finding algorithm
+
+commit dfc2a94fa87bfea98e26c8a35b9cb3efc3494525
+Author: jholt <holtkampjs@gmail.com>
+Date:   Tue Feb 1 08:02:37 2022 -0600
+
+    Terrain generation complete with natural appearance
+
+commit cf35b5fc4ecc794b9f675be0bc5bf67cfbc92028
+Author: jholt <holtkampjs@gmail.com>
+Date:   Mon Jan 31 22:43:55 2022 -0600
+
+    Added border generation
+
+commit 88e13a603db2283d07754c8b1e88c0e39c89b1a1
+Author: jholt <holtkampjs@gmail.com>
+Date:   Tue Jan 25 21:50:40 2022 -0600
+
+    Redid .tar file
+
+commit 013c9404dd7b0741dce7933f8850daa7bda21ac9
+Author: jholt <holtkampjs@gmail.com>
+Date:   Tue Jan 25 21:45:17 2022 -0600
+
+    Added Changelog
+
+commit 5e96e5c3ae38d7f63e8e422b17530bd6ec005c91
+Author: jholt <holtkampjs@gmail.com>
+Date:   Tue Jan 25 21:34:45 2022 -0600
+
+    Created tar file
+
+commit cd13dd55f5da77d4b61a6351caf5871c2873e661
+Author: jholt <holtkampjs@gmail.com>
+Date:   Tue Jan 25 21:26:57 2022 -0600
+
+    Renamed directory
+
+commit 17f1127079a2fa4e15cbc0eaab5f51383c76b034
+Author: jholt <holtkampjs@gmail.com>
+Date:   Tue Jan 25 21:23:11 2022 -0600
+
+    Renamed directory
+
+commit 650f5bc1db422379124b415da1551cc3bbfd8d79
+Author: jholt <holtkampjs@gmail.com>
+Date:   Tue Jan 25 21:21:17 2022 -0600
+
+    Added README.md
+
+commit 6046b332eabdc832485e9960ce807829ac6e9b35
+Author: jholt <holtkampjs@gmail.com>
+Date:   Tue Jan 25 20:40:52 2022 -0600
+
+    Attempting bug fix on argv access
+
+commit 4192b67e8f3c3df1f33d77f4465c66d67dc0b685
+Author: jholt <holtkampjs@gmail.com>
+Date:   Tue Jan 25 20:39:23 2022 -0600
+
+    Refactored and added functionality
+
+commit 61335817d89da1f3efbfd18926561a4f9787141a
+Author: jholt <holtkampjs@gmail.com>
+Date:   Tue Jan 25 19:48:28 2022 -0600
+
+    Added git clean
+
+commit def620737e0839c7807a2fe3537738c4fab89815
+Author: jholt <holtkampjs@gmail.com>
+Date:   Tue Jan 25 09:51:19 2022 -0600
+
+    Updated makefile
+
+commit 6aee67282dc186791dbcccd8af80c25911bebcb9
+Author: jholt <holtkampjs@gmail.com>
+Date:   Sat Jan 22 11:41:13 2022 -0600
+
+    Updated makefile
+
+commit 261b19e76002e910b2b99a805aadb143f92248ee
+Author: jholt <holtkampjs@gmail.com>
+Date:   Sat Jan 22 11:38:26 2022 -0600
+
+    Minor refactoring
+
+commit b7fcbd628f3ca4cf2891876ef3456445fe28ea80
+Author: jholt <holtkampjs@gmail.com>
+Date:   Sat Jan 22 11:36:25 2022 -0600
+
+    Added counter to program
+
+commit f3177bb187f0dd9644728817368d37dd309e9e2f
+Author: jholt <holtkampjs@gmail.com>
+Date:   Sat Jan 22 11:33:41 2022 -0600
+
+    Added backtracking to success case
+
+commit 78d6db6470af28ac2ffc3d00ad23634f707bcf62
+Author: jholt <holtkampjs@gmail.com>
+Date:   Thu Jan 20 23:13:53 2022 -0600
+
+    Made path a global pointer variable
+
+commit 3b2ce6f434ef776bca6581704588344a1bb853d3
+Author: jholt <holtkampjs@gmail.com>
+Date:   Thu Jan 20 22:48:28 2022 -0600
+
+    added print board function
+
+commit 370192be6c80873e7ac4d9c3c549ce845aabb97b
+Author: jholt <holtkampjs@gmail.com>
+Date:   Thu Jan 20 22:21:44 2022 -0600
+
+    Updated makefile
+
+commit 9378e60cc32e3ab809c86f8de1e2a0cec6468a84
+Author: jholt <holtkampjs@gmail.com>
+Date:   Thu Jan 20 21:30:38 2022 -0600
+
+    Updated makefile
+
+commit 0d77c3f95b6309562496e6d370f6944c4b8be607
+Author: jholt <holtkampjs@gmail.com>
+Date:   Thu Jan 20 10:22:11 2022 -0600
+
+    Lets try this
+
+commit bd5fb2bb70a727047257be0ccd0a35df1fea441f
+Author: jholt <holtkampjs@gmail.com>
+Date:   Thu Jan 20 09:54:17 2022 -0600
+
+    Removed unnecesary prints
+
+commit aec4329a41922713de33ab86242c04410fd36371
+Author: jholt <holtkampjs@gmail.com>
+Date:   Thu Jan 20 09:47:55 2022 -0600
+
+    Added -Werror to makefile
+
+commit a22ab94852dc4399829336375e452a3473af3614
+Author: jholt <holtkampjs@gmail.com>
+Date:   Thu Jan 20 09:42:32 2022 -0600
+
+    Debugging prints added
+
+commit 6be9b9a0bd08e52b9f84d157a79ee08058e69694
+Author: jholt <holtkampjs@gmail.com>
+Date:   Wed Jan 19 23:23:39 2022 -0600
+
+    clear path added
+
+commit b31e675a53a3e4a89edffc9f4f39a3470e784303
+Author: jholt <holtkampjs@gmail.com>
+Date:   Wed Jan 19 23:13:44 2022 -0600
+
+    Forgot include for stdlib.h
+
+commit 945866925a6756bf540e3ee9a20fb6c760248b75
+Author: jholt <holtkampjs@gmail.com>
+Date:   Wed Jan 19 23:12:14 2022 -0600
+
+    Attempted to reimplement
+
+commit 4bd7bfc784bd531d00bec660759895be2d3227de
+Author: jholt <holtkampjs@gmail.com>
+Date:   Wed Jan 19 20:52:31 2022 -0600
+
+    Added a dummy statement
+
+commit 5545c20a9f8de471842642886aa4d813453f5bd0
+Author: jholt <holtkampjs@gmail.com>
+Date:   Wed Jan 19 20:49:49 2022 -0600
+
+    Added a dummy statement
+
+commit 21f0803ea5764dc02785b48acf41153eb34e93e2
+Author: jholt <holtkampjs@gmail.com>
+Date:   Wed Jan 19 20:45:14 2022 -0600
+
+    Added a dummy statement
+
+commit 3143a80f78ded9b76368d01d58bec614994cabf0
+Author: jholt <holtkampjs@gmail.com>
+Date:   Wed Jan 19 18:50:52 2022 -0600
+
+    Added a dummy statement
+
+commit bed90e6eb44918de4de5fbb40720bbb3f7e3801c
+Author: jholt <holtkampjs@gmail.com>
+Date:   Wed Jan 19 18:36:35 2022 -0600
+
+    Updated makefile
+
+commit a77be51c415fdf69e7d73c65090b8984160f2f0f
+Author: jholt <holtkampjs@gmail.com>
+Date:   Wed Jan 19 17:48:05 2022 -0600
+
+    Time to debug
+
+commit 2cb8ad6be6ebb1e7c25384eae294aae672f126d4
+Author: jholt <holtkampjs@gmail.com>
+Date:   Wed Jan 19 17:28:10 2022 -0600
+
+    Come on
+
+commit df1a46d3ee16a29ae36616b1e7127696902d949a
+Author: jholt <holtkampjs@gmail.com>
+Date:   Wed Jan 19 17:26:41 2022 -0600
+
+    Come on
+
+commit bbf602f31aa3a24e63f4e5619992c8af1826d859
+Author: jholt <holtkampjs@gmail.com>
+Date:   Wed Jan 19 17:19:17 2022 -0600
+
+    Come on
+
+commit d16966cf3a4bd96ff40a60292998bd2b4bc4e3ad
+Author: jholt <holtkampjs@gmail.com>
+Date:   Wed Jan 19 16:08:14 2022 -0600
+
+    Come on
+
+commit 11bbf51d148c476502be36a8d9b0cd3d0cbea08c
+Author: jholt <holtkampjs@gmail.com>
+Date:   Wed Jan 19 15:48:35 2022 -0600
+
+    Come on
+
+commit d32c7457f4eb0cdd4dfa1ab980c6ce6c44df090a
+Author: jholt <holtkampjs@gmail.com>
+Date:   Wed Jan 19 15:47:09 2022 -0600
+
+    Come on
+
+commit e7052a86902c81664672620bbf96a2b503038bb6
+Author: jholt <holtkampjs@gmail.com>
+Date:   Wed Jan 19 15:44:05 2022 -0600
+
+    Come on
+
+commit fc4cb6d59a7cd07672591fdd745332c4d5023ba0
+Author: jholt <holtkampjs@gmail.com>
+Date:   Wed Jan 19 15:40:27 2022 -0600
+
+    Come on
+
+commit a9aebbd60bc1a47ebdfe126134f0da6bb15379fc
+Author: jholt <holtkampjs@gmail.com>
+Date:   Wed Jan 19 15:37:10 2022 -0600
+
+    Combed through and altered logic. Hopefully cleaned up functionality
+
+commit 5fc92c1a38182c072c6d8cad6ff7e5bdf4096364
+Author: jholt <holtkampjs@gmail.com>
+Date:   Wed Jan 19 15:05:00 2022 -0600
+
+    Heres to getting started again
+
+commit 7bd3e5669c3f05e58322b12941c013dc148920d4
+Author: jholt <holtkampjs@gmail.com>
+Date:   Wed Jan 19 00:12:31 2022 -0600
+
+    attempt to fix logic
+
+commit 07a0b2f4d9e58f3ab8e1a1e72ffe3ac1c019000d
+Author: jholt <holtkampjs@gmail.com>
+Date:   Tue Jan 18 22:40:47 2022 -0600
+
+    Fixed print board and time to test large scale
+
+commit 95897ecdcc7fe897b4228fd519bd9b5f84f4e299
+Author: jholt <holtkampjs@gmail.com>
+Date:   Tue Jan 18 22:33:45 2022 -0600
+
+    Trying to fix the print
+
+commit 144b74394391badcd8ede680ff91b43a713376ef
+Author: jholt <holtkampjs@gmail.com>
+Date:   Tue Jan 18 22:30:40 2022 -0600
+
+    Trying to fix the print
+
+commit ec1eeee6f927de7d6542e1e658bf0c5d865aa587
+Author: jholt <holtkampjs@gmail.com>
+Date:   Tue Jan 18 22:20:03 2022 -0600
+
+    Trying to fix the print
+
+commit 2a0b1df25d355b2a6da42c9bed2b731603ca0cab
+Author: jholt <holtkampjs@gmail.com>
+Date:   Tue Jan 18 22:16:41 2022 -0600
+
+    Hopefully fixed print board
+
+commit c2c940d45de9322423ba5bd7cc5c7271ffb8aaa8
+Author: jholt <holtkampjs@gmail.com>
+Date:   Tue Jan 18 22:12:40 2022 -0600
+
+    Hopefully fixed print board
+
+commit 4d6d487df97c18f97ea39bedeb9c579d04406209
+Author: jholt <holtkampjs@gmail.com>
+Date:   Tue Jan 18 22:10:50 2022 -0600
+
+    Hopefully fixed print board
+
+commit 7917be060c9b5c41569f331d21a81448c3d30b23
+Author: jholt <holtkampjs@gmail.com>
+Date:   Tue Jan 18 22:07:47 2022 -0600
+
+    Hopefully fixed print board
+
+commit 8facb8ecb7d44f5793b0c44f0b9ee26a04c61a35
+Author: jholt <holtkampjs@gmail.com>
+Date:   Tue Jan 18 22:01:52 2022 -0600
+
+    Hopefully fixed print board
+
+commit b2076f6ee915f7471aa3df35ffdbac2fa8374985
+Author: jholt <holtkampjs@gmail.com>
+Date:   Tue Jan 18 21:02:52 2022 -0600
+
+    Updating print board
+
+commit 9234a6bd7f8c713ceb36d29b6c8292e7f39852f5
+Author: jholt <holtkampjs@gmail.com>
+Date:   Tue Jan 18 20:58:39 2022 -0600
+
+    Added print board to see whats going on
+
+commit 98e630148c9629b08ac1f5f6e98560c28d243fcd
+Author: jholt <holtkampjs@gmail.com>
+Date:   Tue Jan 18 20:54:40 2022 -0600
+
+    Added print board to see whats going on
+
+commit ece4ca6b873753d59abb5cb6689ffed4da70e378
+Author: jholt <holtkampjs@gmail.com>
+Date:   Tue Jan 18 20:46:13 2022 -0600
+
+    Added print board to see whats going on
+
+commit 5d9b1bfc684dd114d9b5a4fcd6dfc2560bbb927c
+Author: jholt <holtkampjs@gmail.com>
+Date:   Tue Jan 18 20:41:22 2022 -0600
+
+    Added print statements
+
+commit e6fa09a5c68d351b0c15750ae8c82df1a7a8b5e4
+Author: jholt <holtkampjs@gmail.com>
+Date:   Tue Jan 18 20:40:20 2022 -0600
+
+    Added print statements
+
+commit fcd6c9a46e6093fdc88f817126d694b46a9ad774
+Author: jholt <holtkampjs@gmail.com>
+Date:   Tue Jan 18 20:39:15 2022 -0600
+
+    Added print statements
+
+commit bff8e6b60d03e958b78db8c7c94dae964d4bf145
+Author: jholt <holtkampjs@gmail.com>
+Date:   Tue Jan 18 20:32:24 2022 -0600
+
+    Updated makefile
+
+commit 762fb68a5bf807eaab65a530d3fdfa2c8ee11cf1
+Author: jholt <holtkampjs@gmail.com>
+Date:   Tue Jan 18 20:27:45 2022 -0600
+
+    Updated makefile
+
+commit 5294e4b3b0da71752c9977cc764ae841c3f2589d
+Author: jholt <holtkampjs@gmail.com>
+Date:   Tue Jan 18 20:26:33 2022 -0600
+
+    Updated makefile
+
+commit 650ba989c4969159ecda1f0895076947e5363a91
+Author: jholt <holtkampjs@gmail.com>
+Date:   Tue Jan 18 20:24:49 2022 -0600
+
+    Debugging
+
+commit 629d6765ca5a1a1bf8694ca3a895d8b47444421c
+Author: jholt <holtkampjs@gmail.com>
+Date:   Tue Jan 18 20:21:24 2022 -0600
+
+    Debugging print statements
+
+commit c70b8a8070a31a8b17e1447fc0a9d0624ed8e7e2
+Author: jholt <holtkampjs@gmail.com>
+Date:   Tue Jan 18 20:17:36 2022 -0600
+
+    Fixed compile errors, now debugging logic
+
+commit 9cfbac688590ec5f20958c4f32c891c42e3095ca
+Author: jholt <holtkampjs@gmail.com>
+Date:   Tue Jan 18 20:13:54 2022 -0600
+
+    Debugging passing 2D arrays - attempt 2
+
+commit 095b06c7a23b5ed2236d60cb3700d6c73d73a0fe
+Author: jholt <holtkampjs@gmail.com>
+Date:   Tue Jan 18 20:09:58 2022 -0600
+
+    Debugging passing 2D arrays
+
+commit 7c88c5f210af7154042fbb6ced2b8369a74c96a0
+Author: jholt <holtkampjs@gmail.com>
+Date:   Tue Jan 18 20:07:13 2022 -0600
+
+    Forgot to include stdio
+
+commit 480aba81793f0484dffd1eeda1d33e601184677f
+Author: jholt <holtkampjs@gmail.com>
+Date:   Tue Jan 18 20:04:36 2022 -0600
+
+    Added makefile
+
+commit 9667c0b7cce255ec022ad7529244bd8f03f3efe2
+Author: jholt <holtkampjs@gmail.com>
+Date:   Tue Jan 18 19:59:09 2022 -0600
+
+    Refactoring
+
+commit b545f9067a9036c0920a9cf99ae3d000483891da
+Author: jholt <holtkampjs@gmail.com>
+Date:   Tue Jan 18 19:04:48 2022 -0600
+
+    Added function to check if square is an available move
+
+commit 267348a38d35a22bc8269907ba4d00cab702238a
+Author: jholt <holtkampjs@gmail.com>
+Date:   Tue Jan 18 18:59:41 2022 -0600
+
+    initial commit
