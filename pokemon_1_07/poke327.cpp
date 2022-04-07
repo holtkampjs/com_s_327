@@ -1051,8 +1051,6 @@ int main(int argc, char *argv[])
 
     db_parse(false);
 
-    return 0;
-
     if (argc == 2) {
         seed = atoi(argv[1]);
     } else {
