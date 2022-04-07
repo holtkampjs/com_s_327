@@ -1032,6 +1032,11 @@ void game_loop()
         if (p) {
             // Performance bug - pathfinding runs twice after generating a new map
             pathfind(world.cur_map);
+            if (world.cur_map->map[d[dim_y]][d[dim_x]] == ter_grass && rand()%10 == 0) {
+                // Pokemon battle
+                printf("Hit\n");
+                return 0;
+            }
         }
 
         c->next_turn += move_cost[n ? n->ctype : char_pc]
