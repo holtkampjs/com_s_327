@@ -1089,6 +1089,12 @@ void game_loop()
     c->next_turn += move_cost[n ? n->ctype : char_pc]
                              [world.cur_map->map[d[dim_y]][d[dim_x]]];
 
+    if (p && (c->pos[dim_y] != d[dim_y] || c->pos[dim_x] != d[dim_x]) &&
+        (world.cur_map->map[d[dim_y]][d[dim_x]] == ter_grass) &&
+        (rand() % 100 < ENCOUNTER_PROB)) {
+      io_encounter_pokemon();
+    }
+    
     c->pos[dim_y] = d[dim_y];
     c->pos[dim_x] = d[dim_x];
 
@@ -1103,10 +1109,6 @@ int main(int argc, char *argv[])
   //  char c;
   //  int x, y;
 
-  db_parse(true);
-
-  return 0;
-
   if (argc == 2) {
     seed = atoi(argv[1]);
   } else {
@@ -1119,6 +1121,8 @@ int main(int argc, char *argv[])
 
   io_init_terminal();
   
+  db_parse(false);
+
   init_world();
 
   /* print_hiker_dist(); */
