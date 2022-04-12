@@ -1,0 +1,349 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_OUTPUT_EXCMD	mixed	/number, pattern, mixed, or combineV2/
+!_TAG_OUTPUT_FILESEP	slash	/slash or backslash/
+!_TAG_OUTPUT_MODE	u-ctags	/u-ctags or e-ctags/
+!_TAG_PATTERN_LENGTH_LIMIT	96	/0 for no limit/
+!_TAG_PROC_CWD	/home/josephh1/com_s_327/pokemon_1_08/	//
+!_TAG_PROGRAM_AUTHOR	Universal Ctags Team	//
+!_TAG_PROGRAM_NAME	Universal Ctags	/Derived from Exuberant Ctags/
+!_TAG_PROGRAM_URL	https://ctags.io/	/official site/
+!_TAG_PROGRAM_VERSION	5.9.0	//
+$(BIN)	Makefile	/^$(BIN): $(OBJS)$/;"	t
+%.o	Makefile	/^%.o: %.c$/;"	t
+%.o	Makefile	/^%.o: %.cpp$/;"	t
+ADD_TRAINER_PROB	poke327.h	/^#define ADD_TRAINER_PROB /;"	d
+BIN	Makefile	/^BIN = poke327$/;"	m
+BOULDER_PROB	poke327.h	/^#define BOULDER_PROB /;"	d
+CC	Makefile	/^CC = gcc$/;"	m
+CFLAGS	Makefile	/^CFLAGS = -Wall -Werror -ggdb -funroll-loops -DTERM=$(TERM)$/;"	m
+CHARACTER_H	character.h	/^# define CHARACTER_H$/;"	d
+CXX	Makefile	/^CXX = g++$/;"	m
+CXXFLAGS	Makefile	/^CXXFLAGS = -Wall -Werror -ggdb -funroll-loops -DTERM=$(TERM)$/;"	m
+Character	poke327.h	/^class Character {$/;"	c
+DB_PARSE_H	db_parse.h	/^# define DB_PARSE_H$/;"	d
+ENCOUNTER_PROB	poke327.h	/^#define ENCOUNTER_PROB /;"	d
+HEAP_H	heap.h	/^# define HEAP_H$/;"	d
+IO_H	io.h	/^# define IO_H$/;"	d
+IV	pokemon.h	/^  int IV[6];$/;"	m	class:Pokemon	typeref:typename:int[6]
+LDFLAGS	Makefile	/^LDFLAGS = -lncurses$/;"	m
+MAP_X	poke327.h	/^#define MAP_X /;"	d
+MAP_Y	poke327.h	/^#define MAP_Y /;"	d
+MIN_BOULDERS	poke327.h	/^#define MIN_BOULDERS /;"	d
+MIN_TRAINERS	poke327.h	/^#define MIN_TRAINERS /;"	d
+MIN_TREES	poke327.h	/^#define MIN_TREES /;"	d
+Map	poke327.h	/^class Map {$/;"	c
+Npc	poke327.h	/^class Npc : public Character {$/;"	c
+OBJS	Makefile	/^OBJS = poke327.o heap.o character.o io.o db_parse.o pokemon.o$/;"	m
+POKE327_H	poke327.h	/^# define POKE327_H$/;"	d
+POKEMON_H	pokemon.h	/^# define POKEMON_H$/;"	d
+Pc	poke327.h	/^class Pc : public Character {$/;"	c
+Pokemon	pokemon.cpp	/^Pokemon::Pokemon(int level) : level(level)$/;"	f	class:Pokemon
+Pokemon	pokemon.h	/^class Pokemon {$/;"	c
+RM	Makefile	/^RM = rm -f$/;"	m
+TERM	Makefile	/^TERM = "S2022"$/;"	m
+TREE_PROB	poke327.h	/^#define TREE_PROB /;"	d
+UNUSED	poke327.h	/^# define UNUSED(/;"	d
+WORLD_SIZE	poke327.h	/^#define WORLD_SIZE /;"	d
+World	poke327.h	/^class World {$/;"	c
+accuracy	db_parse.h	/^  int accuracy;$/;"	m	struct:move_db	typeref:typename:int
+all	Makefile	/^all: $(BIN) etags$/;"	t
+all_dirs	poke327.cpp	/^pair_t all_dirs[8] = {$/;"	v	typeref:typename:pair_t[8]
+base_experience	db_parse.h	/^  int base_experience;$/;"	m	struct:pokemon_db	typeref:typename:int
+base_happiness	db_parse.h	/^  int base_happiness;$/;"	m	struct:pokemon_species_db	typeref:typename:int
+base_stat	db_parse.h	/^  int base_stat;$/;"	m	struct:pokemon_stats_db	typeref:typename:int
+base_stat	db_parse.h	/^  int base_stat[6];$/;"	m	struct:pokemon_species_db	typeref:typename:int[6]
+build_paths	poke327.cpp	/^static int build_paths(Map *m)$/;"	f	typeref:typename:int	file:
+capture_rate	db_parse.h	/^  int capture_rate;$/;"	m	struct:pokemon_species_db	typeref:typename:int
+char_hiker	poke327.h	/^  char_hiker,$/;"	e	enum:character_type
+char_other	poke327.h	/^  char_other,$/;"	e	enum:character_type
+char_pc	poke327.h	/^  char_pc,$/;"	e	enum:character_type
+char_rival	poke327.h	/^  char_rival,$/;"	e	enum:character_type
+char_type_name	character.cpp	/^const char *char_type_name[num_character_types] = {$/;"	v	typeref:typename:const char * []
+character_type	poke327.h	/^typedef enum __attribute__ ((__packed__)) character_type {$/;"	g
+character_type_t	poke327.h	/^} character_type_t;$/;"	t	typeref:enum:character_type
+child	heap.c	/^  heap_node_t *child;$/;"	m	struct:heap_node	typeref:typename:heap_node_t *	file:
+clean	Makefile	/^clean:$/;"	t
+clobber	Makefile	/^clobber: clean$/;"	t
+cmap	poke327.h	/^  Character *cmap[MAP_Y][MAP_X];$/;"	m	class:Map	typeref:typename:Character * [][]
+cmp_char_turns	character.cpp	/^int32_t cmp_char_turns(const void *key, const void *with)$/;"	f	typeref:typename:int32_t
+color_id	db_parse.h	/^  int color_id;$/;"	m	struct:pokemon_species_db	typeref:typename:int
+compare	heap.c	/^int32_t compare(const void *key, const void *with)$/;"	f	typeref:typename:int32_t
+compare	heap.h	/^  int32_t (*compare)(const void *key, const void *with);$/;"	m	struct:heap	typeref:typename:int32_t (*)(const void * key,const void * with)
+compare_move	pokemon.cpp	/^static int compare_move(const void *v1, const void *v2)$/;"	f	typeref:typename:int	file:
+compare_trainer_distance	io.cpp	/^static int compare_trainer_distance(const void *v1, const void *v2)$/;"	f	typeref:typename:int	file:
+conquest_order	db_parse.h	/^  int conquest_order;$/;"	m	struct:pokemon_species_db	typeref:typename:int
+contest_effect_id	db_parse.h	/^  int contest_effect_id;$/;"	m	struct:move_db	typeref:typename:int
+contest_type_id	db_parse.h	/^  int contest_type_id;$/;"	m	struct:move_db	typeref:typename:int
+cost	poke327.h	/^  int32_t cost;$/;"	m	struct:path	typeref:typename:int32_t
+ctype	poke327.h	/^  character_type_t ctype;$/;"	m	class:Npc	typeref:typename:character_type_t
+cur_idx	poke327.h	/^  pair_t cur_idx;$/;"	m	class:World	typeref:typename:pair_t
+cur_map	poke327.h	/^  Map *cur_map;$/;"	m	class:World	typeref:typename:Map *
+damage_class_id	db_parse.h	/^  int damage_class_id;$/;"	m	struct:move_db	typeref:typename:int
+datum	heap.c	/^  void *datum;$/;"	m	struct:heap_node	typeref:typename:void *	file:
+datum_delete	heap.h	/^  void (*datum_delete)(void *);$/;"	m	struct:heap	typeref:typename:void (*)(void *)
+db_parse	db_parse.cpp	/^void db_parse(bool print)$/;"	f	typeref:typename:void
+defeated	poke327.h	/^  int defeated;$/;"	m	class:Npc	typeref:typename:int
+degree	heap.c	/^  uint32_t degree;$/;"	m	struct:heap_node	typeref:typename:uint32_t	file:
+delete_character	character.cpp	/^void delete_character(void *v)$/;"	f	typeref:typename:void
+delete_world	poke327.cpp	/^void delete_world()$/;"	f	typeref:typename:void
+dijkstra_path	poke327.cpp	/^static void dijkstra_path(Map *m, pair_t from, pair_t to)$/;"	f	typeref:typename:void	file:
+dim	poke327.h	/^typedef enum dim {$/;"	g
+dim_t	poke327.h	/^} dim_t;$/;"	t	typeref:enum:dim
+dim_x	poke327.h	/^  dim_x,$/;"	e	enum:dim
+dim_y	poke327.h	/^  dim_y,$/;"	e	enum:dim
+dir	poke327.h	/^  pair_t dir;$/;"	m	class:Npc	typeref:typename:pair_t
+e	poke327.h	/^  int8_t n, s, e, w;$/;"	m	class:Map	typeref:typename:int8_t
+edge_penalty	poke327.cpp	/^static int32_t edge_penalty(int8_t x, int8_t y)$/;"	f	typeref:typename:int32_t	file:
+effect_chance	db_parse.h	/^  int effect_chance;$/;"	m	struct:move_db	typeref:typename:int
+effect_id	db_parse.h	/^  int effect_id;$/;"	m	struct:move_db	typeref:typename:int
+effective_stat	pokemon.h	/^  int effective_stat[6];$/;"	m	class:Pokemon	typeref:typename:int[6]
+effort	db_parse.h	/^  int effort;$/;"	m	struct:pokemon_stats_db	typeref:typename:int
+etags	Makefile	/^etags:$/;"	t
+evolution_chain_id	db_parse.h	/^  int evolution_chain_id;$/;"	m	struct:pokemon_species_db	typeref:typename:int
+evolves_from_species_id	db_parse.h	/^  int evolves_from_species_id;$/;"	m	struct:pokemon_species_db	typeref:typename:int
+experience	db_parse.cpp	/^experience_db experience[601];$/;"	v	typeref:typename:experience_db[601]
+experience	db_parse.h	/^  int experience;$/;"	m	struct:experience_db	typeref:typename:int
+experience_db	db_parse.h	/^struct experience_db {$/;"	s
+find_building_location	poke327.cpp	/^static void find_building_location(Map *m, pair_t p)$/;"	f	typeref:typename:void	file:
+forms_switchable	db_parse.h	/^  int forms_switchable;$/;"	m	struct:pokemon_species_db	typeref:typename:int
+from	poke327.h	/^  uint8_t from[2];$/;"	m	struct:path	typeref:typename:uint8_t[2]
+game_loop	poke327.cpp	/^void game_loop()$/;"	f	typeref:typename:void
+gaussian	poke327.cpp	/^static int gaussian[5][5] = {$/;"	v	typeref:typename:int[5][5]	file:
+gender	pokemon.h	/^  pokemon_gender gender;$/;"	m	class:Pokemon	typeref:typename:pokemon_gender
+gender_female	pokemon.h	/^  gender_female,$/;"	e	enum:pokemon_gender
+gender_male	pokemon.h	/^  gender_male$/;"	e	enum:pokemon_gender
+gender_rate	db_parse.h	/^  int gender_rate;$/;"	m	struct:pokemon_species_db	typeref:typename:int
+generation_id	db_parse.h	/^  int generation_id;$/;"	m	struct:move_db	typeref:typename:int
+generation_id	db_parse.h	/^  int generation_id;$/;"	m	struct:pokemon_species_db	typeref:typename:int
+get_atk	pokemon.cpp	/^int Pokemon::get_atk() const$/;"	f	class:Pokemon	typeref:typename:int
+get_def	pokemon.cpp	/^int Pokemon::get_def() const$/;"	f	class:Pokemon	typeref:typename:int
+get_gender_string	pokemon.cpp	/^const char *Pokemon::get_gender_string() const$/;"	f	class:Pokemon	typeref:typename:const char *
+get_hp	pokemon.cpp	/^int Pokemon::get_hp() const$/;"	f	class:Pokemon	typeref:typename:int
+get_move	pokemon.cpp	/^const char *Pokemon::get_move(int i) const$/;"	f	class:Pokemon	typeref:typename:const char *
+get_spatk	pokemon.cpp	/^int Pokemon::get_spatk() const$/;"	f	class:Pokemon	typeref:typename:int
+get_spdef	pokemon.cpp	/^int Pokemon::get_spdef() const$/;"	f	class:Pokemon	typeref:typename:int
+get_species	pokemon.cpp	/^const char *Pokemon::get_species() const$/;"	f	class:Pokemon	typeref:typename:const char *
+get_speed	pokemon.cpp	/^int Pokemon::get_speed() const$/;"	f	class:Pokemon	typeref:typename:int
+growth_rate_id	db_parse.h	/^  int growth_rate_id;$/;"	m	struct:experience_db	typeref:typename:int
+growth_rate_id	db_parse.h	/^  int growth_rate_id;$/;"	m	struct:pokemon_species_db	typeref:typename:int
+habitat_id	db_parse.h	/^  int habitat_id;$/;"	m	struct:pokemon_species_db	typeref:typename:int
+has_gender_differences	db_parse.h	/^  int has_gender_differences;$/;"	m	struct:pokemon_species_db	typeref:typename:int
+hatch_counter	db_parse.h	/^  int hatch_counter;$/;"	m	struct:pokemon_species_db	typeref:typename:int
+heap	heap.h	/^typedef struct heap {$/;"	s
+heap_cascading_cut	heap.c	/^static void heap_cascading_cut(heap_t *h, heap_node_t *n)$/;"	f	typeref:typename:void	file:
+heap_combine	heap.c	/^int heap_combine(heap_t *h, heap_t *h1, heap_t *h2)$/;"	f	typeref:typename:int
+heap_consolidate	heap.c	/^static void heap_consolidate(heap_t *h)$/;"	f	typeref:typename:void	file:
+heap_cut	heap.c	/^static void heap_cut(heap_t *h, heap_node_t *n, heap_node_t *p)$/;"	f	typeref:typename:void	file:
+heap_decrease_key	heap.c	/^int heap_decrease_key(heap_t *h, heap_node_t *n, void *v)$/;"	f	typeref:typename:int
+heap_decrease_key_no_replace	heap.c	/^int heap_decrease_key_no_replace(heap_t *h, heap_node_t *n)$/;"	f	typeref:typename:int
+heap_delete	heap.c	/^void heap_delete(heap_t *h)$/;"	f	typeref:typename:void
+heap_init	heap.c	/^void heap_init(heap_t *h,$/;"	f	typeref:typename:void
+heap_insert	heap.c	/^heap_node_t *heap_insert(heap_t *h, void *v)$/;"	f	typeref:typename:heap_node_t *
+heap_link	heap.c	/^static void heap_link(heap_t *h, heap_node_t *node, heap_node_t *root)$/;"	f	typeref:typename:void	file:
+heap_node	heap.c	/^struct heap_node {$/;"	s	file:
+heap_node_delete	heap.c	/^void heap_node_delete(heap_t *h, heap_node_t *hn)$/;"	f	typeref:typename:void
+heap_node_t	heap.h	/^typedef struct heap_node heap_node_t;$/;"	t	typeref:struct:heap_node
+heap_peek_min	heap.c	/^void *heap_peek_min(heap_t *h)$/;"	f	typeref:typename:void *
+heap_remove_min	heap.c	/^void *heap_remove_min(heap_t *h)$/;"	f	typeref:typename:void *
+heap_t	heap.h	/^} heap_t;$/;"	t	typeref:struct:heap
+height	db_parse.h	/^  int height;$/;"	m	struct:pokemon_db	typeref:typename:int
+height	poke327.h	/^  uint8_t height[MAP_Y][MAP_X];$/;"	m	class:Map	typeref:typename:uint8_t[][]
+heightpair	poke327.h	/^#define heightpair(/;"	d
+heightxy	poke327.h	/^#define heightxy(/;"	d
+hiker_cmp	character.cpp	/^static int32_t hiker_cmp(const void *key, const void *with) {$/;"	f	typeref:typename:int32_t	file:
+hiker_dist	poke327.h	/^  int hiker_dist[MAP_Y][MAP_X];$/;"	m	class:World	typeref:typename:int[][]
+hn	poke327.h	/^  heap_node_t *hn;$/;"	m	struct:path	typeref:typename:heap_node_t *
+id	db_parse.h	/^  int id;$/;"	m	struct:move_db	typeref:typename:int
+id	db_parse.h	/^  int id;$/;"	m	struct:pokemon_db	typeref:typename:int
+id	db_parse.h	/^  int id;$/;"	m	struct:pokemon_species_db	typeref:typename:int
+identifier	db_parse.h	/^  char identifier[30];$/;"	m	struct:move_db	typeref:typename:char[30]
+identifier	db_parse.h	/^  char identifier[30];$/;"	m	struct:pokemon_db	typeref:typename:char[30]
+identifier	db_parse.h	/^  char identifier[30];$/;"	m	struct:pokemon_species_db	typeref:typename:char[30]
+init_pc	poke327.cpp	/^void init_pc()$/;"	f	typeref:typename:void
+init_world	poke327.cpp	/^void init_world()$/;"	f	typeref:typename:void
+insert_heap_node_in_list	heap.c	/^#define insert_heap_node_in_list(/;"	d	file:
+io_battle	io.cpp	/^void io_battle(Character *aggressor, Character *defender)$/;"	f	typeref:typename:void
+io_choose_starting_pokemon	io.cpp	/^void io_choose_starting_pokemon() {$/;"	f	typeref:typename:void
+io_display	io.cpp	/^void io_display()$/;"	f	typeref:typename:void
+io_encounter_pokemon	io.cpp	/^void io_encounter_pokemon()$/;"	f	typeref:typename:void
+io_handle_input	io.cpp	/^void io_handle_input(pair_t dest)$/;"	f	typeref:typename:void
+io_head	io.cpp	/^static io_message_t *io_head, *io_tail;$/;"	v	typeref:typename:io_message_t *	file:
+io_init_terminal	io.cpp	/^void io_init_terminal(void)$/;"	f	typeref:typename:void
+io_list_trainers	io.cpp	/^static void io_list_trainers()$/;"	f	typeref:typename:void	file:
+io_list_trainers_display	io.cpp	/^static void io_list_trainers_display(Npc **c,$/;"	f	typeref:typename:void	file:
+io_message	io.cpp	/^typedef struct io_message {$/;"	s	file:
+io_message_t	io.cpp	/^} io_message_t;$/;"	t	typeref:struct:io_message	file:
+io_nearest_visible_trainer	io.cpp	/^static Character *io_nearest_visible_trainer()$/;"	f	typeref:typename:Character *	file:
+io_pokemart	io.cpp	/^void io_pokemart()$/;"	f	typeref:typename:void
+io_pokemon_center	io.cpp	/^void io_pokemon_center()$/;"	f	typeref:typename:void
+io_print_message_queue	io.cpp	/^static void io_print_message_queue(uint32_t y, uint32_t x)$/;"	f	typeref:typename:void	file:
+io_queue_message	io.cpp	/^void io_queue_message(const char *format, ...)$/;"	f	typeref:typename:void
+io_reset_terminal	io.cpp	/^void io_reset_terminal(void)$/;"	f	typeref:typename:void
+io_scroll_trainer_list	io.cpp	/^static void io_scroll_trainer_list(char (*s)[40], uint32_t count)$/;"	f	typeref:typename:void	file:
+io_tail	io.cpp	/^static io_message_t *io_head, *io_tail;$/;"	v	typeref:typename:io_message_t *	file:
+io_teleport_pc	io.cpp	/^uint32_t io_teleport_pc(pair_t dest)$/;"	f	typeref:typename:uint32_t
+io_teleport_world	io.cpp	/^void io_teleport_world(pair_t dest)$/;"	f	typeref:typename:void
+is_baby	db_parse.h	/^  int is_baby;$/;"	m	struct:pokemon_species_db	typeref:typename:int
+is_default	db_parse.h	/^  int is_default;$/;"	m	struct:pokemon_db	typeref:typename:int
+is_legendary	db_parse.h	/^  int is_legendary;$/;"	m	struct:pokemon_species_db	typeref:typename:int
+is_mythical	db_parse.h	/^  int is_mythical;$/;"	m	struct:pokemon_species_db	typeref:typename:int
+is_shiny	pokemon.cpp	/^bool Pokemon::is_shiny() const$/;"	f	class:Pokemon	typeref:typename:bool
+leave_map	poke327.cpp	/^void leave_map(pair_t d)$/;"	f	typeref:typename:void
+level	db_parse.h	/^  int level;$/;"	m	struct:experience_db	typeref:typename:int
+level	db_parse.h	/^  int level;$/;"	m	struct:levelup_move	typeref:typename:int
+level	db_parse.h	/^  int level;$/;"	m	struct:pokemon_move_db	typeref:typename:int
+level	pokemon.h	/^  int level;$/;"	m	class:Pokemon	typeref:typename:int
+levelup_move	db_parse.h	/^struct levelup_move {$/;"	s
+levelup_moves	db_parse.h	/^  levelup_move *levelup_moves;$/;"	m	struct:pokemon_species_db	typeref:typename:levelup_move *
+main	heap.c	/^int main(int argc, char *argv[])$/;"	f	typeref:typename:int
+main	poke327.cpp	/^int main(int argc, char *argv[])$/;"	f	typeref:typename:int
+malloc	poke327.h	/^#define malloc(/;"	d
+map	poke327.h	/^  terrain_type_t map[MAP_Y][MAP_X];$/;"	m	class:Map	typeref:typename:terrain_type_t[][]
+map_terrain	poke327.cpp	/^static int map_terrain(Map *m, int8_t n, int8_t s, int8_t e, int8_t w)$/;"	f	typeref:typename:int	file:
+mappair	poke327.h	/^#define mappair(/;"	d
+mapxy	poke327.h	/^#define mapxy(/;"	d
+mark	heap.c	/^  uint32_t mark;$/;"	m	struct:heap_node	typeref:typename:uint32_t	file:
+min	heap.h	/^  heap_node_t *min;$/;"	m	struct:heap	typeref:typename:heap_node_t *
+move	db_parse.h	/^  int move;$/;"	m	struct:levelup_move	typeref:typename:int
+move_cost	character.cpp	/^int32_t move_cost[num_character_types][num_terrain_types] = {$/;"	v	typeref:typename:int32_t[][]
+move_db	db_parse.h	/^struct move_db {$/;"	s
+move_func	character.cpp	/^void (*move_func[num_movement_types])(Character *, pair_t) = {$/;"	v	typeref:typename:void (* [num_movement_types])(Character *,pair_t)
+move_hiker	poke327.h	/^  move_hiker,$/;"	e	enum:movement_type
+move_hiker_func	character.cpp	/^static void move_hiker_func(Character *c, pair_t dest)$/;"	f	typeref:typename:void	file:
+move_id	db_parse.h	/^  int move_id;$/;"	m	struct:pokemon_move_db	typeref:typename:int
+move_index	pokemon.h	/^  int move_index[4];$/;"	m	class:Pokemon	typeref:typename:int[4]
+move_pace	poke327.h	/^  move_pace,$/;"	e	enum:movement_type
+move_pacer_func	character.cpp	/^static void move_pacer_func(Character *c, pair_t dest)$/;"	f	typeref:typename:void	file:
+move_pc	poke327.h	/^  move_pc,$/;"	e	enum:movement_type
+move_pc_dir	io.cpp	/^uint32_t move_pc_dir(uint32_t input, pair_t dest)$/;"	f	typeref:typename:uint32_t
+move_pc_func	character.cpp	/^static void move_pc_func(Character *c, pair_t dest)$/;"	f	typeref:typename:void	file:
+move_rival	poke327.h	/^  move_rival,$/;"	e	enum:movement_type
+move_rival_func	character.cpp	/^static void move_rival_func(Character *c, pair_t dest)$/;"	f	typeref:typename:void	file:
+move_sentry	poke327.h	/^  move_sentry,$/;"	e	enum:movement_type
+move_sentry_func	character.cpp	/^static void move_sentry_func(Character *c, pair_t dest)$/;"	f	typeref:typename:void	file:
+move_walk	poke327.h	/^  move_walk,$/;"	e	enum:movement_type
+move_walker_func	character.cpp	/^static void move_walker_func(Character *c, pair_t dest)$/;"	f	typeref:typename:void	file:
+move_wander	poke327.h	/^  move_wander,$/;"	e	enum:movement_type
+move_wanderer_func	character.cpp	/^static void move_wanderer_func(Character *c, pair_t dest)$/;"	f	typeref:typename:void	file:
+movement_type	poke327.h	/^typedef enum __attribute__ ((__packed__)) movement_type {$/;"	g
+movement_type_t	poke327.h	/^} movement_type_t;$/;"	t	typeref:enum:movement_type
+moves	db_parse.cpp	/^move_db moves[845];$/;"	v	typeref:typename:move_db[845]
+msg	io.cpp	/^  char msg[71];$/;"	m	struct:io_message	typeref:typename:char[71]	file:
+mtype	poke327.h	/^  movement_type_t mtype;$/;"	m	class:Npc	typeref:typename:movement_type_t
+n	poke327.h	/^  int8_t n, s, e, w;$/;"	m	class:Map	typeref:typename:int8_t
+new_char_other	poke327.cpp	/^void new_char_other()$/;"	f	typeref:typename:void
+new_hiker	poke327.cpp	/^void new_hiker()$/;"	f	typeref:typename:void
+new_map	poke327.cpp	/^int new_map(int teleport)$/;"	f	typeref:typename:int
+new_rival	poke327.cpp	/^void new_rival()$/;"	f	typeref:typename:void
+next	heap.c	/^  heap_node_t *next;$/;"	m	struct:heap_node	typeref:typename:heap_node_t *	file:
+next	io.cpp	/^  struct io_message *next;$/;"	m	struct:io_message	typeref:struct:io_message *	file:
+next	poke327.cpp	/^    struct queue_node *next;$/;"	m	struct:queue_node	typeref:struct:queue_node *	file:
+next_token	db_parse.cpp	/^static char *next_token(char *start, char delim)$/;"	f	typeref:typename:char *	file:
+next_turn	poke327.h	/^  int next_turn;$/;"	m	class:Character	typeref:typename:int
+num_character_types	poke327.h	/^  num_character_types$/;"	e	enum:character_type
+num_dims	poke327.h	/^  num_dims$/;"	e	enum:dim
+num_levelup_moves	db_parse.h	/^  unsigned num_levelup_moves;$/;"	m	struct:pokemon_species_db	typeref:typename:unsigned
+num_movement_types	poke327.h	/^  num_movement_types$/;"	e	enum:movement_type
+num_terrain_types	poke327.h	/^  num_terrain_types$/;"	e	enum:terrain_type
+num_trainers	poke327.h	/^  int32_t num_trainers;$/;"	m	class:Map	typeref:typename:int32_t
+operator <<	pokemon.cpp	/^std::ostream &operator<<(std::ostream &o, const Pokemon &p)$/;"	f	typeref:typename:std::ostream &
+order	db_parse.h	/^  int order;$/;"	m	struct:pokemon_db	typeref:typename:int
+order	db_parse.h	/^  int order;$/;"	m	struct:pokemon_move_db	typeref:typename:int
+order	db_parse.h	/^  int order;$/;"	m	struct:pokemon_species_db	typeref:typename:int
+pair_t	character.h	/^typedef int16_t pair_t[2];$/;"	t	typeref:typename:int16_t[2]
+pair_t	io.h	/^typedef int16_t pair_t[2];$/;"	t	typeref:typename:int16_t[2]
+pair_t	poke327.h	/^typedef int16_t pair_t[num_dims];$/;"	t	typeref:typename:int16_t[num_dims]
+parent	heap.c	/^  heap_node_t *parent;$/;"	m	struct:heap_node	typeref:typename:heap_node_t *	file:
+path	poke327.h	/^typedef struct path {$/;"	s
+path_cmp	poke327.cpp	/^static int32_t path_cmp(const void *key, const void *with) {$/;"	f	typeref:typename:int32_t	file:
+path_t	poke327.h	/^} path_t;$/;"	t	typeref:struct:path
+pathfind	character.cpp	/^void pathfind(Map *m)$/;"	f	typeref:typename:void
+pc	poke327.h	/^  Pc pc;$/;"	m	class:World	typeref:typename:Pc
+place_boulders	poke327.cpp	/^static int place_boulders(Map *m)$/;"	f	typeref:typename:int	file:
+place_center	poke327.cpp	/^static int place_center(Map *m)$/;"	f	typeref:typename:int	file:
+place_characters	poke327.cpp	/^void place_characters()$/;"	f	typeref:typename:void
+place_pc	poke327.cpp	/^void place_pc()$/;"	f	typeref:typename:void
+place_pokemart	poke327.cpp	/^static int place_pokemart(Map *m)$/;"	f	typeref:typename:int	file:
+place_trees	poke327.cpp	/^static int place_trees(Map *m)$/;"	f	typeref:typename:int	file:
+pokemon	db_parse.cpp	/^pokemon_db pokemon[1093];$/;"	v	typeref:typename:pokemon_db[1093]
+pokemon_db	db_parse.h	/^struct pokemon_db {$/;"	s
+pokemon_gender	pokemon.h	/^enum pokemon_gender {$/;"	g
+pokemon_id	db_parse.h	/^  int pokemon_id;$/;"	m	struct:pokemon_move_db	typeref:typename:int
+pokemon_id	db_parse.h	/^  int pokemon_id;$/;"	m	struct:pokemon_stats_db	typeref:typename:int
+pokemon_index	pokemon.h	/^  int pokemon_index;$/;"	m	class:Pokemon	typeref:typename:int
+pokemon_move_db	db_parse.h	/^struct pokemon_move_db {$/;"	s
+pokemon_move_method_id	db_parse.h	/^  int pokemon_move_method_id;$/;"	m	struct:pokemon_move_db	typeref:typename:int
+pokemon_moves	db_parse.cpp	/^pokemon_move_db pokemon_moves[528239];$/;"	v	typeref:typename:pokemon_move_db[528239]
+pokemon_species_db	db_parse.h	/^struct pokemon_species_db {$/;"	s
+pokemon_species_index	pokemon.h	/^  int pokemon_species_index;$/;"	m	class:Pokemon	typeref:typename:int
+pokemon_stat	pokemon.h	/^enum pokemon_stat {$/;"	g
+pokemon_stats	db_parse.cpp	/^pokemon_stats_db pokemon_stats[6553];$/;"	v	typeref:typename:pokemon_stats_db[6553]
+pokemon_stats_db	db_parse.h	/^struct pokemon_stats_db {$/;"	s
+pos	poke327.h	/^  pair_t pos;$/;"	m	class:Character	typeref:typename:pair_t
+pos	poke327.h	/^  uint8_t pos[2];$/;"	m	struct:path	typeref:typename:uint8_t[2]
+power	db_parse.h	/^  int power;$/;"	m	struct:move_db	typeref:typename:int
+pp	db_parse.h	/^  int pp;$/;"	m	struct:move_db	typeref:typename:int
+prev	heap.c	/^  heap_node_t *prev;$/;"	m	struct:heap_node	typeref:typename:heap_node_t *	file:
+print	pokemon.cpp	/^std::ostream &Pokemon::print(std::ostream &o) const$/;"	f	class:Pokemon	typeref:typename:std::ostream &
+print_heap	heap.c	/^void print_heap(heap_t *h, char *(*print)(const void *v))$/;"	f	typeref:typename:void
+print_heap_node	heap.c	/^void print_heap_node(heap_node_t *n, unsigned indent,$/;"	f	typeref:typename:void
+print_heap_node_list	heap.c	/^void print_heap_node_list(heap_node_t *n)$/;"	f	typeref:typename:void
+print_hiker_dist	poke327.cpp	/^void print_hiker_dist()$/;"	f	typeref:typename:void
+print_int	heap.c	/^char *print_int(const void *v)$/;"	f	typeref:typename:char *
+print_rival_dist	poke327.cpp	/^void print_rival_dist()$/;"	f	typeref:typename:void
+priority	db_parse.h	/^  int priority;$/;"	m	struct:move_db	typeref:typename:int
+queue_node	poke327.cpp	/^typedef struct queue_node {$/;"	s	file:
+queue_node_t	poke327.cpp	/^} queue_node_t;$/;"	t	typeref:struct:queue_node	file:
+quit	poke327.h	/^  int quit;$/;"	m	class:World	typeref:typename:int
+rand_dir	poke327.h	/^#define rand_dir(/;"	d
+rand_pos	poke327.cpp	/^void rand_pos(pair_t pos)$/;"	f	typeref:typename:void
+rand_range	poke327.h	/^# define rand_range(/;"	d
+rand_under	poke327.h	/^# define rand_under(/;"	d
+remove_heap_node_from_list	heap.c	/^#define remove_heap_node_from_list(/;"	d	file:
+rival_cmp	character.cpp	/^static int32_t rival_cmp(const void *key, const void *with) {$/;"	f	typeref:typename:int32_t	file:
+rival_dist	poke327.h	/^  int rival_dist[MAP_Y][MAP_X];$/;"	m	class:World	typeref:typename:int[][]
+s	poke327.h	/^  int8_t n, s, e, w;$/;"	m	class:Map	typeref:typename:int8_t
+shape_id	db_parse.h	/^  int shape_id;$/;"	m	struct:pokemon_species_db	typeref:typename:int
+shiny	pokemon.h	/^  bool shiny;$/;"	m	class:Pokemon	typeref:typename:bool
+size	heap.h	/^  uint32_t size;$/;"	m	struct:heap	typeref:typename:uint32_t
+smooth_height	poke327.cpp	/^static int smooth_height(Map *m)$/;"	f	typeref:typename:int	file:
+species	db_parse.cpp	/^pokemon_species_db species[899];$/;"	v	typeref:typename:pokemon_species_db[899]
+species_id	db_parse.h	/^  int species_id;$/;"	m	struct:pokemon_db	typeref:typename:int
+splice_heap_node_lists	heap.c	/^#define splice_heap_node_lists(/;"	d	file:
+stat_atk	pokemon.h	/^  stat_atk,$/;"	e	enum:pokemon_stat
+stat_def	pokemon.h	/^  stat_def,$/;"	e	enum:pokemon_stat
+stat_hp	pokemon.h	/^  stat_hp,$/;"	e	enum:pokemon_stat
+stat_id	db_parse.h	/^  int stat_id;$/;"	m	struct:pokemon_stats_db	typeref:typename:int
+stat_spatk	pokemon.h	/^  stat_spatk,$/;"	e	enum:pokemon_stat
+stat_spdef	pokemon.h	/^  stat_spdef,$/;"	e	enum:pokemon_stat
+stat_speed	pokemon.h	/^  stat_speed$/;"	e	enum:pokemon_stat
+super_contest_effect_id	db_parse.h	/^  int super_contest_effect_id;$/;"	m	struct:move_db	typeref:typename:int
+swap	heap.c	/^#define swap(/;"	d	file:
+symbol	poke327.h	/^  char symbol;$/;"	m	class:Character	typeref:typename:char
+target_id	db_parse.h	/^  int target_id;$/;"	m	struct:move_db	typeref:typename:int
+ter_boulder	poke327.h	/^  ter_boulder,$/;"	e	enum:terrain_type
+ter_center	poke327.h	/^  ter_center,$/;"	e	enum:terrain_type
+ter_clearing	poke327.h	/^  ter_clearing,$/;"	e	enum:terrain_type
+ter_cost	character.cpp	/^#define ter_cost(/;"	d	file:
+ter_exit	poke327.h	/^  ter_exit,$/;"	e	enum:terrain_type
+ter_forest	poke327.h	/^  ter_forest,$/;"	e	enum:terrain_type
+ter_grass	poke327.h	/^  ter_grass,$/;"	e	enum:terrain_type
+ter_mart	poke327.h	/^  ter_mart,$/;"	e	enum:terrain_type
+ter_mountain	poke327.h	/^  ter_mountain,$/;"	e	enum:terrain_type
+ter_path	poke327.h	/^  ter_path,$/;"	e	enum:terrain_type
+ter_tree	poke327.h	/^  ter_tree,$/;"	e	enum:terrain_type
+terrain_type	poke327.h	/^typedef enum __attribute__ ((__packed__)) terrain_type {$/;"	g
+terrain_type_t	poke327.h	/^} terrain_type_t;$/;"	t	typeref:enum:terrain_type
+turn	poke327.h	/^  heap_t turn;$/;"	m	class:Map	typeref:typename:heap_t
+type_id	db_parse.h	/^  int type_id;$/;"	m	struct:move_db	typeref:typename:int
+types	db_parse.cpp	/^char *types[19];$/;"	v	typeref:typename:char * [19]
+version_group_id	db_parse.h	/^  int version_group_id;$/;"	m	struct:pokemon_move_db	typeref:typename:int
+w	poke327.h	/^  int8_t n, s, e, w;$/;"	m	class:Map	typeref:typename:int8_t
+weight	db_parse.h	/^  int weight;$/;"	m	struct:pokemon_db	typeref:typename:int
+world	poke327.cpp	/^World world;$/;"	v	typeref:typename:World
+world	poke327.h	/^  Map *world[WORLD_SIZE][WORLD_SIZE];$/;"	m	class:World	typeref:typename:Map * [][]
+x	poke327.cpp	/^    int x, y;$/;"	m	struct:queue_node	typeref:typename:int	file:
+y	poke327.cpp	/^    int x, y;$/;"	m	struct:queue_node	typeref:typename:int	file:
+~Character	poke327.h	/^  virtual ~Character() {}$/;"	f	class:Character
+~pokemon_species_db	db_parse.cpp	/^pokemon_species_db::~pokemon_species_db()$/;"	f	class:pokemon_species_db
