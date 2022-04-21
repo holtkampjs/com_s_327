@@ -55,6 +55,43 @@ static void move_hiker_func(Character *c, pair_t dest)
     }
 }
 
+Pc::Pc() {
+    this->pokemon_inventory = 0;
+}
+
+int Character::AddPokemon(Pokemon *p) {
+    if (!(this->pokemon_inventory ^ 0x1)) {
+        this->pokemon[0] = p;
+        this->pokemon_inventory |= 0x1;
+    } else if (!(this->pokemon_inventory ^ 0x2)) {
+        this->pokemon[1] = p;
+        this->pokemon_inventory |= 0x2;
+    } else if (!(this->pokemon_inventory ^ 0x4)) {
+        this->pokemon[2] = p;
+        this->pokemon_inventory |= 0x4;
+    } else if (!(this->pokemon_inventory ^ 0x8)) {
+        this->pokemon[3] = p;
+        this->pokemon_inventory |= 0x8;
+    } else if (!(this->pokemon_inventory ^ 0x10)) {
+        this->pokemon[4] = p;
+        this->pokemon_inventory |= 0x10;
+    } else if (!(this->pokemon_inventory ^ 0x11)) {
+        this->pokemon[5] = p;
+        this->pokemon_inventory |= 0x11;
+    } else {
+        return 1;
+    }
+
+    return 0;
+}
+
+Npc::Npc() {
+    this->pokemon_inventory = 0;
+    // TODO: generate starting pokemon for Npc
+
+    // TODO: give npc random number of pokemon at various levels
+}
+
 static void move_rival_func(Character *c, pair_t dest)
 {
     int min;

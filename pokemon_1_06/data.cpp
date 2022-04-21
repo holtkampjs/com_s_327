@@ -818,19 +818,3 @@ public:
     return 0;
   }
 };
-
-// int main(int argc, char *argv[]) {
-//   CsvParser *parser = new CsvParser();
-
-//   parser->parse(argv[1]);
-
-//   delete parser;
-//   return 0;
-// }
-// Files to parse:
-//  - pokemon.csv
-//  - moves.csv
-//  - pokemon_moves.csv
-//  - pokemon_species.csv
-//  - experience.csv
-//  - type_names.csv

@@ -683,7 +683,7 @@ void io_choose_starting_pokemon() {
 
         mvwprintw(choose_pokemon_win, 0, 0, "Choose your starting pokemon.");
         mvwprintw(choose_pokemon_win, 1, 0, "Enter the number next to the pokemon name to select.");
-        
+
         mvwprintw(choose_pokemon_win, 3, 1, "0 -> %s", pokemon0->get_species());
         mvwprintw(choose_pokemon_win, 4, 1, "1 -> %s", pokemon1->get_species());
         mvwprintw(choose_pokemon_win, 5, 1, "2 -> %s", pokemon2->get_species());
@@ -693,7 +693,23 @@ void io_choose_starting_pokemon() {
         c = wgetch(choose_pokemon_win);
     } while (c != '0' && c != '1' && c != '2');
 
-    // TODO: Add pokemon to pc's pokemon
+    switch(c) {
+        case '0':
+            world.pc.CapturePokemon(pokemon0); 
+            delete pokemon1;
+            delete pokemon2;
+            break;
+        case '1':
+            world.pc.CapturePokemon(pokemon1); 
+            delete pokemon0;
+            delete pokemon2;
+            break;
+        case '2':
+            world.pc.CapturePokemon(pokemon2); 
+            delete pokemon0;
+            delete pokemon1;
+            break;
+    }
 
     delwin(choose_pokemon_win);
 }

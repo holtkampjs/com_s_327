@@ -695,8 +695,6 @@ void new_hiker()
     c->symbol = 'h';
     c->next_turn = 0;
     heap_insert(&world.cur_map->turn, c);
-
-    //  printf("Hiker at %d,%d\n", pos[dim_x], pos[dim_y]);
 }
 
 void new_rival()
@@ -934,58 +932,6 @@ int new_map(int teleport)
 
     return 0;
 }
-
-/*
-   static void print_map()
-   {
-   int x, y;
-   int default_reached = 0;
-
-   printf("\n\n\n");
-
-   for (y = 0; y < MAP_Y; y++) {
-   for (x = 0; x < MAP_X; x++) {
-   if (world.cur_map->cmap[y][x]) {
-   putchar(world.cur_map->cmap[y][x]->symbol);
-   } else {
-   switch (world.cur_map->map[y][x]) {
-   case ter_boulder:
-   case ter_mountain:
-   putchar('%');
-   break;
-   case ter_tree:
-   case ter_forest:
-   putchar('^');
-   break;
-   case ter_path:
-   putchar('#');
-   break;
-   case ter_mart:
-   putchar('M');
-   break;
-   case ter_center:
-   putchar('C');
-   break;
-   case ter_grass:
-   putchar(':');
-   break;
-   case ter_clearing:
-   putchar('.');
-   break;
-   default:
-   default_reached = 1;
-   break;
-   }
-   }
-   }
-   putchar('\n');
-   }
-
-   if (default_reached) {
-   fprintf(stderr, "Default reached in %s\n", __FUNCTION__);
-   }
-   }
-   */
 
 // The world is global because of its size, so init_world is parameterless
 void init_world()

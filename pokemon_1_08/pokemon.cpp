@@ -93,6 +93,10 @@ Pokemon::Pokemon(int level) : level(level)
   gender = ((rand() & 0x1fff) ? gender_female : gender_male);
 }
 
+Pokemon::Pokemon(Pokemon *&p) {
+
+}
+
 const char *Pokemon::get_species() const
 {
   return species[pokemon_species_index].identifier;

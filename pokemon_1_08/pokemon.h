@@ -29,6 +29,7 @@ class Pokemon {
   pokemon_gender gender;
  public:
   Pokemon(int level);
+  Pokemon(Pokemon *&p);
   const char *get_species() const;
   int get_hp() const;
   int get_atk() const;
