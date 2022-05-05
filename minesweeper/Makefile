@@ -10,8 +10,8 @@ CXXFLAGS = -Wall -Werror -ggdb -funroll-loops -DTERM=$(TERM)
 
 LDFLAGS = -lncurses
 
-BIN = poke327
-OBJS = poke327.o heap.o character.o io.o
+BIN = minesweeper
+OBJS = main.o
 
 all: $(BIN) etags
 
